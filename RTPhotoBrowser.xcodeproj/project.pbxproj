@@ -14,6 +14,10 @@
 		26DABFED1E6312620029DEE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */; };
 		26DABFF81E6312620029DEE5 /* RTPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFF71E6312620029DEE5 /* RTPhotoBrowserTests.swift */; };
 		26DAC0031E6312620029DEE5 /* RTPhotoBrowserUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0021E6312620029DEE5 /* RTPhotoBrowserUITests.swift */; };
+		26DAC0111E6316130029DEE5 /* PhotoSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */; };
+		26DAC0131E6316670029DEE5 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0121E6316670029DEE5 /* ImageCell.swift */; };
+		26DAC0161E6318900029DEE5 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; };
+		26DAC0171E6318900029DEE5 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +37,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		26DAC0181E6318900029DEE5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				26DAC0171E6318900029DEE5 /* Kingfisher.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		26DABFDF1E6312620029DEE5 /* RTPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DABFE21E6312620029DEE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +65,9 @@
 		26DABFFE1E6312620029DEE5 /* RTPhotoBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTPhotoBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DAC0021E6312620029DEE5 /* RTPhotoBrowserUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTPhotoBrowserUITests.swift; sourceTree = "<group>"; };
 		26DAC0041E6312620029DEE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectVC.swift; sourceTree = "<group>"; };
+		26DAC0121E6316670029DEE5 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		26DAC0151E6318900029DEE5 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26DAC0161E6318900029DEE5 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +99,7 @@
 		26DABFD61E6312610029DEE5 = {
 			isa = PBXGroup;
 			children = (
+				26DAC0151E6318900029DEE5 /* Kingfisher.framework */,
 				26DABFE11E6312620029DEE5 /* RTPhotoBrowser */,
 				26DABFF61E6312620029DEE5 /* RTPhotoBrowserTests */,
 				26DAC0011E6312620029DEE5 /* RTPhotoBrowserUITests */,
@@ -97,12 +120,14 @@
 		26DABFE11E6312620029DEE5 /* RTPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				26DAC0121E6316670029DEE5 /* ImageCell.swift */,
 				26DABFE21E6312620029DEE5 /* AppDelegate.swift */,
 				26DABFE41E6312620029DEE5 /* ViewController.swift */,
 				26DABFE61E6312620029DEE5 /* Main.storyboard */,
 				26DABFE91E6312620029DEE5 /* Assets.xcassets */,
 				26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */,
 				26DABFEE1E6312620029DEE5 /* Info.plist */,
+				26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */,
 			);
 			path = RTPhotoBrowser;
 			sourceTree = "<group>";
@@ -135,6 +160,8 @@
 				26DABFDB1E6312620029DEE5 /* Sources */,
 				26DABFDC1E6312620029DEE5 /* Frameworks */,
 				26DABFDD1E6312620029DEE5 /* Resources */,
+				26DAC0141E6318260029DEE5 /* ShellScript */,
+				26DAC0181E6318900029DEE5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,11 +284,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		26DAC0141E6318260029DEE5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		26DABFDB1E6312620029DEE5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26DAC0111E6316130029DEE5 /* PhotoSelectVC.swift in Sources */,
+				26DAC0131E6316670029DEE5 /* ImageCell.swift in Sources */,
 				26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */,
 				26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */,
 			);
@@ -414,6 +460,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = RTPhotoBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
@@ -427,6 +477,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = RTPhotoBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
@@ -512,6 +566,7 @@
 				26DAC0091E6312620029DEE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		26DAC00A1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +575,7 @@
 				26DAC00C1E6312620029DEE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		26DAC00D1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +584,7 @@
 				26DAC00F1E6312620029DEE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

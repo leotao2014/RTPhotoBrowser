@@ -8,18 +8,55 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+let kReuseID = "reuseID";
 
+class ViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        setup();
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func setup() {
+        self.automaticallyAdjustsScrollViewInsets = false;
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: kReuseID);
     }
+}
 
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: kReuseID)!;
+        
+        switch indexPath.row {
+        case 0:
+            cell.textLabel?.text = "NetworkImage";
+        case 1:
+            cell.textLabel?.text = "LocalImage"
+        default:
+            break;
+        }
+        
+        return cell;
+    }
+}
 
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            let dis = PhotoSelectVC();
+            self.navigationController?.pushViewController(dis, animated: true);
+        case 1:
+            break;
+        default:
+            break;
+        }
+    }
 }
 

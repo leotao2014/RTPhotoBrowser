@@ -7,14 +7,22 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PhotoSelectVC: UIViewController {
-    var photos = [String]();
+    var photos = [RTPhotoModel]();
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup();
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated);
+        
+        ImageCache.default.clearMemoryCache();
+        
     }
     
     func setup() {
@@ -41,7 +49,13 @@ class PhotoSelectVC: UIViewController {
                     "http://images-10038599.cos.myqcloud.com/QQ20161015-0.png",
                     "http://images-10038599.cos.myqcloud.com/QQ20161015-1.png"];
         
-        self.photos = urls;
+        
+        for url in urls {
+            let model = RTPhotoModel();
+            model.bigPicURL = url;
+            photos.append(model);
+        }
+        
     }
     
     deinit {
@@ -77,7 +91,7 @@ extension PhotoSelectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "image", for: indexPath) as! ImageCell;
         let photo = self.photos[indexPath.item];
-        cell.imageUrl = photo;
+        cell.imageUrl = photo.bigPicURL!;
         
         return cell;
     }

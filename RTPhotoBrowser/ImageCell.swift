@@ -13,7 +13,7 @@ class ImageCell: UICollectionViewCell {
     let imageView = UIImageView();
     var imageUrl:String = "" {
         didSet {
-            imageView.kf.setImage(with: URL(string: imageUrl));
+            imageView.kf.setImage(with: URL(string:imageUrl), placeholder: nil, options: [], progressBlock: nil, completionHandler: nil);
         }
     }
     

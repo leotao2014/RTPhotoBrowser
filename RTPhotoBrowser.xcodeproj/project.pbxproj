@@ -1,0 +1,535 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE21E6312620029DEE5 /* AppDelegate.swift */; };
+		26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE41E6312620029DEE5 /* ViewController.swift */; };
+		26DABFE81E6312620029DEE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26DABFE61E6312620029DEE5 /* Main.storyboard */; };
+		26DABFEA1E6312620029DEE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26DABFE91E6312620029DEE5 /* Assets.xcassets */; };
+		26DABFED1E6312620029DEE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */; };
+		26DABFF81E6312620029DEE5 /* RTPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFF71E6312620029DEE5 /* RTPhotoBrowserTests.swift */; };
+		26DAC0031E6312620029DEE5 /* RTPhotoBrowserUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0021E6312620029DEE5 /* RTPhotoBrowserUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		26DABFF41E6312620029DEE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DABFD71E6312610029DEE5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 26DABFDE1E6312620029DEE5;
+			remoteInfo = RTPhotoBrowser;
+		};
+		26DABFFF1E6312620029DEE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26DABFD71E6312610029DEE5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 26DABFDE1E6312620029DEE5;
+			remoteInfo = RTPhotoBrowser;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		26DABFDF1E6312620029DEE5 /* RTPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		26DABFE21E6312620029DEE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		26DABFE41E6312620029DEE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		26DABFE71E6312620029DEE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		26DABFE91E6312620029DEE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		26DABFEC1E6312620029DEE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		26DABFEE1E6312620029DEE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26DABFF31E6312620029DEE5 /* RTPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		26DABFF71E6312620029DEE5 /* RTPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTPhotoBrowserTests.swift; sourceTree = "<group>"; };
+		26DABFF91E6312620029DEE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26DABFFE1E6312620029DEE5 /* RTPhotoBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTPhotoBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		26DAC0021E6312620029DEE5 /* RTPhotoBrowserUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTPhotoBrowserUITests.swift; sourceTree = "<group>"; };
+		26DAC0041E6312620029DEE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		26DABFDC1E6312620029DEE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26DABFF01E6312620029DEE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26DABFFB1E6312620029DEE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		26DABFD61E6312610029DEE5 = {
+			isa = PBXGroup;
+			children = (
+				26DABFE11E6312620029DEE5 /* RTPhotoBrowser */,
+				26DABFF61E6312620029DEE5 /* RTPhotoBrowserTests */,
+				26DAC0011E6312620029DEE5 /* RTPhotoBrowserUITests */,
+				26DABFE01E6312620029DEE5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		26DABFE01E6312620029DEE5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				26DABFDF1E6312620029DEE5 /* RTPhotoBrowser.app */,
+				26DABFF31E6312620029DEE5 /* RTPhotoBrowserTests.xctest */,
+				26DABFFE1E6312620029DEE5 /* RTPhotoBrowserUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		26DABFE11E6312620029DEE5 /* RTPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				26DABFE21E6312620029DEE5 /* AppDelegate.swift */,
+				26DABFE41E6312620029DEE5 /* ViewController.swift */,
+				26DABFE61E6312620029DEE5 /* Main.storyboard */,
+				26DABFE91E6312620029DEE5 /* Assets.xcassets */,
+				26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */,
+				26DABFEE1E6312620029DEE5 /* Info.plist */,
+			);
+			path = RTPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		26DABFF61E6312620029DEE5 /* RTPhotoBrowserTests */ = {
+			isa = PBXGroup;
+			children = (
+				26DABFF71E6312620029DEE5 /* RTPhotoBrowserTests.swift */,
+				26DABFF91E6312620029DEE5 /* Info.plist */,
+			);
+			path = RTPhotoBrowserTests;
+			sourceTree = "<group>";
+		};
+		26DAC0011E6312620029DEE5 /* RTPhotoBrowserUITests */ = {
+			isa = PBXGroup;
+			children = (
+				26DAC0021E6312620029DEE5 /* RTPhotoBrowserUITests.swift */,
+				26DAC0041E6312620029DEE5 /* Info.plist */,
+			);
+			path = RTPhotoBrowserUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		26DABFDE1E6312620029DEE5 /* RTPhotoBrowser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26DAC0071E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowser" */;
+			buildPhases = (
+				26DABFDB1E6312620029DEE5 /* Sources */,
+				26DABFDC1E6312620029DEE5 /* Frameworks */,
+				26DABFDD1E6312620029DEE5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RTPhotoBrowser;
+			productName = RTPhotoBrowser;
+			productReference = 26DABFDF1E6312620029DEE5 /* RTPhotoBrowser.app */;
+			productType = "com.apple.product-type.application";
+		};
+		26DABFF21E6312620029DEE5 /* RTPhotoBrowserTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26DAC00A1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserTests" */;
+			buildPhases = (
+				26DABFEF1E6312620029DEE5 /* Sources */,
+				26DABFF01E6312620029DEE5 /* Frameworks */,
+				26DABFF11E6312620029DEE5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				26DABFF51E6312620029DEE5 /* PBXTargetDependency */,
+			);
+			name = RTPhotoBrowserTests;
+			productName = RTPhotoBrowserTests;
+			productReference = 26DABFF31E6312620029DEE5 /* RTPhotoBrowserTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		26DABFFD1E6312620029DEE5 /* RTPhotoBrowserUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26DAC00D1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserUITests" */;
+			buildPhases = (
+				26DABFFA1E6312620029DEE5 /* Sources */,
+				26DABFFB1E6312620029DEE5 /* Frameworks */,
+				26DABFFC1E6312620029DEE5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				26DAC0001E6312620029DEE5 /* PBXTargetDependency */,
+			);
+			name = RTPhotoBrowserUITests;
+			productName = RTPhotoBrowserUITests;
+			productReference = 26DABFFE1E6312620029DEE5 /* RTPhotoBrowserUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		26DABFD71E6312610029DEE5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = leotao;
+				TargetAttributes = {
+					26DABFDE1E6312620029DEE5 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 2ASFUBQX4V;
+						ProvisioningStyle = Automatic;
+					};
+					26DABFF21E6312620029DEE5 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 2ASFUBQX4V;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 26DABFDE1E6312620029DEE5;
+					};
+					26DABFFD1E6312620029DEE5 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 2ASFUBQX4V;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 26DABFDE1E6312620029DEE5;
+					};
+				};
+			};
+			buildConfigurationList = 26DABFDA1E6312610029DEE5 /* Build configuration list for PBXProject "RTPhotoBrowser" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 26DABFD61E6312610029DEE5;
+			productRefGroup = 26DABFE01E6312620029DEE5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				26DABFDE1E6312620029DEE5 /* RTPhotoBrowser */,
+				26DABFF21E6312620029DEE5 /* RTPhotoBrowserTests */,
+				26DABFFD1E6312620029DEE5 /* RTPhotoBrowserUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		26DABFDD1E6312620029DEE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26DABFED1E6312620029DEE5 /* LaunchScreen.storyboard in Resources */,
+				26DABFEA1E6312620029DEE5 /* Assets.xcassets in Resources */,
+				26DABFE81E6312620029DEE5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26DABFF11E6312620029DEE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26DABFFC1E6312620029DEE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		26DABFDB1E6312620029DEE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */,
+				26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26DABFEF1E6312620029DEE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26DABFF81E6312620029DEE5 /* RTPhotoBrowserTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26DABFFA1E6312620029DEE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26DAC0031E6312620029DEE5 /* RTPhotoBrowserUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		26DABFF51E6312620029DEE5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 26DABFDE1E6312620029DEE5 /* RTPhotoBrowser */;
+			targetProxy = 26DABFF41E6312620029DEE5 /* PBXContainerItemProxy */;
+		};
+		26DAC0001E6312620029DEE5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 26DABFDE1E6312620029DEE5 /* RTPhotoBrowser */;
+			targetProxy = 26DABFFF1E6312620029DEE5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		26DABFE61E6312620029DEE5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				26DABFE71E6312620029DEE5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				26DABFEC1E6312620029DEE5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		26DAC0051E6312620029DEE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		26DAC0061E6312620029DEE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		26DAC0081E6312620029DEE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				INFOPLIST_FILE = RTPhotoBrowser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		26DAC0091E6312620029DEE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				INFOPLIST_FILE = RTPhotoBrowser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		26DAC00B1E6312620029DEE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				INFOPLIST_FILE = RTPhotoBrowserTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RTPhotoBrowser.app/RTPhotoBrowser";
+			};
+			name = Debug;
+		};
+		26DAC00C1E6312620029DEE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				INFOPLIST_FILE = RTPhotoBrowserTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RTPhotoBrowser.app/RTPhotoBrowser";
+			};
+			name = Release;
+		};
+		26DAC00E1E6312620029DEE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				INFOPLIST_FILE = RTPhotoBrowserUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = RTPhotoBrowser;
+			};
+			name = Debug;
+		};
+		26DAC00F1E6312620029DEE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				INFOPLIST_FILE = RTPhotoBrowserUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = RTPhotoBrowser;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		26DABFDA1E6312610029DEE5 /* Build configuration list for PBXProject "RTPhotoBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26DAC0051E6312620029DEE5 /* Debug */,
+				26DAC0061E6312620029DEE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26DAC0071E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26DAC0081E6312620029DEE5 /* Debug */,
+				26DAC0091E6312620029DEE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		26DAC00A1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26DAC00B1E6312620029DEE5 /* Debug */,
+				26DAC00C1E6312620029DEE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		26DAC00D1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26DAC00E1E6312620029DEE5 /* Debug */,
+				26DAC00F1E6312620029DEE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 26DABFD71E6312610029DEE5 /* Project object */;
+}

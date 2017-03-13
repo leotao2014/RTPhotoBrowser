@@ -70,16 +70,8 @@ class PhotoSelectVC: UIViewController {
 
 extension PhotoSelectVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as! ImageCell;
-//        let photo = self.photos[indexPath.item];
-//        photo.image = cell.imageView.image;
-//        photo.sourceFrame = collectionView.convert(cell.frame, to: UIApplication.shared.keyWindow);
-//        print(photo.sourceFrame);
-//        let gs = GSPhotoBrowser();
-//        gs.currentIndex = indexPath.item;
-//        gs.delegate = self;
-//        gs.presentStyle = .weibo;
-//        self.present(gs, animated: true, completion: nil);
+        let browser = RTPhotoBrowser();
+        self.present(browser, animated: true, completion: nil);
     }
 }
 
@@ -95,9 +87,9 @@ extension PhotoSelectVC: UICollectionViewDataSource {
         
         return cell;
     }
-    
-    
 }
+
+
 
 let margin:CGFloat = 10.0;
 extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {

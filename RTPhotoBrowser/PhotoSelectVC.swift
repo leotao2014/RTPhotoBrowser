@@ -71,6 +71,8 @@ class PhotoSelectVC: UIViewController {
 extension PhotoSelectVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let browser = RTPhotoBrowser();
+        browser.delegate = self;
+        
         self.present(browser, animated: true, completion: nil);
     }
 }
@@ -107,6 +109,16 @@ extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(10, 10, 0, 10);
+    }
+}
+
+extension PhotoSelectVC: RTPhotoBrowserDelegate {
+    func numberOfPhotosForBrowser() -> Int {
+        return self.photos.count;
+    }
+    
+    func photoForIndex(index: Int) -> RTPhotoModel {
+        return self.photos[index];
     }
 }
 

@@ -9,13 +9,34 @@
 import UIKit
 
 class RTImagePage: UIScrollView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    var indexLabel:UILabel = {
+        let label = UILabel();
+        label.font = UIFont.systemFont(ofSize: 70);
+        label.textColor = UIColor.white;
+        label.textAlignment = .center;
+        
+        return label;
+    }();
+    
+    var pageIndex:Int = 0 {
+        didSet {
+            indexLabel.text = String(pageIndex);
+        }
     }
-    */
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame);
+        
+        addSubview(indexLabel);
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews();
+        
+        indexLabel.frame = self.bounds;
+    }
 }

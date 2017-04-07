@@ -99,20 +99,34 @@ class RTPhotoBrowser: UIViewController {
             return;
         }
         
+        for page in self.visiblePages {
+            if page.pageIndex > rightIndex || page.pageIndex < leftIndex {
+                self.visiblePages.remove(page);
+                self.recyclePages.insert(page);
+            }
+        }
+      
         for i in leftIndex...rightIndex {
             if !pageExistAtIndex(index: i) {
-                if let page = dequePageFromRecycleSet() {   // 从缓存池中取出来
-                    page.pageIndex = i;
-                    page.frame = pageFrameAtIndex(index: i);
-                } else {    // 如果从缓存池中没有取出 则新建一个
-                    let page = RTImagePage();
-                    page.backgroundColor = UIColor.randomColor();
-                    page.pageIndex = i;
-                    page.frame = pageFrameAtIndex(index: i);
-                    self.container.addSubview(page);
-                    self.visiblePages.insert(page);
+                var page = dequePageFromRecycleSet();
+                if page == nil {
+                    print("从缓存池中取不出来了 leftIndex=\(leftIndex) rightIndex=\(rightIndex)");
+                    page = RTImagePage();
+                    page!.backgroundColor = UIColor.randomColor();
+                    self.container.addSubview(page!);
                 }
+                
+                page!.pageIndex = i;
+                page!.frame = pageFrameAtIndex(index: i);
+                self.visiblePages.insert(page!);
+                
             }
+        }
+        
+        
+        
+        if self.recyclePages.count > 1 {
+            self.recyclePages.removeFirst();
         }
     }
     

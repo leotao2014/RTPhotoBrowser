@@ -19,14 +19,28 @@ enum RTPhotoBrowserShowStyle {
     case weibo;
 }
 
-let gap:CGFloat = 10.0;
+let gap:CGFloat = 5.0;
 
 class RTPhotoBrowser: UIViewController {
+    
     var showStyle: RTPhotoBrowserShowStyle = .weibo;
     weak var delegate:RTPhotoBrowserDelegate?
     
     private var visiblePages:Set<RTImagePage> = Set();
     private var recyclePages:Set<RTImagePage> = Set();
+    var viewActive = false;
+    var currentIndex = 0;
+    var photoCounts:Int  {
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.numberOfPhotosForBrowser)) {
+                let photoCount = delegate.numberOfPhotosForBrowser();
+                return photoCount;
+            }
+        }
+        
+        return 0;
+    }
+    
     // MARK: 计算属性
     private var frameForContainer:CGRect {
         let rect = CGRect(x: -gap, y: 0, width: self.view.bounds.width + 2.0 * gap, height: self.view.bounds.height);
@@ -34,16 +48,10 @@ class RTPhotoBrowser: UIViewController {
     }
     
     private var contentSizeForContainer:CGSize {
-        if let delegate = self.delegate {
-            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.numberOfPhotosForBrowser)) {
-                let photoCount = delegate.numberOfPhotosForBrowser();
-                let contentSize = CGSize(width:  photoCount.rtFloatValue * frameForContainer.width, height: 0);
-                
-                return contentSize;
-            }
-        }
+        let photoCount = photoCounts;
+        let contentSize = CGSize(width:  photoCount.rtFloatValue * frameForContainer.width, height: 0);
         
-        return .zero;
+        return contentSize;
     }
     
     private lazy var container: UIScrollView = { [unowned self] in
@@ -76,6 +84,21 @@ class RTPhotoBrowser: UIViewController {
         layoutImagePages();
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+        
+        viewActive = true;
+    }
+    
+    deinit {
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+    
 // MARK:PrivateMethods
     private func commonSetup() {
         self.view.backgroundColor = UIColor.white;
@@ -85,15 +108,16 @@ class RTPhotoBrowser: UIViewController {
         self.container.frame = frameForContainer;
         self.container.contentSize = contentSizeForContainer;
         self.view.addSubview(self.container);
-        
-        
     }
     
     func layoutImagePages() {
-        let bufferDistance:CGFloat = 2;
+        let bufferDistance:CGFloat = gap > 0 ? 2 : 0;
         let width = self.container.bounds.width;
-        let leftIndex = ((self.container.bounds.minX + 1.rtFloatValue * gap - bufferDistance) / width).rtIntValue;
-        let rightIndex = ((self.container.bounds.maxX - 1.rtFloatValue * gap + bufferDistance) / width).rtIntValue;
+        let interval = 2.0 * gap - bufferDistance;
+        // 此处是2倍的gap
+        let leftIndex = ((self.container.bounds.minX + interval) / width).rtIntValue;
+        let rightIndex = ((self.container.bounds.maxX - interval) / width).rtIntValue;
+        
         let totalCount = self.delegate?.numberOfPhotosForBrowser() ?? 0;
         guard leftIndex >= 0 && rightIndex < totalCount else {
             return;
@@ -107,10 +131,9 @@ class RTPhotoBrowser: UIViewController {
         }
       
         for i in leftIndex...rightIndex {
-            if !pageExistAtIndex(index: i) {
-                var page = dequePageFromRecycleSet();
-                if page == nil {
-                    print("从缓存池中取不出来了 leftIndex=\(leftIndex) rightIndex=\(rightIndex)");
+            if !pageExistAtIndex(index: i) {    // 当前页上没有page则执行取page逻辑
+                var page = dequePageFromRecycleSet();   // 先从缓存池中取
+                if page == nil {    // 没有取出则新建一个
                     page = RTImagePage();
                     page!.backgroundColor = UIColor.randomColor();
                     self.container.addSubview(page!);
@@ -119,14 +142,7 @@ class RTPhotoBrowser: UIViewController {
                 page!.pageIndex = i;
                 page!.frame = pageFrameAtIndex(index: i);
                 self.visiblePages.insert(page!);
-                
             }
-        }
-        
-        
-        
-        if self.recyclePages.count > 1 {
-            self.recyclePages.removeFirst();
         }
     }
     
@@ -154,21 +170,27 @@ class RTPhotoBrowser: UIViewController {
             return nil;
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.dismiss(animated: true, completion: nil);
+    func didStartViewPage(atIndex index:Int) {
+        print(#function, index);
     }
 }
 
 extension RTPhotoBrowser: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print(scrollView.contentOffset.x);
-        layoutImagePages();
+        if viewActive {
+            layoutImagePages();
+            
+            var index = (scrollView.contentOffset.x / scrollView.bounds.width).rtIntValue;
+            index = index < 0 ? 0 : index;
+            index = index > photoCounts - 1 ? photoCounts - 1 : index;
+            
+            let previousIndex = currentIndex;
+            currentIndex = index;
+            if previousIndex != currentIndex {
+                didStartViewPage(atIndex: currentIndex);
+            }
+        }
     }
 }
 

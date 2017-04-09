@@ -24,6 +24,15 @@ class RTImagePage: UIScrollView {
         }
     }
     
+    var photo:RTPhotoModel? {
+        didSet {
+            if let photo = photo {
+                RTImageFetcher.fetcher.fetchImage(photo: photo);
+            }
+        }
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         
@@ -38,5 +47,17 @@ class RTImagePage: UIScrollView {
         super.layoutSubviews();
         
         indexLabel.frame = self.bounds;
+    }
+    
+    func setImage(image: UIImage) {
+        print(#function);
+    }
+    
+    func imageFailLoad(error:Error?) {
+        print(#function);
+    }
+    
+    func updateImageLoadProgress(progress:CGFloat) {
+        print("updateImageLoadProgress\(progress)");
     }
 }

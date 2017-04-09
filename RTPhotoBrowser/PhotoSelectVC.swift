@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 class PhotoSelectVC: UIViewController {
-    var photos = [RTPhotoModel]();
+    var photos = [PhotoModel]();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class PhotoSelectVC: UIViewController {
         
         
         for url in urls {
-            let model = RTPhotoModel();
+            let model = PhotoModel();
             model.bigPicURL = url;
             photos.append(model);
         }
@@ -112,13 +112,14 @@ extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PhotoSelectVC: RTPhotoBrowserDelegate {
+extension PhotoSelectVC: RTPhotoBrowserDelegate {    
     func numberOfPhotosForBrowser() -> Int {
         return self.photos.count;
     }
     
-    func photoForIndex(index: Int) -> RTPhotoModel {
-        return self.photos[index];
+    
+    func photoForIndex<T>(index: Int) -> T where T : RTPhotoModelDelegate {
+        return self.photos[index] as! T;
     }
 }
 

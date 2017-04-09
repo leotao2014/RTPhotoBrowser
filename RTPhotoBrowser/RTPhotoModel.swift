@@ -8,8 +8,21 @@
 
 import UIKit
 
+enum RTImageDownloadPriority {
+    case high
+    case low
+    case cancel
+}
+
+protocol RTPhotoModelDelegate: NSObjectProtocol {
+    var thumbPicURL:String? {get set};
+    var bigPicURL:String? {get set};
+}
+
 class RTPhotoModel: NSObject {
     var thumbPicURL:String?     // 缩略图地址
-    var middlePicURL:String?    // 中图地址
     var bigPicURL:String?       // 大图或原图地址
+    
+    var downloadPriority = RTImageDownloadPriority.high
+    var index:Int = 0;
 }

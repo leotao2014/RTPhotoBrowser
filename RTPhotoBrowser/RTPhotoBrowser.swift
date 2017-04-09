@@ -8,10 +8,10 @@
 
 import UIKit
 
-@objc protocol RTPhotoBrowserDelegate: NSObjectProtocol {
+protocol RTPhotoBrowserDelegate: class {
     func numberOfPhotosForBrowser() -> Int;
-    func photoForIndex(index: Int) -> RTPhotoModel;
-    @objc optional func sourceImageViewForIndex(index: Int) -> UIImageView?
+    func photoForIndex<T>(index: Int) -> T where T:RTPhotoModelDelegate;
+//    @objc optional func sourceImageViewForIndex(index: Int) -> UIImageView?
 }
 
 enum RTPhotoBrowserShowStyle {
@@ -32,14 +32,17 @@ class RTPhotoBrowser: UIViewController {
     var currentIndex = 0;
     var photoCounts:Int  {
         if let delegate = self.delegate {
-            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.numberOfPhotosForBrowser)) {
-                let photoCount = delegate.numberOfPhotosForBrowser();
-                return photoCount;
-            }
+            
+//            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.numberOfPhotosForBrowser)) {
+//                let photoCount = delegate.numberOfPhotosForBrowser();
+//                return photoCount;
+//            }
         }
         
         return 0;
     }
+    
+    
     
     // MARK: 计算属性
     private var frameForContainer:CGRect {
@@ -50,7 +53,6 @@ class RTPhotoBrowser: UIViewController {
     private var contentSizeForContainer:CGSize {
         let photoCount = photoCounts;
         let contentSize = CGSize(width:  photoCount.rtFloatValue * frameForContainer.width, height: 0);
-        
         return contentSize;
     }
     
@@ -88,9 +90,19 @@ class RTPhotoBrowser: UIViewController {
         super.viewDidAppear(animated);
         
         viewActive = true;
+        
     }
     
     deinit {
+        
+    }
+    
+    enum Result<T> {
+        case Success(T)
+        case Failure(T)
+    }
+    
+    func get(completionHandler: (Result<[RTPhotoModelDelegate]>) -> Void) {
         
     }
     
@@ -102,6 +114,8 @@ class RTPhotoBrowser: UIViewController {
 // MARK:PrivateMethods
     private func commonSetup() {
         self.view.backgroundColor = UIColor.white;
+        RTImageFetcher.fetcher.delegate = self;
+        
     }
     
     private func setupSubviews() {
@@ -139,21 +153,41 @@ class RTPhotoBrowser: UIViewController {
                     self.container.addSubview(page!);
                 }
                 
-                page!.pageIndex = i;
-                page!.frame = pageFrameAtIndex(index: i);
+                
                 self.visiblePages.insert(page!);
+                page!.pageIndex = i;
+                page!.photo = photoAtIndex(index: i);
+                page!.photo?.index = i;
+                page!.frame = pageFrameAtIndex(index: i);
+                
             }
         }
     }
     
     func pageExistAtIndex(index:Int) -> Bool {
+        let page = pageAtIndex(index: index);
+        
+        return page != nil;
+    }
+    
+    func pageAtIndex(index:Int) -> RTImagePage? {
         for page in self.visiblePages {
             if page.pageIndex == index {
-                return true;
+                return page;
             }
         }
         
-        return false;
+        return nil;
+    }
+    
+    func photoAtIndex(index:Int) -> RTPhotoModel? {
+        if let delegate = self.delegate {
+//            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.photoForIndex(index:))) {
+//                return delegate.photoForIndex(index:index);
+//            }
+        }
+        
+        return nil;
     }
     
     func pageFrameAtIndex(index:Int) -> CGRect {
@@ -173,6 +207,8 @@ class RTPhotoBrowser: UIViewController {
     
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
+        
+        
     }
 }
 
@@ -190,6 +226,29 @@ extension RTPhotoBrowser: UIScrollViewDelegate {
             if previousIndex != currentIndex {
                 didStartViewPage(atIndex: currentIndex);
             }
+        }
+    }
+}
+
+extension RTPhotoBrowser: RTImageFetchDelegate {
+    func imageDidLoaded(image: UIImage, photoModel: RTPhotoModel) {
+        print("image下载完毕");
+        if let page = pageAtIndex(index: photoModel.index) {
+            page.setImage(image: image);
+        }
+    }
+    
+    func imageDidFailLoad(error: Error?, photoModel: RTPhotoModel) {
+        print("image下载失败");
+        if let page = pageAtIndex(index: photoModel.index) {
+            page.imageFailLoad(error: error);
+        }
+    }
+    
+    func imageLoadingUpdateProgress(progress: CGFloat, photoModel: RTPhotoModel) {
+        print("image正在下载");
+        if let page = pageAtIndex(index: photoModel.index) {
+            page.updateImageLoadProgress(progress: progress);
         }
     }
 }

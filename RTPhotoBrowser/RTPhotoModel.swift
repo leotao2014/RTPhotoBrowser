@@ -25,4 +25,9 @@ class RTPhotoModel: NSObject {
     
     var downloadPriority = RTImageDownloadPriority.high
     var index:Int = 0;
+    
+    init(model:RTPhotoModelDelegate) {
+        self.thumbPicURL = model.thumbPicURL;
+        self.bigPicURL = model.bigPicURL;
+    }
 }

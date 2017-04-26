@@ -8,15 +8,24 @@
 
 import UIKit
 
-protocol RTPhotoBrowserDelegate: class {
+protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     func numberOfPhotosForBrowser() -> Int;
-    func photoForIndex<T>(index: Int) -> T where T:RTPhotoModelDelegate;
-//    @objc optional func sourceImageViewForIndex(index: Int) -> UIImageView?
+    func photoForIndex(index: Int) -> RTPhotoModelDelegate;
+    // optional
+    func sourceImageViewForIndex(index: Int) -> UIImageView?
 }
+
+extension RTPhotoBrowserDelegate {
+    func sourceImageViewForIndex(index: Int) -> UIImageView? {
+        return nil;
+    }
+}
+
 
 enum RTPhotoBrowserShowStyle {
     case normal;
     case weibo;
+    case twitter;
 }
 
 let gap:CGFloat = 5.0;
@@ -24,6 +33,7 @@ let gap:CGFloat = 5.0;
 class RTPhotoBrowser: UIViewController {
     
     var showStyle: RTPhotoBrowserShowStyle = .weibo;
+    var photoArray:[RTPhotoModel] = [];
     weak var delegate:RTPhotoBrowserDelegate?
     
     private var visiblePages:Set<RTImagePage> = Set();
@@ -32,11 +42,8 @@ class RTPhotoBrowser: UIViewController {
     var currentIndex = 0;
     var photoCounts:Int  {
         if let delegate = self.delegate {
-            
-//            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.numberOfPhotosForBrowser)) {
-//                let photoCount = delegate.numberOfPhotosForBrowser();
-//                return photoCount;
-//            }
+            let photoCount = delegate.numberOfPhotosForBrowser();
+            return photoCount;
         }
         
         return 0;
@@ -181,10 +188,15 @@ class RTPhotoBrowser: UIViewController {
     }
     
     func photoAtIndex(index:Int) -> RTPhotoModel? {
-        if let delegate = self.delegate {
-//            if delegate.responds(to: #selector(RTPhotoBrowserDelegate.photoForIndex(index:))) {
-//                return delegate.photoForIndex(index:index);
-//            }
+        if index < self.photoArray.count {
+            return self.photoArray[index];
+        } else {
+            if let delegate = self.delegate {
+                let model = delegate.photoForIndex(index: index);
+                let photoModel = RTPhotoModel(model: model);
+                self.photoArray.append(photoModel);
+                return photoModel;
+            }
         }
         
         return nil;
@@ -241,7 +253,7 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
     func imageDidFailLoad(error: Error?, photoModel: RTPhotoModel) {
         print("image下载失败");
         if let page = pageAtIndex(index: photoModel.index) {
-            page.imageFailLoad(error: error);
+            page.imageLoadFail(error: error);
         }
     }
     

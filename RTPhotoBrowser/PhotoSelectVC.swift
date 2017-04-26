@@ -118,22 +118,7 @@ extension PhotoSelectVC: RTPhotoBrowserDelegate {
     }
     
     
-    func photoForIndex<T>(index: Int) -> T where T : RTPhotoModelDelegate {
-        return self.photos[index] as! T;
+    func photoForIndex(index: Int) -> RTPhotoModelDelegate {
+        return self.photos[index];
     }
 }
-
-//extension PhotoSelectVC: GSPhotoBrowserDelegate {
-//    func numberOfPhotos() -> Int {
-//        return self.photos.count;
-//    }
-//    
-//    func photoForIndex(index:Int) -> GSPhoto {
-//        return self.photos[index];
-//    }
-//    
-//    func sourceImageViewFrameForIndex(index: Int) -> CGRect {
-//        let photo = self.photos[index];
-//        return photo.sourceFrame;
-//    }
-//}

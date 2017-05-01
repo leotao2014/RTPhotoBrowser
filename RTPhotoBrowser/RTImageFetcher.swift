@@ -51,55 +51,31 @@ class RTImageFetcher: NSObject {
     }
     
     func fetchImageFromNetwork(photo:RTPhotoModel, url:URL) {
-        var tasksNeedMove = [RTPhotoModel]();
-        // 清空所有不需要下载的任务
-        self.taskDict.forEach { (model, task) in
-            if model.downloadPriority == .cancel {
-                task.cancel();
-                tasksNeedMove.append(model);
+        KingfisherManager.shared.retrieveImage(with: url, options: [.backgroundDecode], progressBlock: { (received, total) in
+            let progress = CGFloat(received) / CGFloat(total);
+            if let delegate = self.delegate {
+                if delegate.responds(to: #selector(RTImageFetchDelegate.imageLoadingUpdateProgress(progress:photoModel:))) {
+                    delegate.imageLoadingUpdateProgress(progress: progress, photoModel: photo);
+                }
             }
-        }
-        
-        tasksNeedMove.forEach { (model) in
-            self.taskDict.removeValue(forKey: model);
-        }
-        
-        // 查看任务是否已存在。存在说明还没下完则直接返回
-        var task = self.taskDict[photo];
-        if task != nil {    // 已经处于正在下载的状态了则直接return
-            return;
-        } else {
-            // 此处一定要设置后台解码图片。否则加载大图片时会卡顿
-            task = KingfisherManager.shared.retrieveImage(with: url, options: [.backgroundDecode], progressBlock: { (received, total) in
-                let progress = CGFloat(received) / CGFloat(total);
-                if let delegate = self.delegate {
-                    if delegate.responds(to: #selector(RTImageFetchDelegate.imageLoadingUpdateProgress(progress:photoModel:))) {
-                        delegate.imageLoadingUpdateProgress(progress: progress, photoModel: photo);
-                    }
-                }
-            }, completionHandler: { (image, error, type, url) in
-                self.taskDict.removeValue(forKey: photo);
-                
-                guard let image = image else {
-                    if let delegate = self.delegate {
-                        if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidFailLoad(error:photoModel:))) {
-                            delegate.imageDidFailLoad(error: error, photoModel: photo);
-                        }
-                    }
-                    return;
-                }
-                
-                if let delegate = self.delegate {
-                    if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidLoaded(image:photoModel:))) {
-                        delegate.imageDidLoaded(image: image, photoModel: photo);
-                    }
-                }
-            });
+        }, completionHandler: { (image, error, type, url) in
+            self.taskDict.removeValue(forKey: photo);
             
-            if let task = task {
-                self.taskDict[photo] = task;
+            guard let image = image else {
+                if let delegate = self.delegate {
+                    if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidFailLoad(error:photoModel:))) {
+                        delegate.imageDidFailLoad(error: error, photoModel: photo);
+                    }
+                }
+                return;
             }
-        }
+            
+            if let delegate = self.delegate {
+                if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidLoaded(image:photoModel:))) {
+                    delegate.imageDidLoaded(image: image, photoModel: photo);
+                }
+            }
+        });
     }
     
 }

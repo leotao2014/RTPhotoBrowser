@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     func numberOfPhotosForBrowser() -> Int;
@@ -36,8 +37,8 @@ class RTPhotoBrowser: UIViewController {
     var photoArray:[RTPhotoModel] = [];
     weak var delegate:RTPhotoBrowserDelegate?
     
-    private var visiblePages:Set<RTImagePage> = Set();
-    private var recyclePages:Set<RTImagePage> = Set();
+    fileprivate var visiblePages:Set<RTImagePage> = Set();
+    fileprivate var recyclePages:Set<RTImagePage> = Set();
     var viewActive = false;
     var currentIndex = 0;
     var photoCounts:Int  {
@@ -101,7 +102,7 @@ class RTPhotoBrowser: UIViewController {
     }
     
     deinit {
-        
+        ImageCache.default.clearMemoryCache();
     }
     
     enum Result<T> {
@@ -156,19 +157,28 @@ class RTPhotoBrowser: UIViewController {
                 var page = dequePageFromRecycleSet();   // 先从缓存池中取
                 if page == nil {    // 没有取出则新建一个
                     page = RTImagePage();
-                    page!.backgroundColor = UIColor.randomColor();
                     self.container.addSubview(page!);
+                } else {
+                    page!.prepareForReuse();
                 }
                 
-                
+                // 在设置page之前进行插入动作 因为在page!.photo = photoAtIndex(index: i);这一步操作时进行了获取图片操作
+                // 如果获取图片在self.visiblePages.insert(page!);之前完成的话由于在self.visiblePages找不到对应index的page会导致
+                // 图片不会进行赋值操作也就是不显示图片
                 self.visiblePages.insert(page!);
-                page!.pageIndex = i;
-                page!.photo = photoAtIndex(index: i);
-                page!.photo?.index = i;
-                page!.frame = pageFrameAtIndex(index: i);
-                
+                configurePage(page: page!, atIndex: i);
             }
         }
+    }
+    
+    func configurePage(page:RTImagePage, atIndex index:Int) {
+        page.singleTapHandler = { [weak self] in
+            self?.dismiss(animated: true, completion: nil);
+        }
+        
+        page.pageIndex = index;
+        page.photo = photoAtIndex(index: index);
+        page.frame = pageFrameAtIndex(index: index);
     }
     
     func pageExistAtIndex(index:Int) -> Bool {
@@ -194,6 +204,7 @@ class RTPhotoBrowser: UIViewController {
             if let delegate = self.delegate {
                 let model = delegate.photoForIndex(index: index);
                 let photoModel = RTPhotoModel(model: model);
+                photoModel.index = index;
                 self.photoArray.append(photoModel);
                 return photoModel;
             }
@@ -247,7 +258,14 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
         print("image下载完毕");
         if let page = pageAtIndex(index: photoModel.index) {
             page.setImage(image: image);
+        } else {
+            print("photoModel.index = \(photoModel.index)");
+            self.visiblePages.forEach({ (page) in
+                print("self.visiblePages -- page.index = \(page.pageIndex)");
+            })
         }
+        
+        
     }
     
     func imageDidFailLoad(error: Error?, photoModel: RTPhotoModel) {

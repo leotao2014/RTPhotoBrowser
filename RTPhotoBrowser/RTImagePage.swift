@@ -11,23 +11,7 @@ import UIKit
 class RTImagePage: UIScrollView {
     var imageView: UIImageView = UIImageView();
     var singleTapHandler:(()->Void)?;
-    
-    var indexLabel:UILabel = {
-        let label = UILabel();
-        label.font = UIFont.systemFont(ofSize: 70);
-        label.textColor = UIColor.white;
-        label.textAlignment = .center;
-        
-        return label;
-    }();
-    
-    var pageIndex:Int = 0 {
-        didSet {
-            indexLabel.text = String(pageIndex);
-        }
-    }
-    
-    
+    var pageIndex:Int = 0;
     
     var photo:RTPhotoModel? {
         didSet {
@@ -40,7 +24,8 @@ class RTImagePage: UIScrollView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        addSubview(indexLabel);
+        addSubview(imageView);
+        self.backgroundColor = UIColor.black;
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,15 +35,25 @@ class RTImagePage: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews();
         
-        indexLabel.frame = self.bounds;
+        setImageViewFrame();
+    }
+    
+    func prepareForReuse() {
+        self.imageView.image = nil;
     }
     
     func setImage(image: UIImage) {
         print(#function);
+        self.imageView.image = image;
+        setNeedsLayout();
     }
     
-    func setImageViewFrame(image:UIImage?) {
-        guard let image = image else {
+    func setImageViewFrame() {
+        guard let image = self.imageView.image else {
+            return;
+        }
+        
+        guard self.bounds.width != 0 && self.bounds.height != 0 else {
             return;
         }
         

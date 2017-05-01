@@ -34,14 +34,15 @@ let gap:CGFloat = 5.0;
 class RTPhotoBrowser: UIViewController {
     
     var showStyle: RTPhotoBrowserShowStyle = .weibo;
-    var photoArray:[RTPhotoModel] = [];
+    var currentIndex = 0;
     weak var delegate:RTPhotoBrowserDelegate?
     
+    fileprivate var photoArray:[RTPhotoModel] = [];
     fileprivate var visiblePages:Set<RTImagePage> = Set();
     fileprivate var recyclePages:Set<RTImagePage> = Set();
-    var viewActive = false;
-    var currentIndex = 0;
-    var photoCounts:Int  {
+    fileprivate var viewActive = false;
+    
+    fileprivate var photoCounts:Int  {
         if let delegate = self.delegate {
             let photoCount = delegate.numberOfPhotosForBrowser();
             return photoCount;
@@ -53,18 +54,18 @@ class RTPhotoBrowser: UIViewController {
     
     
     // MARK: 计算属性
-    private var frameForContainer:CGRect {
+    fileprivate var frameForContainer:CGRect {
         let rect = CGRect(x: -gap, y: 0, width: self.view.bounds.width + 2.0 * gap, height: self.view.bounds.height);
         return rect;
     }
     
-    private var contentSizeForContainer:CGSize {
+    fileprivate var contentSizeForContainer:CGSize {
         let photoCount = photoCounts;
         let contentSize = CGSize(width:  photoCount.rtFloatValue * frameForContainer.width, height: 0);
         return contentSize;
     }
     
-    private lazy var container: UIScrollView = { [unowned self] in
+    fileprivate lazy var container: UIScrollView = { [unowned self] in
         let scrollView = UIScrollView();
         scrollView.isPagingEnabled = true;
         scrollView.showsHorizontalScrollIndicator = false;
@@ -98,7 +99,6 @@ class RTPhotoBrowser: UIViewController {
         super.viewDidAppear(animated);
         
         viewActive = true;
-        
     }
     
     deinit {
@@ -120,6 +120,10 @@ class RTPhotoBrowser: UIViewController {
     private func setupSubviews() {
         self.container.frame = frameForContainer;
         self.container.contentSize = contentSizeForContainer;
+        if currentIndex != 0 {
+            self.container.setContentOffset(contentOffset(atIndex: currentIndex), animated: false);
+        }
+        
         self.view.addSubview(self.container);
     }
     
@@ -172,8 +176,8 @@ class RTPhotoBrowser: UIViewController {
         }
         
         page.pageIndex = index;
-        page.photo = photoAtIndex(index: index);
         page.frame = pageFrameAtIndex(index: index);
+        page.photo = photoAtIndex(index: index);
     }
     
     func pageExistAtIndex(index:Int) -> Bool {
@@ -204,6 +208,10 @@ class RTPhotoBrowser: UIViewController {
         }
         
         return nil;
+    }
+    
+    func contentOffset(atIndex: Int) -> CGPoint {
+        return CGPoint(x: currentIndex.rtFloatValue * container.frame.width, y: 0);
     }
     
     func pageFrameAtIndex(index:Int) -> CGRect {

@@ -60,18 +60,14 @@ class PhotoSelectVC: UIViewController {
     deinit {
         print("dealloc - PhotoSelectVC");
     }
-    
-//    func dismissAction() {
-//        ImageCache.default.clearMemoryCache();
-//        self.dismiss(animated: true, completion: nil);
-//    }
 }
 
 extension PhotoSelectVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function);
         let browser = RTPhotoBrowser();
         browser.delegate = self;
-        
+        browser.currentIndex = indexPath.item;
         self.present(browser, animated: true, completion: nil);
     }
 }

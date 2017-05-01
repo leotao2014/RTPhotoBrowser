@@ -25,6 +25,7 @@ class RTImagePage: UIScrollView {
         super.init(frame: frame);
         
         addSubview(imageView);
+        self.delegate = self;
         self.backgroundColor = UIColor.black;
     }
     
@@ -32,11 +33,12 @@ class RTImagePage: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews();
-        
-        setImageViewFrame();
-    }
+    // 在放大图片时会不断调用layoutSubViews方法
+//    override func layoutSubviews() {
+//        super.layoutSubviews();
+//        
+//        
+//    }
     
     func prepareForReuse() {
         self.imageView.image = nil;
@@ -45,7 +47,8 @@ class RTImagePage: UIScrollView {
     func setImage(image: UIImage) {
         print(#function);
         self.imageView.image = image;
-        setNeedsLayout();
+        setupZoomScale();
+        setImageViewFrame();
     }
     
     func setImageViewFrame() {
@@ -98,7 +101,7 @@ class RTImagePage: UIScrollView {
     }
     
     func setupZoomScale() {
-        let width = self.frame.size.width < self.frame.size.height ? self.frame.size.width : self.frame.size.height;
+        let width = min(self.frame.width, self.frame.height);
         self.maximumZoomScale = (((self.imageView.image!.size.width) / UIScreen.main.scale) * 3) / width;
     }
 
@@ -108,7 +111,7 @@ class RTImagePage: UIScrollView {
             switch touch.tapCount {
             case 1:
                 // 延迟单击操作
-                self.perform(#selector(handleSingleTap(touch:)), with: touch, afterDelay: 0.2);
+                self.perform(#selector(handleSingleTap(touch:)), with: touch, afterDelay: 0.3);
             case 2:
                 // 如果是双击操作。则双击方法会先执行。并在双击方法里取消单击操作
                 handleDoubleTap(touch: touch);

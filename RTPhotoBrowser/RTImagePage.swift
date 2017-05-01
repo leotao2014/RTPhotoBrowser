@@ -99,8 +99,8 @@ class RTImagePage: UIScrollView {
         self.contentSize = self.imageView.frame.size;
         var x = (self.frame.size.width - width) * 0.5;
         var y = (self.frame.size.height - height) * 0.5;
-        x = x < 0 ? 0 : x;
-        y = y < 0 ? 0 : y;
+        x = max(0, x);
+        y = max(0, y);
         
         self.imageView.frame = CGRect(x: x, y: y, width: self.imageView.frame.width, height: self.imageView.frame.height);
     }

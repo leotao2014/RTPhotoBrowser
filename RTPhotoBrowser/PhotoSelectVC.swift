@@ -64,7 +64,6 @@ class PhotoSelectVC: UIViewController {
 
 extension PhotoSelectVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function);
         let browser = RTPhotoBrowser();
         browser.delegate = self;
         browser.currentIndex = indexPath.item;

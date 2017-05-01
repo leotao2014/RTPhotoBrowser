@@ -195,9 +195,12 @@ class RTPhotoBrowser: UIViewController {
     }
     
     func photoAtIndex(index:Int) -> RTPhotoModel? {
-        if index < self.photoArray.count {
-            return self.photoArray[index];
-        } else {
+        let result = self.photoArray.filter { (model) -> Bool in
+            return model.index == index;
+        }
+        
+        let photo = result.first;
+        if photo == nil {
             if let delegate = self.delegate {
                 let model = delegate.photoForIndex(index: index);
                 let photoModel = RTPhotoModel(model: model);
@@ -207,7 +210,7 @@ class RTPhotoBrowser: UIViewController {
             }
         }
         
-        return nil;
+        return photo;
     }
     
     func contentOffset(atIndex: Int) -> CGPoint {
@@ -260,7 +263,7 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
         if let page = pageAtIndex(index: photoModel.index) {
             page.setImage(image: image);
         } else {
-            print("photoModel.index = \(photoModel.index)");
+            print("self.visiblePages -- photoModel.index = \(photoModel.index)");
             self.visiblePages.forEach({ (page) in
                 print("self.visiblePages -- page.index = \(page.pageIndex)");
             })

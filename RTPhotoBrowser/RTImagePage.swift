@@ -9,7 +9,14 @@
 import UIKit
 
 class RTImagePage: UIScrollView {
-    var imageView: UIImageView = UIImageView();
+    var imageView: UIImageView = {
+        let iv = UIImageView();
+        iv.contentMode = .scaleAspectFill;
+        iv.clipsToBounds = true;
+        
+        return iv;
+    }();
+
     var singleTapHandler:(()->Void)?;
     var pageIndex:Int = 0;
     
@@ -45,7 +52,8 @@ class RTImagePage: UIScrollView {
     }
     
     func setImage(image: UIImage) {
-        print(#function);
+        print(#function, image);
+        
         self.imageView.image = image;
         setupZoomScale();
         setImageViewFrame();
@@ -56,19 +64,16 @@ class RTImagePage: UIScrollView {
             return;
         }
         
-        guard self.bounds.width != 0 && self.bounds.height != 0 else {
-            return;
-        }
-        
         var x:CGFloat = 0;
         var size:CGSize = .zero;
         if image.size.width < self.frame.size.width && image.size.height < self.frame.size.height {
             size = image.size;
             x = (self.frame.size.width - size.width) * 0.5;
         } else {
-            let heightScale = image.size.height / self.frame.size.height;
-            let widthScale = image.size.width / self.frame.size.width;
+            let heightScale = image.size.height / self.frame.height;
+            let widthScale = image.size.width / self.frame.width;
             let scale = image.size.height / image.size.width;
+            print("heightScale = \(heightScale) widthScale = \(widthScale) scale = \(scale) image.size = \(image.size) self.frame = \(self.frame.size)");
             if heightScale > 1.0 && heightScale <= 1.51 && widthScale <= 1.1 {   // 虽然此时图片高度大于屏幕高度，但是高的不明显(倍数不超过1.51.根据qq中的相册反复试验得出)。所以不看成长图
                 size.height = self.frame.size.height;
                 size.width = size.height / scale;
@@ -101,8 +106,10 @@ class RTImagePage: UIScrollView {
     }
     
     func setupZoomScale() {
+        guard let image = self.imageView.image else { return };
+        
         let width = min(self.frame.width, self.frame.height);
-        self.maximumZoomScale = (((self.imageView.image!.size.width) / UIScreen.main.scale) * 3) / width;
+        self.maximumZoomScale = (((image.size.width) / UIScreen.main.scale) * 3) / width;
     }
 
     

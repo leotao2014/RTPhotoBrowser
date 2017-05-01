@@ -136,11 +136,15 @@ class RTPhotoBrowser: UIViewController {
             return;
         }
         
-        for page in self.visiblePages {
+        // 回收已经不显示的page
+        self.visiblePages.forEach { (page) in
             if page.pageIndex > rightIndex || page.pageIndex < leftIndex {
-                self.visiblePages.remove(page);
                 self.recyclePages.insert(page);
             }
+        }
+        
+        self.recyclePages.forEach { (page) in
+            self.visiblePages.remove(page);
         }
       
         for i in leftIndex...rightIndex {
@@ -179,13 +183,11 @@ class RTPhotoBrowser: UIViewController {
     }
     
     func pageAtIndex(index:Int) -> RTImagePage? {
-        for page in self.visiblePages {
-            if page.pageIndex == index {
-                return page;
-            }
+        let result = self.visiblePages.filter { (page) -> Bool in
+            return (page.pageIndex == index);
         }
-        
-        return nil;
+                
+        return result.first;
     }
     
     func photoAtIndex(index:Int) -> RTPhotoModel? {

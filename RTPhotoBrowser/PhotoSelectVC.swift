@@ -50,12 +50,11 @@ class PhotoSelectVC: UIViewController {
                     "http://images-10038599.cos.myqcloud.com/QQ20161015-1.png"];
         
         
-        for url in urls {
+        photos = urls.map { (url) -> PhotoModel in
             let model = PhotoModel();
             model.bigPicURL = url;
-            photos.append(model);
+            return model;
         }
-        
     }
     
     deinit {

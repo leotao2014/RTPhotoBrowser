@@ -105,15 +105,6 @@ class RTPhotoBrowser: UIViewController {
         ImageCache.default.clearMemoryCache();
     }
     
-    enum Result<T> {
-        case Success(T)
-        case Failure(T)
-    }
-    
-    func get(completionHandler: (Result<[RTPhotoModelDelegate]>) -> Void) {
-        
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

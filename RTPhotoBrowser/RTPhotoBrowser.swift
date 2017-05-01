@@ -234,8 +234,7 @@ class RTPhotoBrowser: UIViewController {
     
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
-        
-        
+        ImageCache.default.clearMemoryCache();
     }
 }
 

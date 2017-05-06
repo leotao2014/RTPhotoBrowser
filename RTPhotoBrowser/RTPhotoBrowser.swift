@@ -103,6 +103,7 @@ class RTPhotoBrowser: UIViewController {
     }
     
     deinit {
+        print(#function);
         ImageCache.default.clearMemoryCache();
     }
     

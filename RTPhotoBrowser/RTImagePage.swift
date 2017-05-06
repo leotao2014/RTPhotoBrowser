@@ -210,6 +210,8 @@ extension RTImagePage {
                 tempImgView.removeFromSuperview();
                 self.imageView.isHidden = false;
                 self.completionHandler!();
+                // 去除循环引用
+                self.completionHandler = nil;
             })
         } else {
             
@@ -231,6 +233,7 @@ extension RTImagePage {
                 }, completion: { (_) in
                     self.imageView.isHidden = true;
                     completionHandler();
+                    
                 })
             case .twitter:break;
             case .normal: break;

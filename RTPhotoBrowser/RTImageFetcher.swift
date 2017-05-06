@@ -24,12 +24,8 @@ class RTImageFetcher: NSObject {
     weak var delegate:RTImageFetchDelegate?
     
     func fetchImage(photo:RTPhotoModel) {
-        guard let urlString = photo.bigPicURL else {
-            print("图片地址为空");
-            return
-        };
-        
-        guard let url = URL(string:urlString) else {
+
+        guard let url = URL(string:photo.picUrl) else {
             return
         };
         

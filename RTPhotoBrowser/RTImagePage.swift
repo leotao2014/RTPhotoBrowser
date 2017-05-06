@@ -180,7 +180,7 @@ extension RTImagePage {
         
         switch realStyle {
         case .weibo:
-            let result = ImageCache.default.isImageCached(forKey: self.photo!.bigPicURL!);
+            let result = ImageCache.default.isImageCached(forKey: self.photo!.picUrl);
             self.sourceFrame = sourceFrame;
             self.completionHandler = completionHandler;
             if result.cached {  // 如果已缓存则等待image获取完毕开始动画

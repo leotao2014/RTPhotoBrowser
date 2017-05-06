@@ -45,7 +45,7 @@ class PhotoSelectVC: UIViewController {
         
         photos = urls.map { (url) -> PhotoModel in
             let model = PhotoModel();
-            model.bigPicURL = url;
+            model.picUrl = url;
             return model;
         }
     }
@@ -74,7 +74,7 @@ extension PhotoSelectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "image", for: indexPath) as! ImageCell;
         let photo = self.photos[indexPath.item];
-        cell.imageUrl = photo.bigPicURL!;
+        cell.imageUrl = photo.picUrl;
         
         return cell;
     }

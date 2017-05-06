@@ -15,19 +15,19 @@ enum RTImageDownloadPriority {
 }
 
 protocol RTPhotoModelDelegate: NSObjectProtocol {
-    var thumbPicURL:String? {get set};
-    var bigPicURL:String? {get set};
+    var picUrl:String {get set};
+    var originalPicUrl:String? {get set};
 }
 
 class RTPhotoModel: NSObject {
-    var thumbPicURL:String?     // 缩略图地址
-    var bigPicURL:String?       // 大图或原图地址
+    var picUrl:String     // 图片地址
+    var originalPicUrl:String?
     
     var downloadPriority = RTImageDownloadPriority.high
     var index:Int = 0;
     
     init(model:RTPhotoModelDelegate) {
-        self.thumbPicURL = model.thumbPicURL;
-        self.bigPicURL = model.bigPicURL;
+        self.picUrl = model.picUrl;
+        self.originalPicUrl = model.originalPicUrl;
     }
 }

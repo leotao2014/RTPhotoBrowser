@@ -9,6 +9,6 @@
 import UIKit
 
 class PhotoModel: NSObject, RTPhotoModelDelegate {
-    var thumbPicURL: String?
-    var bigPicURL: String?
+    var picUrl: String = "";
+    var originalPicUrl: String?
 }

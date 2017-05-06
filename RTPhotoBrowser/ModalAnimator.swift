@@ -36,7 +36,6 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             browser.beginDismissAnimation(withCompletionHandler: { (_) in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled);
             });
-            
         }
     }
 }

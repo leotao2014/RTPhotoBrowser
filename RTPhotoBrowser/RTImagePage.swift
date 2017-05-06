@@ -224,7 +224,9 @@ extension RTImagePage {
         
         switch realStyle {
             case .weibo:
+                self.backgroundColor = UIColor.black.withAlphaComponent(0.8);
                 UIView.animate(withDuration: 0.25, animations: {
+                    self.backgroundColor = UIColor.black.withAlphaComponent(0.0);
                     self.imageView.frame = sourceFrame!;
                 }, completion: { (_) in
                     self.imageView.isHidden = true;

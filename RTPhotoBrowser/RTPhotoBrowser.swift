@@ -70,7 +70,7 @@ class RTPhotoBrowser: UIViewController {
         scrollView.isPagingEnabled = true;
         scrollView.showsHorizontalScrollIndicator = false;
         scrollView.showsVerticalScrollIndicator = false;
-        scrollView.backgroundColor = UIColor.black;
+        scrollView.backgroundColor = UIColor.clear;
         scrollView.delegate = self;
         
         return scrollView;
@@ -236,7 +236,6 @@ class RTPhotoBrowser: UIViewController {
     
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
-//        ImageCache.default.clearMemoryCache();
     }
     
     func beginPresentAnimation(withCompletionHandler completionHandler:@escaping (Void)->Void) {
@@ -245,12 +244,7 @@ class RTPhotoBrowser: UIViewController {
             return;
         }
         
-        guard let sourceFrame = sourceImageViewFrame(atIndex: visiblePage.pageIndex) else {
-            completionHandler();
-            return;
-        }
-        
-        
+        let sourceFrame = sourceImageViewFrame(atIndex: visiblePage.pageIndex)
         visiblePage.startPresentAnimation(style: self.showStyle, sourceFrame: sourceFrame, completionHandler: completionHandler);
     }
     

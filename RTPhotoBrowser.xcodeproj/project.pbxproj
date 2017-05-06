@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26AFC2081EB78E7800EB29D6 /* ModalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */; };
 		26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE21E6312620029DEE5 /* AppDelegate.swift */; };
 		26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE41E6312620029DEE5 /* ViewController.swift */; };
 		26DABFE81E6312620029DEE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26DABFE61E6312620029DEE5 /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalAnimator.swift; sourceTree = "<group>"; };
 		26DABFDF1E6312620029DEE5 /* RTPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DABFE21E6312620029DEE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26DABFE41E6312620029DEE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		26DABFE11E6312620029DEE5 /* RTPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */,
 				26DAC0121E6316670029DEE5 /* ImageCell.swift */,
 				26DABFE21E6312620029DEE5 /* AppDelegate.swift */,
 				26DABFE41E6312620029DEE5 /* ViewController.swift */,
@@ -329,6 +332,7 @@
 				26ED8FD11E76F4CF00AB364E /* RTImagePage.swift in Sources */,
 				26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */,
 				26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */,
+				26AFC2081EB78E7800EB29D6 /* ModalAnimator.swift in Sources */,
 				26ED8FCF1E76F49300AB364E /* RTPhotoBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

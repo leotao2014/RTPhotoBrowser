@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RTImagePage: UIScrollView {
     var imageView: UIImageView = {
@@ -16,9 +17,12 @@ class RTImagePage: UIScrollView {
         
         return iv;
     }();
-
+    
     var singleTapHandler:(()->Void)?;
     var pageIndex:Int = 0;
+    var setNeedsPresentAnimation = false;
+    var sourceFrame:CGRect?
+    var completionHandler:((Void)->Void)?
     
     var photo:RTPhotoModel? {
         didSet {
@@ -41,11 +45,11 @@ class RTImagePage: UIScrollView {
     }
     
     // 在放大图片时会不断调用layoutSubViews方法
-//    override func layoutSubviews() {
-//        super.layoutSubviews();
-//        
-//        
-//    }
+    //    override func layoutSubviews() {
+    //        super.layoutSubviews();
+    //
+    //
+    //    }
     
     func prepareForReuse() {
         self.imageView.image = nil;
@@ -57,6 +61,10 @@ class RTImagePage: UIScrollView {
         self.imageView.image = image;
         setupZoomScale();
         setImageViewFrame();
+        
+        if self.setNeedsPresentAnimation {
+            weiboPresentAnimation();
+        }
     }
     
     func setImageViewFrame() {
@@ -91,7 +99,7 @@ class RTImagePage: UIScrollView {
         self.imageView.frame = CGRect(x: x, y: y, width: size.width, height: size.height);
         self.contentSize = self.imageView.frame.size;
     }
-
+    
     
     func centerImageView() {
         let width = self.imageView.frame.width;
@@ -111,7 +119,7 @@ class RTImagePage: UIScrollView {
         let width = min(self.frame.width, self.frame.height);
         self.maximumZoomScale = (((image.size.width) / UIScreen.main.scale) * 3) / width;
     }
-
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -156,10 +164,90 @@ class RTImagePage: UIScrollView {
             //            print("self.zoomScale = \(self.zoomScale) cacluateScale = \(zoomScale) self.max = \(self.maximumZoomScale) self.min = \(self.minimumZoomScale)");
         }
     }
-
 }
 
+// MARK:Animations
+extension RTImagePage {
+    
+    func startPresentAnimation(style: RTPhotoBrowserShowStyle, sourceFrame:CGRect?, completionHandler:@escaping (Void)->Void) {
+        self.imageView.isHidden = true;
+        
+        print(#function);
+        var realStyle = style;
+        if style == .weibo && sourceFrame == nil {
+            realStyle = .normal;
+        }
+        
+        switch realStyle {
+        case .weibo:
+            let result = ImageCache.default.isImageCached(forKey: self.photo!.bigPicURL!);
+            self.sourceFrame = sourceFrame;
+            self.completionHandler = completionHandler;
+            if result.cached {  // 如果已缓存则等待image获取完毕开始动画
+                if self.imageView.image != nil {
+                    weiboPresentAnimation();
+                } else {
+                    self.setNeedsPresentAnimation = true;
+                }
+            } else {
+                weiboPresentAnimation();
+            }
+        case .normal: break
+        case .twitter: break
+        }
+    }
+    
+    func weiboPresentAnimation() {
+        self.setNeedsPresentAnimation = false;
+        let tempImgView = UIImageView();
+        tempImgView.image = self.imageView.image;
+        tempImgView.frame = sourceFrame!;
+        self.addSubview(tempImgView);
+        if let _ = self.imageView.image {
+            UIView.animate(withDuration: 0.25, animations: {
+                tempImgView.frame = self.imageView.frame;
+            }, completion: { (_) in
+                tempImgView.removeFromSuperview();
+                self.imageView.isHidden = false;
+                self.completionHandler!();
+            })
+        } else {
+            
+        }
+    }
+    
+    func startDismissAnimation(style: RTPhotoBrowserShowStyle, sourceFrame:CGRect?, completionHandler:@escaping (Void)->Void) {
+        var realStyle = style;
+        if style == .weibo && sourceFrame == nil {
+            realStyle = .normal;
+        }
+        
+        switch realStyle {
+            case .weibo:
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.imageView.frame = sourceFrame!;
+                }, completion: { (_) in
+                    self.imageView.isHidden = true;
+                    completionHandler();
+                })
+            case .twitter:break;
+            case .normal: break;
+        }
+    }
+}
 
+// MARK:ImageFetchHandle
+extension RTImagePage {
+    func imageLoadFail(error:Error?) {
+        print(#function);
+    }
+    
+    func updateImageLoadProgress(progress:CGFloat) {
+        print("updateImageLoadProgress\(progress)");
+    }
+}
+
+// MARK:UIScrollViewDelegate
 extension RTImagePage: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imageView;
@@ -170,12 +258,4 @@ extension RTImagePage: UIScrollViewDelegate {
     }
 }
 
-extension RTImagePage {
-    func imageLoadFail(error:Error?) {
-        print(#function);
-    }
-    
-    func updateImageLoadProgress(progress:CGFloat) {
-        print("updateImageLoadProgress\(progress)");
-    }
-}
+

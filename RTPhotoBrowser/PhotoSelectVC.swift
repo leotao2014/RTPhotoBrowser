@@ -11,23 +11,16 @@ import Kingfisher
 
 class PhotoSelectVC: UIViewController {
     var photos = [PhotoModel]();
-    
+    var collectionView:UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup();
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated);
-        
-        ImageCache.default.clearMemoryCache();
-        
-    }
-    
     func setup() {
         let layout = UICollectionViewFlowLayout();
-        let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout);
+        collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout);
         collectionView.delegate = self;
         collectionView.dataSource = self;
         
@@ -58,6 +51,7 @@ class PhotoSelectVC: UIViewController {
     }
     
     deinit {
+        ImageCache.default.clearMemoryCache();
         print("dealloc - PhotoSelectVC");
     }
 }
@@ -67,6 +61,7 @@ extension PhotoSelectVC: UICollectionViewDelegate {
         let browser = RTPhotoBrowser();
         browser.delegate = self;
         browser.currentIndex = indexPath.item;
+        self.modalPresentationStyle = .custom;
         self.present(browser, animated: true, completion: nil);
     }
 }
@@ -114,5 +109,10 @@ extension PhotoSelectVC: RTPhotoBrowserDelegate {
     
     func photoForIndex(index: Int) -> RTPhotoModelDelegate {
         return self.photos[index];
+    }
+    
+    func sourceImageViewForIndex(index: Int) -> UIImageView? {
+        let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as! ImageCell;
+        return cell.imageView;
     }
 }

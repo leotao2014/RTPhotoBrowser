@@ -90,6 +90,7 @@ class RTPhotoBrowser: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(#function);
         commonSetup();
         setupSubviews();
         layoutImagePages();
@@ -114,7 +115,8 @@ class RTPhotoBrowser: UIViewController {
     private func commonSetup() {
         self.view.backgroundColor = UIColor.white;
         RTImageFetcher.fetcher.delegate = self;
-        
+        self.transitioningDelegate = self;
+        self.modalPresentationStyle = .custom;
     }
     
     private func setupSubviews() {
@@ -234,7 +236,46 @@ class RTPhotoBrowser: UIViewController {
     
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
-        ImageCache.default.clearMemoryCache();
+//        ImageCache.default.clearMemoryCache();
+    }
+    
+    func beginPresentAnimation(withCompletionHandler completionHandler:@escaping (Void)->Void) {
+        guard let visiblePage = self.visiblePages.first else {
+            completionHandler();
+            return;
+        }
+        
+        guard let sourceFrame = sourceImageViewFrame(atIndex: visiblePage.pageIndex) else {
+            completionHandler();
+            return;
+        }
+        
+        
+        visiblePage.startPresentAnimation(style: self.showStyle, sourceFrame: sourceFrame, completionHandler: completionHandler);
+    }
+    
+    func beginDismissAnimation(withCompletionHandler completionHandler:@escaping (Void)->Void) {
+        guard let visiblePage = self.visiblePages.first else {
+            completionHandler();
+            return;
+        }
+        
+        guard let sourceFrame = sourceImageViewFrame(atIndex: visiblePage.pageIndex) else {
+            completionHandler();
+            return;
+        }
+        
+        visiblePage.startDismissAnimation(style: self.showStyle, sourceFrame: sourceFrame, completionHandler: completionHandler);
+    }
+    
+    func sourceImageViewFrame(atIndex index:Int) -> CGRect? {
+        if let sourceImageView = self.delegate?.sourceImageViewForIndex(index: index) {
+            let rect = sourceImageView.convert(sourceImageView.frame, to: self.view);
+            
+            return rect;
+        }
+        
+        return nil;
     }
 }
 
@@ -283,6 +324,22 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
         if let page = pageAtIndex(index: photoModel.index) {
             page.updateImageLoadProgress(progress: progress);
         }
+    }
+}
+
+extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = ModalAnimator();
+        animator.present = true;
+        
+        return animator;
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = ModalAnimator();
+        animator.present = false;
+        
+        return animator;
     }
 }
 

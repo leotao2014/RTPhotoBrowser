@@ -308,14 +308,14 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
     }
     
     func imageDidFailLoad(error: Error?, photoModel: RTPhotoModel) {
-        print("image下载失败");
+        print("image下载失败 index = \(photoModel.index) currentIndex = \(currentIndex) error = \(error!)");
         if let page = pageAtIndex(index: photoModel.index) {
             page.imageLoadFail(error: error);
         }
     }
     
     func imageLoadingUpdateProgress(progress: CGFloat, photoModel: RTPhotoModel) {
-        print("image正在下载");
+        print("image正在下载 index = \(photoModel.index) currentIndex = \(currentIndex)");
         if let page = pageAtIndex(index: photoModel.index) {
             page.updateImageLoadProgress(progress: progress);
         }

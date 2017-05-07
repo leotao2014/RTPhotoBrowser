@@ -74,7 +74,7 @@ extension PhotoSelectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "image", for: indexPath) as! ImageCell;
         let photo = self.photos[indexPath.item];
-        cell.imageUrl = photo.picUrl;
+//        cell.imageUrl = photo.picUrl;
         
         return cell;
     }
@@ -112,7 +112,7 @@ extension PhotoSelectVC: RTPhotoBrowserDelegate {
     }
     
     func sourceImageViewForIndex(index: Int) -> UIImageView? {
-        let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as! ImageCell;
-        return cell.imageView;
+        let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ImageCell;
+        return cell?.imageView;
     }
 }

@@ -18,6 +18,8 @@ class RTImagePage: UIScrollView {
         return iv;
     }();
     
+    var progressView = RTProgressView();
+    
     var singleTapHandler:(()->Void)?;
     var pageIndex:Int = 0;
     var setNeedsPresentAnimation = false;
@@ -36,6 +38,7 @@ class RTImagePage: UIScrollView {
         super.init(frame: frame);
         
         addSubview(imageView);
+        addSubview(progressView);
         self.delegate = self;
         self.backgroundColor = UIColor.black;
     }
@@ -44,15 +47,17 @@ class RTImagePage: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // 在放大图片时会不断调用layoutSubViews方法
-    //    override func layoutSubviews() {
-    //        super.layoutSubviews();
-    //
-    //
-    //    }
+//  在放大图片时会不断调用layoutSubViews方法
+    override func layoutSubviews() {
+        super.layoutSubviews();
+        let pWidth:CGFloat = kProgressViewWidth;
+        let pHeight = pWidth;
+        progressView.frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
+    }
     
     func prepareForReuse() {
         self.imageView.image = nil;
+        self.progressView.isHidden = true;
     }
     
     func setImage(image: UIImage) {
@@ -199,11 +204,11 @@ extension RTImagePage {
     
     func weiboPresentAnimation() {
         self.setNeedsPresentAnimation = false;
-        let tempImgView = UIImageView();
-        tempImgView.image = self.imageView.image;
-        tempImgView.frame = sourceFrame!;
-        self.addSubview(tempImgView);
         if let _ = self.imageView.image {
+            let tempImgView = UIImageView();
+            tempImgView.image = self.imageView.image;
+            tempImgView.frame = sourceFrame!;
+            self.addSubview(tempImgView);
             UIView.animate(withDuration: 0.25, animations: {
                 tempImgView.frame = self.imageView.frame;
             }, completion: { (_) in
@@ -214,7 +219,10 @@ extension RTImagePage {
                 self.completionHandler = nil;
             })
         } else {
-            
+            self.imageView.isHidden = false;
+            self.completionHandler!();
+            // 去除循环引用
+            self.completionHandler = nil;
         }
     }
     
@@ -249,6 +257,17 @@ extension RTImagePage {
     
     func updateImageLoadProgress(progress:CGFloat) {
         print("updateImageLoadProgress\(progress)");
+        var progress = max(0.02, progress);
+        progress = min(progress, 1.0);
+        
+        if progress == 1.0 {
+            progressView.isHidden = true;
+        } else {
+            progressView.isHidden = false;
+        }
+        
+        
+        progressView.progress = progress;
     }
 }
 

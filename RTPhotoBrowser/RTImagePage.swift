@@ -30,6 +30,10 @@ class RTImagePage: UIScrollView {
         didSet {
             if let photo = photo {
                 RTImageFetcher.fetcher.fetchImage(photo: photo);
+                let result = ImageCache.default.isImageCached(forKey: photo.picUrl);
+                if result.cached == false { // 如果没有缓存则显示loading界面
+                    self.progressView.isHidden = false;
+                }
             }
         }
     }
@@ -58,6 +62,7 @@ class RTImagePage: UIScrollView {
     func prepareForReuse() {
         self.imageView.image = nil;
         self.progressView.isHidden = true;
+        self.progressView.progress = 0.02;
     }
     
     func setImage(image: UIImage) {
@@ -253,6 +258,8 @@ extension RTImagePage {
 extension RTImagePage {
     func imageLoadFail(error:Error?) {
         print(#function);
+        self.progressView.isHidden = true;
+        self.setImage(image: UIImage(named: "fail")!);
     }
     
     func updateImageLoadProgress(progress:CGFloat) {

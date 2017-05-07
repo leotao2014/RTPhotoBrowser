@@ -218,17 +218,18 @@ extension RTImagePage {
                 tempImgView.frame = self.imageView.frame;
             }, completion: { (_) in
                 tempImgView.removeFromSuperview();
-                self.imageView.isHidden = false;
-                self.completionHandler!();
-                // 去除循环引用
-                self.completionHandler = nil;
+                self.completeAnimation();
             })
         } else {
-            self.imageView.isHidden = false;
-            self.completionHandler!();
-            // 去除循环引用
-            self.completionHandler = nil;
+            completeAnimation();
         }
+    }
+    
+    func completeAnimation() {
+        self.imageView.isHidden = false;
+        self.completionHandler!();
+        // 去除循环引用
+        self.completionHandler = nil;
     }
     
     func startDismissAnimation(style: RTPhotoBrowserShowStyle, sourceFrame:CGRect?, completionHandler:@escaping (Void)->Void) {

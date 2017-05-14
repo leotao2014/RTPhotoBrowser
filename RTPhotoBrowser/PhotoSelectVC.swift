@@ -28,19 +28,33 @@ class PhotoSelectVC: UIViewController {
         self.view.addSubview(collectionView);
         collectionView.backgroundColor = UIColor.white;
         
-        let urls = ["http://images-10038599.cos.myqcloud.com/1.jpg",
-                    "http://images-10038599.cos.myqcloud.com/2.jpg",
-                    "http://images-10038599.cos.myqcloud.com/3.jpg",
-                    "http://images-10038599.cos.myqcloud.com/4.jpg",
+//        let urls = ["http://images-10038599.cos.myqcloud.com/1.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/2.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/3.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/4.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/5.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/6.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/7.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/8.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/9.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/10.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/11.jpg",
+//                    "http://images-10038599.cos.myqcloud.com/QQ20161015-0.png",
+//                    "http://images-10038599.cos.myqcloud.com/QQ20161015-1.png"];
+        
+        let urls = ["http://7xr16i.com1.z0.glb.clouddn.com/607210ee51151af6f9a25a1c75f55aab_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/6ee28dfeeff39ed9807b868c9969d8fb_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/8c2cfc7c0e713b9c3bf02daec77e2cbe_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/83f79630ae87d6ddfa1d6adb4413ff70_copy.jpg",
                     "http://images-10038599.cos.myqcloud.com/5.jpg",
-                    "http://images-10038599.cos.myqcloud.com/6.jpg",
-                    "http://images-10038599.cos.myqcloud.com/7.jpg",
-                    "http://images-10038599.cos.myqcloud.com/8.jpg",
-                    "http://images-10038599.cos.myqcloud.com/9.jpg",
-                    "http://images-10038599.cos.myqcloud.com/10.jpg",
-                    "http://images-10038599.cos.myqcloud.com/11.jpg",
-                    "http://images-10038599.cos.myqcloud.com/QQ20161015-0.png",
-                    "http://images-10038599.cos.myqcloud.com/QQ20161015-1.png"];
+                    "http://7xr16i.com1.z0.glb.clouddn.com/a622abd5a0fbc15337d2848fc58eae1a_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/landscapecopy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/924a4008418cfe474363545cfc444051_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/9_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/351b86227b5714f60278a4c501346cd4_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/11_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/98c7d2dfe77926ecbb590ebb99ff33c3_copy.jpg",
+                    "http://7xr16i.com1.z0.glb.clouddn.com/ab062e4df53eede0176035bc8221acec_copy.jpg"];
         
         
         photos = urls.map { (url) -> PhotoModel in
@@ -74,7 +88,7 @@ extension PhotoSelectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "image", for: indexPath) as! ImageCell;
         let photo = self.photos[indexPath.item];
-//        cell.imageUrl = photo.picUrl;
+        cell.imageUrl = photo.picUrl;
         
         return cell;
     }
@@ -111,7 +125,7 @@ extension PhotoSelectVC: RTPhotoBrowserDelegate {
         return self.photos[index];
     }
     
-    func sourceImageViewForIndex(index: Int) -> UIImageView? {
+    func thumnailViewForIndex(index: Int) -> UIView? {
         let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ImageCell;
         return cell?.imageView;
     }

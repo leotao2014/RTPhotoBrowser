@@ -9,6 +9,11 @@
 import UIKit
 
 class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    var startView:UIView?
+    var finalView:UIView?
+    var scaleView:UIView?
+    
+    
     var present = true;
     var duration:TimeInterval {
         return present ? 0.25 : 0.20;
@@ -22,20 +27,47 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from);
         let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to);
         
-        if present {
-            toVC!.view.backgroundColor = UIColor.black.withAlphaComponent(0);
-            let browser = toVC! as! RTPhotoBrowser;
-            transitionContext.containerView.addSubview(toVC!.view);
+        let fromView = transitionContext.view(forKey: .from);
+        let toView = transitionContext.view(forKey: .to);
+        
+        let isPresent = toVC?.presentingViewController == fromVC;
+        let containerView = transitionContext.containerView;
+        
+        guard let startView = self.startView, let finalView = self.finalView, let scaleView = self.scaleView else { return  };
+        
+        guard let startFrame = startView.superview?.convert(startView.frame, to: containerView) else { return };
+        let relativeFrame = finalView.convert(finalView.bounds, to: nil);
+        let windowBounds = UIScreen.main.bounds;
+        
+        var endFrame = startFrame;
+        var endAlpha:CGFloat = 0.0;
+    
+        if windowBounds.intersects(relativeFrame) { // 在屏幕内的
+            endAlpha = 1.0;
+            endFrame = finalView.convert(finalView.bounds, to: containerView);
+        }
+        
+        print("startFrame =\(startFrame), endFrame = \(endFrame)");
+        scaleView.frame = startFrame;
+        containerView.addSubview(scaleView);
+        
+        
+        if isPresent {
             
-            browser.beginPresentAnimation(withCompletionHandler: { (_) in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled);
-            });
-        } else {
-            let browser = fromVC! as! RTPhotoBrowser;
-            transitionContext.containerView.insertSubview(toVC!.view, at: 0);
-            browser.beginDismissAnimation(withCompletionHandler: { (_) in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled);
-            });
+        } else {    // 如果是dismiss动画则隐藏fromView
+            fromView?.isHidden = true;
+        }
+        
+        UIView.animate(withDuration: duration, animations: {
+            scaleView.alpha = endAlpha;
+            scaleView.frame = endFrame;
+        }) { (_) in
+            if (isPresent) {    // 如果是present的话需要将toView在结束的时候添加上去
+                containerView.addSubview(toView!);
+            }
+            
+            scaleView.removeFromSuperview();
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled);
         }
     }
 }

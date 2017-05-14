@@ -13,11 +13,11 @@ protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     func numberOfPhotosForBrowser() -> Int;
     func photoForIndex(index: Int) -> RTPhotoModelDelegate;
     // optional
-    func sourceImageViewForIndex(index: Int) -> UIImageView?
+    func thumnailViewForIndex(index: Int) -> UIView?
 }
 
 extension RTPhotoBrowserDelegate {
-    func sourceImageViewForIndex(index: Int) -> UIImageView? {
+    func thumnailViewForIndex(index: Int) -> UIView? {
         return nil;
     }
 }
@@ -35,12 +35,21 @@ class RTPhotoBrowser: UIViewController {
     
     var showStyle: RTPhotoBrowserShowStyle = .weibo;
     var currentIndex = 0;
+    
     weak var delegate:RTPhotoBrowserDelegate?
     
     fileprivate var photoArray:[RTPhotoModel] = [];
     fileprivate var visiblePages:Set<RTImagePage> = Set();
     fileprivate var recyclePages:Set<RTImagePage> = Set();
     fileprivate var viewActive = false;
+    fileprivate var scaleView:UIView? {
+        let imageView = UIImageView();
+        imageView.image = self.visiblePages.first?.imageView.image;
+        imageView.contentMode = .scaleAspectFill;
+        imageView.clipsToBounds = true;
+        
+        return imageView;
+    }
     
     fileprivate var photoCounts:Int  {
         if let delegate = self.delegate {
@@ -238,40 +247,6 @@ class RTPhotoBrowser: UIViewController {
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
     }
-    
-    func beginPresentAnimation(withCompletionHandler completionHandler:@escaping (Void)->Void) {
-        guard let visiblePage = self.visiblePages.first else {
-            completionHandler();
-            return;
-        }
-        
-        let sourceFrame = sourceImageViewFrame(atIndex: visiblePage.pageIndex)
-        visiblePage.startPresentAnimation(style: self.showStyle, sourceFrame: sourceFrame, completionHandler: completionHandler);
-    }
-    
-    func beginDismissAnimation(withCompletionHandler completionHandler:@escaping (Void)->Void) {
-        guard let visiblePage = self.visiblePages.first else {
-            completionHandler();
-            return;
-        }
-        
-        guard let sourceFrame = sourceImageViewFrame(atIndex: visiblePage.pageIndex) else {
-            completionHandler();
-            return;
-        }
-        
-        visiblePage.startDismissAnimation(style: self.showStyle, sourceFrame: sourceFrame, completionHandler: completionHandler);
-    }
-    
-    func sourceImageViewFrame(atIndex index:Int) -> CGRect? {
-        if let sourceImageView = self.delegate?.sourceImageViewForIndex(index: index) {
-            let rect = sourceImageView.convert(sourceImageView.frame, to: self.view);
-            
-            return rect;
-        }
-        
-        return nil;
-    }
 }
 
 extension RTPhotoBrowser: UIScrollViewDelegate {
@@ -326,15 +301,27 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = ModalAnimator();
         animator.present = true;
+        animator.startView = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        animator.finalView = self.visiblePages.first?.imageView;
+        animator.scaleView = scaleView;
         
         return animator;
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = ModalAnimator();
-        animator.present = false;
+        animator.present = true;
+        animator.startView = self.visiblePages.first?.imageView;
+        animator.finalView = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        animator.scaleView = scaleView;
         
         return animator;
+    }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        let presentaionController = RTPresentationController(presentedViewController: presented, presenting: presenting);
+        
+        return presentaionController;
     }
 }
 

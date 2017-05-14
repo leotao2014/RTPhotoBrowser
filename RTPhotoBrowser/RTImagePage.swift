@@ -22,9 +22,6 @@ class RTImagePage: UIScrollView {
     
     var singleTapHandler:(()->Void)?;
     var pageIndex:Int = 0;
-    var setNeedsPresentAnimation = false;
-    var sourceFrame:CGRect?
-    var completionHandler:((Void)->Void)?
     
     var photo:RTPhotoModel? {
         didSet {
@@ -51,14 +48,6 @@ class RTImagePage: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//  在放大图片时会不断调用layoutSubViews方法
-    override func layoutSubviews() {
-        super.layoutSubviews();
-        let pWidth:CGFloat = kProgressViewWidth;
-        let pHeight = pWidth;
-        progressView.frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
-    }
-    
     func prepareForReuse() {
         self.imageView.image = nil;
         self.progressView.isHidden = true;
@@ -70,14 +59,10 @@ class RTImagePage: UIScrollView {
         
         self.imageView.image = image;
         setupZoomScale();
-        setImageViewFrame();
-        
-        if self.setNeedsPresentAnimation {
-            weiboPresentAnimation();
-        }
+        layoutComponents();
     }
     
-    func setImageViewFrame() {
+    func layoutComponents() {
         guard let image = self.imageView.image else {
             return;
         }
@@ -108,6 +93,10 @@ class RTImagePage: UIScrollView {
         }
         self.imageView.frame = CGRect(x: x, y: y, width: size.width, height: size.height);
         self.contentSize = self.imageView.frame.size;
+        
+        let pWidth:CGFloat = kProgressViewWidth;
+        let pHeight = pWidth;
+        progressView.frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
     }
     
     
@@ -172,85 +161,6 @@ class RTImagePage: UIScrollView {
             let zoomRect = CGRect(x: zoomX, y: zoomY, width: zoomWidth, height: zoomHeigh);
             self.zoom(to: zoomRect, animated: true);
             //            print("self.zoomScale = \(self.zoomScale) cacluateScale = \(zoomScale) self.max = \(self.maximumZoomScale) self.min = \(self.minimumZoomScale)");
-        }
-    }
-}
-
-// MARK:Animations
-extension RTImagePage {
-    
-    func startPresentAnimation(style: RTPhotoBrowserShowStyle, sourceFrame:CGRect?, completionHandler:@escaping (Void)->Void) {
-        self.imageView.isHidden = true;
-        
-        print(#function);
-        var realStyle = style;
-        if style == .weibo && sourceFrame == nil {
-            realStyle = .normal;
-        }
-        
-        switch realStyle {
-        case .weibo:
-            let result = ImageCache.default.isImageCached(forKey: self.photo!.picUrl);
-            self.sourceFrame = sourceFrame;
-            self.completionHandler = completionHandler;
-            if result.cached {  // 如果已缓存则等待image获取完毕开始动画
-                if self.imageView.image != nil {
-                    weiboPresentAnimation();
-                } else {
-                    self.setNeedsPresentAnimation = true;
-                }
-            } else {
-                weiboPresentAnimation();
-            }
-        case .normal: break
-        case .twitter: break
-        }
-    }
-    
-    func weiboPresentAnimation() {
-        self.setNeedsPresentAnimation = false;
-        if let _ = self.imageView.image {
-            let tempImgView = UIImageView();
-            tempImgView.image = self.imageView.image;
-            tempImgView.frame = sourceFrame!;
-            self.addSubview(tempImgView);
-            UIView.animate(withDuration: 0.25, animations: {
-                tempImgView.frame = self.imageView.frame;
-            }, completion: { (_) in
-                tempImgView.removeFromSuperview();
-                self.completeAnimation();
-            })
-        } else {
-            completeAnimation();
-        }
-    }
-    
-    func completeAnimation() {
-        self.imageView.isHidden = false;
-        self.completionHandler!();
-        // 去除循环引用
-        self.completionHandler = nil;
-    }
-    
-    func startDismissAnimation(style: RTPhotoBrowserShowStyle, sourceFrame:CGRect?, completionHandler:@escaping (Void)->Void) {
-        var realStyle = style;
-        if style == .weibo && sourceFrame == nil {
-            realStyle = .normal;
-        }
-        
-        switch realStyle {
-            case .weibo:
-                self.backgroundColor = UIColor.black.withAlphaComponent(0.8);
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.backgroundColor = UIColor.black.withAlphaComponent(0.0);
-                    self.imageView.frame = sourceFrame!;
-                }, completion: { (_) in
-                    self.imageView.isHidden = true;
-                    completionHandler();
-                    
-                })
-            case .twitter:break;
-            case .normal: break;
         }
     }
 }

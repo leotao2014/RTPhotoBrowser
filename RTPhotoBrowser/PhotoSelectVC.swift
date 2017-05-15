@@ -75,7 +75,8 @@ extension PhotoSelectVC: UICollectionViewDelegate {
         let browser = RTPhotoBrowser();
         browser.delegate = self;
         browser.currentIndex = indexPath.item;
-        self.modalPresentationStyle = .custom;
+        browser.modalPresentationStyle = .custom;
+        browser.transitioningDelegate = browser;
         self.present(browser, animated: true, completion: nil);
     }
 }

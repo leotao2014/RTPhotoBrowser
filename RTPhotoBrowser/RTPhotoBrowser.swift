@@ -38,11 +38,12 @@ class RTPhotoBrowser: UIViewController {
     
     weak var delegate:RTPhotoBrowserDelegate?
     
+    fileprivate let animator = ModalAnimator();
     fileprivate var photoArray:[RTPhotoModel] = [];
     fileprivate var visiblePages:Set<RTImagePage> = Set();
     fileprivate var recyclePages:Set<RTImagePage> = Set();
     fileprivate var viewActive = false;
-    fileprivate var scaleView:UIView? {
+    fileprivate var scaleView:UIImageView? {
         let imageView = UIImageView();
         imageView.image = self.visiblePages.first?.imageView.image;
         imageView.contentMode = .scaleAspectFill;
@@ -103,6 +104,7 @@ class RTPhotoBrowser: UIViewController {
         commonSetup();
         setupSubviews();
         layoutImagePages();
+        animatorSetup();
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,10 +125,14 @@ class RTPhotoBrowser: UIViewController {
     
 // MARK:PrivateMethods
     private func commonSetup() {
-        self.view.backgroundColor = UIColor.white;
         RTImageFetcher.fetcher.delegate = self;
-        self.transitioningDelegate = self;
-        self.modalPresentationStyle = .custom;
+        self.view.backgroundColor = UIColor.white;
+    }
+    
+    private func animatorSetup() {
+        animator.finalView = self.visiblePages.first?.imageView;
+        scaleView?.image = self.visiblePages.first?.imageView.image;
+        animator.scaleView = scaleView;
     }
     
     private func setupSubviews() {
@@ -299,17 +305,13 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
 
 extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = ModalAnimator();
         animator.present = true;
         animator.startView = self.delegate?.thumnailViewForIndex(index: currentIndex);
-        animator.finalView = self.visiblePages.first?.imageView;
-        animator.scaleView = scaleView;
         
         return animator;
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = ModalAnimator();
         animator.present = true;
         animator.startView = self.visiblePages.first?.imageView;
         animator.finalView = self.delegate?.thumnailViewForIndex(index: currentIndex);
@@ -319,7 +321,8 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        let presentaionController = RTPresentationController(presentedViewController: presented, presenting: presenting);
+        let presentaionController: RTPresentationController = RTPresentationController(presentedViewController: presented, presenting: presenting)
+        presentaionController.viewNeedHidden = self.delegate?.thumnailViewForIndex(index: currentIndex);
         
         return presentaionController;
     }

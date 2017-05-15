@@ -66,6 +66,7 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 containerView.addSubview(toView!);
             }
             
+            print((scaleView as! UIImageView).image);
             scaleView.removeFromSuperview();
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled);
         }

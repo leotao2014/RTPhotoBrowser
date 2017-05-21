@@ -24,7 +24,8 @@ class RTImageFetcher: NSObject {
     weak var delegate:RTImageFetchDelegate?
     
     func fetchImage(photo:RTPhotoModel) {
-
+        
+        
         guard let url = URL(string:photo.picUrl) else {
             return
         };

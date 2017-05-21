@@ -23,18 +23,7 @@ class RTImagePage: UIScrollView {
     var singleTapHandler:(()->Void)?;
     var pageIndex:Int = 0;
     
-    var photo:RTPhotoModel? {
-        didSet {
-            if let photo = photo {
-                RTImageFetcher.fetcher.fetchImage(photo: photo);
-                if self.imageView.image == nil {
-                    self.progressView.isHidden = false;
-                    layoutComponents();
-                }
-            }
-        }
-    }
-    
+    var photo:RTPhotoModel?
     override init(frame: CGRect) {
         super.init(frame: frame);
         
@@ -54,11 +43,25 @@ class RTImagePage: UIScrollView {
         self.progressView.progress = 0.02;
     }
     
-    func setImage(image: UIImage) {
+    func setPhoto(photo:RTPhotoModel?, placeHolderImage:UIImage?) {
+        if let photo = photo {
+            RTImageFetcher.fetcher.fetchImage(photo: photo);
+            if self.imageView.image == nil {
+                self.progressView.isHidden = false;
+                layoutComponents();
+                if let placeHolderImage = placeHolderImage {
+                    setImage(image: placeHolderImage, showProgress: true);
+                }
+            }
+
+        }
+    }
+    
+    func setImage(image: UIImage, showProgress:Bool) {
         print(#function, image);
         
         self.imageView.image = image;
-        self.progressView.isHidden = true;
+        self.progressView.isHidden = !showProgress;
         setupZoomScale();
         layoutComponents();
     }
@@ -148,7 +151,7 @@ extension RTImagePage {
     func imageLoadFail(error:Error?) {
         print(#function);
         self.progressView.isHidden = true;
-        self.setImage(image: UIImage(named: "fail")!);
+        self.setImage(image: UIImage(named: "fail")!, showProgress: false);
     }
     
     func updateImageLoadProgress(progress:CGFloat) {

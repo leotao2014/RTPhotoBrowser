@@ -13,11 +13,17 @@ protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     func numberOfPhotosForBrowser() -> Int;
     func photoForIndex(index: Int) -> RTPhotoModelDelegate;
     // optional
-    func thumnailViewForIndex(index: Int) -> UIView?
+    func thumnailView(atIndex index: Int) -> UIView?
+    func placeholderImage(atIndex index:Int) -> UIImage?
 }
 
 extension RTPhotoBrowserDelegate {
-    func thumnailViewForIndex(index: Int) -> UIView? {
+    
+    func thumnailView(atIndex index: Int) -> UIView? {
+        return nil;
+    }
+    
+    func placeholderImage(atIndex index:Int) -> UIImage? {
         return nil;
     }
 }
@@ -204,7 +210,8 @@ class RTPhotoBrowser: UIViewController {
         
         page.pageIndex = index;
         page.frame = pageFrameAtIndex(index: index, givenBounds: self.container.bounds);
-        page.photo = photoAtIndex(index: index);
+        let placeHolderImge = self.delegate?.placeholderImage(atIndex: index);
+        page.setPhoto(photo: photoAtIndex(index: index), placeHolderImage: placeHolderImge);
     }
     
     func pageExistAtIndex(index:Int) -> Bool {
@@ -286,7 +293,7 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
     func imageDidLoaded(image: UIImage, photoModel: RTPhotoModel) {
         print("image下载完毕");
         if let page = pageAtIndex(index: photoModel.index) {
-            page.setImage(image: image);
+            page.setImage(image: image, showProgress: false);
         } else {
             print("self.visiblePages -- photoModel.index = \(photoModel.index)");
             self.visiblePages.forEach({ (page) in
@@ -315,7 +322,7 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
 extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.present = true;
-        animator.startView = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        animator.startView = self.delegate?.thumnailView(atIndex: currentIndex);
         animator.scaleView = scaleView;
         animator.finalView = presentFinalView;
         
@@ -325,14 +332,14 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.present = true;
         animator.startView = self.visiblePages.first?.imageView;
-        animator.finalView = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        animator.finalView = self.delegate?.thumnailView(atIndex: currentIndex);
         animator.scaleView = scaleView;
         
         if let presentController = self.presentationController as? RTPresentationController {
             // 将之前的需要隐藏的View更新成不隐藏状态
             presentController.viewNeedHidden?.isHidden = false;
             // 更新下需要隐藏的View
-            presentController.viewNeedHidden = self.delegate?.thumnailViewForIndex(index: currentIndex);
+            presentController.viewNeedHidden = self.delegate?.thumnailView(atIndex: currentIndex);
         }
         
         return animator;
@@ -340,7 +347,7 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         let presentaionController: RTPresentationController = RTPresentationController(presentedViewController: presented, presenting: presenting)
-        presentaionController.viewNeedHidden = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        presentaionController.viewNeedHidden = self.delegate?.thumnailView(atIndex: currentIndex);
 
         return presentaionController;
     }

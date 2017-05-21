@@ -10,5 +10,5 @@ import UIKit
 
 class PhotoModel: NSObject, RTPhotoModelDelegate {
     var picUrl: String = "";
-    var originalPicUrl: String?
+    var highQualityUrl: String?
 }

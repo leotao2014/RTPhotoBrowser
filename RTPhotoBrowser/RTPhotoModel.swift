@@ -16,7 +16,7 @@ enum RTImageDownloadPriority {
 
 protocol RTPhotoModelDelegate: NSObjectProtocol {
     var picUrl:String {get set};
-    var originalPicUrl:String? {get set};
+    var highQualityUrl:String? {get set};
 }
 
 class RTPhotoModel: NSObject {
@@ -28,6 +28,6 @@ class RTPhotoModel: NSObject {
     
     init(model:RTPhotoModelDelegate) {
         self.picUrl = model.picUrl;
-        self.originalPicUrl = model.originalPicUrl;
+        self.originalPicUrl = model.highQualityUrl;
     }
 }

@@ -44,6 +44,7 @@ class RTPhotoBrowser: UIViewController {
     fileprivate var recyclePages:Set<RTImagePage> = Set();
     fileprivate var viewActive = false;
     
+    // MARK:Modal动画相关属性
     fileprivate var scaleView:UIImageView? {
         let imageView = UIImageView();
         let photoModel = self.visiblePages.first?.photo;
@@ -56,10 +57,8 @@ class RTPhotoBrowser: UIViewController {
     
     fileprivate var presentFinalView:UIImageView? {
         let imageView = UIImageView();
-        let photoModel = self.visiblePages.first?.photo;
-        imageView.image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl);
-        if imageView.image != nil {
-            imageView.frame = imageView.image!.rt_calculateImageViewframe(givenBounds: self.visiblePages.first!.bounds);
+        if let image = self.scaleView?.image {
+            imageView.frame = image.rt_calculateImageViewframe(givenBounds: self.visiblePages.first!.bounds);
         }
         
         return imageView;
@@ -330,13 +329,20 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
         animator.finalView = self.delegate?.thumnailViewForIndex(index: currentIndex);
         animator.scaleView = scaleView;
         
+        if let presentController = self.presentationController as? RTPresentationController {
+            // 将之前的需要隐藏的View更新成不隐藏状态
+            presentController.viewNeedHidden?.isHidden = false;
+            // 更新下需要隐藏的View
+            presentController.viewNeedHidden = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        }
+        
         return animator;
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         let presentaionController: RTPresentationController = RTPresentationController(presentedViewController: presented, presenting: presenting)
         presentaionController.viewNeedHidden = self.delegate?.thumnailViewForIndex(index: currentIndex);
-        
+
         return presentaionController;
     }
 }

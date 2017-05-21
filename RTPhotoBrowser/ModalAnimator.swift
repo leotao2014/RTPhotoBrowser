@@ -9,9 +9,9 @@
 import UIKit
 
 class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    var startView:UIView?
-    var finalView:UIView?
-    var scaleView:UIView?
+    var startView:UIView?   // 只是用来计算最开始的frame
+    var finalView:UIView?   // 只是用来计算最终的frame
+    var scaleView:UIView?   // 最终用来缩放的动画View 
     
     
     var present = true;

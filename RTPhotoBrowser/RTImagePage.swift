@@ -67,31 +67,7 @@ class RTImagePage: UIScrollView {
             return;
         }
         
-        var x:CGFloat = 0;
-        var size:CGSize = .zero;
-        if image.size.width < self.frame.size.width && image.size.height < self.frame.size.height {
-            size = image.size;
-            x = (self.frame.size.width - size.width) * 0.5;
-        } else {
-            let heightScale = image.size.height / self.frame.height;
-            let widthScale = image.size.width / self.frame.width;
-            let scale = image.size.height / image.size.width;
-            print("heightScale = \(heightScale) widthScale = \(widthScale) scale = \(scale) image.size = \(image.size) self.frame = \(self.frame.size)");
-            if heightScale > 1.0 && heightScale <= 1.51 && widthScale <= 1.1 {   // 虽然此时图片高度大于屏幕高度，但是高的不明显(倍数不超过1.51.根据qq中的相册反复试验得出)。所以不看成长图
-                size.height = self.frame.size.height;
-                size.width = size.height / scale;
-                x = (self.frame.size.width - size.width) * 0.5;
-            } else {
-                size.width = self.frame.size.width;
-                size.height = self.frame.size.width * scale;
-            }
-        }
-        
-        var y:CGFloat = 0;
-        if size.height < self.frame.size.height {
-            y = (self.frame.height - size.height) * 0.5;
-        }
-        self.imageView.frame = CGRect(x: x, y: y, width: size.width, height: size.height);
+        self.imageView.frame = image.rt_calculateImageViewframe(givenBounds: self.bounds);
         self.contentSize = self.imageView.frame.size;
         
         let pWidth:CGFloat = kProgressViewWidth;
@@ -200,4 +176,37 @@ extension RTImagePage: UIScrollViewDelegate {
     }
 }
 
+extension UIImage {
+    func rt_calculateImageViewframe(givenBounds:CGRect) -> CGRect {
+        var x:CGFloat = 0;
+        var size:CGSize = .zero;
+        if self.size.width < givenBounds.size.width && self.size.height < givenBounds.size.height {
+            size = self.size;
+            x = (givenBounds.size.width - size.width) * 0.5;
+        } else {
+            let heightScale = self.size.height / givenBounds.height;
+            let widthScale = self.size.width / givenBounds.width;
+            let scale = self.size.height / self.size.width;
+            print("heightScale = \(heightScale) widthScale = \(widthScale) scale = \(scale) image.size = \(self.size) self.frame = \(givenBounds.size)");
+            if heightScale > 1.0 && heightScale <= 1.51 && widthScale <= 1.1 {   // 虽然此时图片高度大于屏幕高度，但是高的不明显(倍数不超过1.51.根据qq中的相册反复试验得出)。所以不看成长图
+                size.height = givenBounds.size.height;
+                size.width = size.height / scale;
+                x = (givenBounds.size.width - size.width) * 0.5;
+            } else {
+                size.width = givenBounds.size.width;
+                size.height = givenBounds.size.width * scale;
+            }
+        }
+        
+        var y:CGFloat = 0;
+        if size.height < givenBounds.size.height {
+            y = (givenBounds.height - size.height) * 0.5;
+        }
+        
+        let rect = CGRect(x: x, y: y, width: size.width, height: size.height);
+        
+        return rect;
+    }
 
+    
+}

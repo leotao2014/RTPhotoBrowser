@@ -43,14 +43,28 @@ class RTPhotoBrowser: UIViewController {
     fileprivate var visiblePages:Set<RTImagePage> = Set();
     fileprivate var recyclePages:Set<RTImagePage> = Set();
     fileprivate var viewActive = false;
+    
     fileprivate var scaleView:UIImageView? {
         let imageView = UIImageView();
-        imageView.image = self.visiblePages.first?.imageView.image;
+        let photoModel = self.visiblePages.first?.photo;
+        imageView.image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl);
         imageView.contentMode = .scaleAspectFill;
         imageView.clipsToBounds = true;
         
         return imageView;
     }
+    
+    fileprivate var presentFinalView:UIImageView? {
+        let imageView = UIImageView();
+        let photoModel = self.visiblePages.first?.photo;
+        imageView.image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl);
+        if imageView.image != nil {
+            imageView.frame = imageView.image!.rt_calculateImageViewframe(givenBounds: self.visiblePages.first!.bounds);
+        }
+        
+        return imageView;
+    }
+
     
     fileprivate var photoCounts:Int  {
         if let delegate = self.delegate {
@@ -126,13 +140,7 @@ class RTPhotoBrowser: UIViewController {
 // MARK:PrivateMethods
     private func commonSetup() {
         RTImageFetcher.fetcher.delegate = self;
-        self.view.backgroundColor = UIColor.white;
-    }
-    
-    private func animatorSetup() {
-        animator.finalView = self.visiblePages.first?.imageView;
-        scaleView?.image = self.visiblePages.first?.imageView.image;
-        animator.scaleView = scaleView;
+        self.view.backgroundColor = UIColor.clear;
     }
     
     private func setupSubviews() {
@@ -143,6 +151,11 @@ class RTPhotoBrowser: UIViewController {
         }
         
         self.view.addSubview(self.container);
+    }
+    
+    func animatorSetup() {
+        animator.scaleView = scaleView;
+        animator.finalView = presentFinalView;
     }
     
     func layoutImagePages() {

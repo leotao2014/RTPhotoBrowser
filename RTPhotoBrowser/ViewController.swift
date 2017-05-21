@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     func setup() {
         self.automaticallyAdjustsScrollViewInsets = false;
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: kReuseID);
+        
     }
 }
 

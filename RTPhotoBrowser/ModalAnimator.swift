@@ -51,10 +51,7 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         scaleView.frame = startFrame;
         containerView.addSubview(scaleView);
         
-        
-        if isPresent {
-            
-        } else {    // 如果是dismiss动画则隐藏fromView
+        if !isPresent { // 如果是dismiss动画则隐藏fromView
             fromView?.isHidden = true;
         }
         
@@ -66,7 +63,6 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 containerView.addSubview(toView!);
             }
             
-            print((scaleView as! UIImageView).image);
             scaleView.removeFromSuperview();
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled);
         }

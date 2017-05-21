@@ -49,28 +49,6 @@ class RTImageFetcher: NSObject {
     }
     
     func fetchImageFromNetwork(photo:RTPhotoModel, url:URL) {
-        var cacheImage: UIImage?
-        let result = KingfisherManager.shared.cache.isImageCached(forKey: url.cacheKey)
-        if result.cached, let cacheType = result.cacheType {
-            switch cacheType {
-            case .memory:
-                cacheImage = KingfisherManager.shared.cache.retrieveImageInMemoryCache(forKey: url.cacheKey)
-            case .disk:
-                cacheImage = KingfisherManager.shared.cache.retrieveImageInDiskCache(forKey: url.cacheKey)
-            default:
-                cacheImage = nil
-            }
-        }
-
-        if cacheImage != nil {
-            if let delegate = self.delegate {
-                if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidLoaded(image:photoModel:))) {
-                    delegate.imageDidLoaded(image: cacheImage!, photoModel: photo);
-                }
-            }
-            
-            return;
-        }
         
         KingfisherManager.shared.retrieveImage(with: url, options: [.backgroundDecode], progressBlock: { (received, total) in
             let progress = CGFloat(received) / CGFloat(total);
@@ -97,6 +75,31 @@ class RTImageFetcher: NSObject {
                 }
             }
         });
+    }
+    
+    func fetchCacheImage(withUrl urlString: String?) -> UIImage? {
+        guard let urlString = urlString else {
+            return nil
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return nil;
+        }
+        
+        var cacheImage: UIImage?
+        let result = KingfisherManager.shared.cache.isImageCached(forKey: url.cacheKey)
+        if result.cached, let cacheType = result.cacheType {
+            switch cacheType {
+            case .memory:
+                cacheImage = KingfisherManager.shared.cache.retrieveImageInMemoryCache(forKey: url.cacheKey)
+            case .disk:
+                cacheImage = KingfisherManager.shared.cache.retrieveImageInDiskCache(forKey: url.cacheKey)
+            default:
+                cacheImage = nil
+            }
+        }
+        
+        return cacheImage;
     }
     
 }

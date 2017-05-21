@@ -27,9 +27,9 @@ class RTImagePage: UIScrollView {
         didSet {
             if let photo = photo {
                 RTImageFetcher.fetcher.fetchImage(photo: photo);
-                let result = ImageCache.default.isImageCached(forKey: photo.picUrl);
-                if result.cached == false { // 如果没有缓存则显示loading界面
+                if self.imageView.image == nil {
                     self.progressView.isHidden = false;
+                    layoutComponents();
                 }
             }
         }
@@ -63,16 +63,17 @@ class RTImagePage: UIScrollView {
     }
     
     func layoutComponents() {
+        // progress的frame和image存不存在不相关
+        let pWidth:CGFloat = kProgressViewWidth;
+        let pHeight = pWidth;
+        progressView.frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
+        
         guard let image = self.imageView.image else {
             return;
         }
         
         self.imageView.frame = image.rt_calculateImageViewframe(givenBounds: self.bounds);
         self.contentSize = self.imageView.frame.size;
-        
-        let pWidth:CGFloat = kProgressViewWidth;
-        let pHeight = pWidth;
-        progressView.frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
     }
     
     

@@ -33,21 +33,27 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let isPresent = toVC?.presentingViewController == fromVC;
         let containerView = transitionContext.containerView;
         
-        guard let startView = self.startView, let finalView = self.finalView, let scaleView = self.scaleView else { return  };
+        guard let startView = self.startView, let scaleView = self.scaleView else { return  };
         
-        guard let startFrame = startView.superview?.convert(startView.frame, to: containerView) else { return };
-        let relativeFrame = finalView.convert(finalView.bounds, to: nil);
-        let windowBounds = UIScreen.main.bounds;
         
+        
+        let startFrame = startView.convert(startView.bounds, to: containerView);
+        // 如果finalView为空则做fade动画
         var endFrame = startFrame;
         var endAlpha:CGFloat = 0.0;
-    
-        if windowBounds.intersects(relativeFrame) { // 在屏幕内的
-            endAlpha = 1.0;
-            endFrame = finalView.convert(finalView.bounds, to: containerView);
-        }
         
-        print("startFrame =\(startFrame), endFrame = \(endFrame)");
+        // finalView 可能为空
+        if let finalView = self.finalView {
+            // 在屏幕内做scale动画 在屏幕外做fade动画
+            let relativeFrame = finalView.convert(finalView.bounds, to: nil);
+            let windowBounds = UIScreen.main.bounds;
+            
+            if windowBounds.intersects(relativeFrame) { // 在屏幕内的
+                endAlpha = 1.0;
+                endFrame = finalView.convert(finalView.bounds, to: containerView);
+            }
+        }
+
         scaleView.frame = startFrame;
         containerView.addSubview(scaleView);
         

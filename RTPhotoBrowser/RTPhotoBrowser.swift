@@ -44,10 +44,10 @@ class RTPhotoBrowser: UIViewController {
     fileprivate var recyclePages:Set<RTImagePage> = Set();
     fileprivate var viewActive = false;
     
-    // MARK:Modal动画相关属性
+    // MARK:Modal动画相关属性 scaleView和presentFinalView
     fileprivate var scaleView:UIImageView? {
         let imageView = UIImageView();
-        let photoModel = self.visiblePages.first?.photo;
+        let photoModel = photoAtIndex(index: currentIndex);
         imageView.image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl);
         imageView.contentMode = .scaleAspectFill;
         imageView.clipsToBounds = true;
@@ -58,7 +58,10 @@ class RTPhotoBrowser: UIViewController {
     fileprivate var presentFinalView:UIImageView? {
         let imageView = UIImageView();
         if let image = self.scaleView?.image {
-            imageView.frame = image.rt_calculateImageViewframe(givenBounds: self.visiblePages.first!.bounds);
+            let containerBounds = frameForContainer;
+            var pageBounds = pageFrameAtIndex(index: currentIndex, givenBounds: containerBounds);
+            pageBounds.origin = .zero;
+            imageView.frame = image.rt_calculateImageViewframe(givenBounds: pageBounds);
         }
         
         return imageView;
@@ -117,7 +120,7 @@ class RTPhotoBrowser: UIViewController {
         commonSetup();
         setupSubviews();
         layoutImagePages();
-        animatorSetup();
+//        animatorSetup();
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -206,7 +209,7 @@ class RTPhotoBrowser: UIViewController {
         }
         
         page.pageIndex = index;
-        page.frame = pageFrameAtIndex(index: index);
+        page.frame = pageFrameAtIndex(index: index, givenBounds: self.container.bounds);
         page.photo = photoAtIndex(index: index);
     }
     
@@ -247,8 +250,8 @@ class RTPhotoBrowser: UIViewController {
         return CGPoint(x: currentIndex.rtFloatValue * container.frame.width, y: 0);
     }
     
-    func pageFrameAtIndex(index:Int) -> CGRect {
-        let rect = CGRect(x: self.container.bounds.width * index.rtFloatValue + gap, y: 0, width: self.container.bounds.width - 2 * gap, height: self.container.bounds.height);
+    func pageFrameAtIndex(index:Int, givenBounds:CGRect) -> CGRect {
+        let rect = CGRect(x: givenBounds.width * index.rtFloatValue + gap, y: 0, width: givenBounds.width - 2 * gap, height: givenBounds.height);
         
         return rect;
     }
@@ -319,6 +322,8 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.present = true;
         animator.startView = self.delegate?.thumnailViewForIndex(index: currentIndex);
+        animator.scaleView = scaleView;
+        animator.finalView = presentFinalView;
         
         return animator;
     }

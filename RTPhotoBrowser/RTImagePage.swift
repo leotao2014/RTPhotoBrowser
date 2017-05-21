@@ -58,6 +58,7 @@ class RTImagePage: UIScrollView {
         print(#function, image);
         
         self.imageView.image = image;
+        self.progressView.isHidden = true;
         setupZoomScale();
         layoutComponents();
     }

@@ -120,7 +120,6 @@ class RTPhotoBrowser: UIViewController {
         commonSetup();
         setupSubviews();
         layoutImagePages();
-//        animatorSetup();
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -153,11 +152,6 @@ class RTPhotoBrowser: UIViewController {
         }
         
         self.view.addSubview(self.container);
-    }
-    
-    func animatorSetup() {
-        animator.scaleView = scaleView;
-        animator.finalView = presentFinalView;
     }
     
     func layoutImagePages() {

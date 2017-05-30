@@ -67,3 +67,9 @@ class RTProgressView: UIView {
         progressLayer.path = progressPath.cgPath;
     }
 }
+
+extension RTProgressView: RTProgressViewDelegate {
+    func setProgress(progress: CGFloat) {
+        self.progress = progress;
+    }
+}

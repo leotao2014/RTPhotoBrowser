@@ -8,110 +8,12 @@
 
 import UIKit
 
-protocol RTPhotoBrowserDelegate : NSObjectProtocol {
-    func rt_numberOfPhotosForBrowser(browser:RTPhotoBrowser) -> Int;
-    func rt_picUrlsForIndex(index: Int, browser:RTPhotoBrowser) -> (picUrl:String, originalPicUrl:String?);
-    // optional
-    func rt_thumnailView(atIndex index: Int, browser:RTPhotoBrowser) -> UIView?
-    func rt_previewImage(atIndex index:Int, browser:RTPhotoBrowser) -> UIImage?
-    func rt_footerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
-    func rt_heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
-    func rt_headerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
-    func rt_heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
-    func rt_pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser);
-    func rt_imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser);
-}
-
-extension RTPhotoBrowserDelegate {
-    func rt_thumnailView(atIndex index: Int, browser:RTPhotoBrowser) -> UIView? {
-        return nil;
-    }
-    
-    func rt_previewImage(atIndex index:Int, browser:RTPhotoBrowser) -> UIImage? {
-        return nil;
-    }
-    
-    func rt_footerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
-        let footer = RTFooterView(frame: .zero);
-        footer.displayOriginalPicClosure = { [weak browser] in
-            browser?.setNeedsDisplayOriginalPic();
-        };
-        
-        return footer;
-    }
-    
-    func rt_heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
-        return RTPhotoBrowserConfig.defaulConfig.footerHeight;
-    }
-    
-    
-    func rt_headerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
-        let header = RTHeaderView();
-        return header;
-    }
-    
-    func rt_heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
-        return RTPhotoBrowserConfig.defaulConfig.headerHeight;
-    }
-
-    
-    func rt_pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser) {
-        let originalImage = browser.originalImage(atIndex: index);
-        let existOriginalImage = originalImage != nil;
-        
-        let contentArray = ["冰与火之歌-提里昂兰尼斯特",
-                            "冰与火之歌-囧斯诺",
-                            "冰与火之歌-二丫斯塔克",
-                            "婚姻起步价戳中多少男人的泪点",
-                            "卡哇伊少女",
-                            "知乎上的49条神回答，针针见血，看完整个人通透多了",
-                            "华大基因楼顶看梧桐山的云",
-                            "一位模特",
-                            "不知道是啥子东西，壁画?",
-                            "健客APP的个人健康报告UI图",
-                            "拍的MacBook Air",
-                            "qq截图1",
-                            "qq截图2"
-        ];
-        print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
-        if let footer = browser.browserFooter as? RTFooterView {
-            footer.contentLabel.text = contentArray[index];
-            footer.btn.isHidden = true;
-            footer.btn.isHidden = existOriginalImage;
-            footer.setNeedsLayout();
-        }
-        
-        if let header = browser.browserHeader as? RTHeaderView {
-            header.contentLabel.text = "\(index + 1)/\(rt_numberOfPhotosForBrowser(browser: browser))";
-            header.setNeedsLayout();
-        }
-    }
-    
-    func rt_imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser) {
-        let originalImage = browser.originalImage(atIndex: browser.currentVisiblePageIndex);
-        let existOriginalImage = originalImage != nil;
-        
-        print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
-        if let footer = browser.browserFooter as? RTFooterView {
-            footer.btn.isHidden = existOriginalImage;
-        }
-    }
-}
-
-
-enum RTPhotoBrowserShowStyle {
-    case normal;
-    case weibo;
-    case twitter;
-}
-
-let gap:CGFloat = 5.0;
-
 class RTPhotoBrowser: UIViewController {
     var showStyle: RTPhotoBrowserShowStyle = .weibo;
     var currentVisiblePageIndex:Int {
         return currentIndex;
     }
+    
     fileprivate var currentIndex = 0;
     
     weak var delegate:RTPhotoBrowserDelegate?
@@ -221,6 +123,7 @@ class RTPhotoBrowser: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+        // 清除内存缓存并还原不显示原图的设置
         RTImageFetcher.fetcher.clearMemoryCache();
         self.photoArray.forEach { (model) in
             if model.viewOriginalPic {
@@ -240,6 +143,7 @@ class RTPhotoBrowser: UIViewController {
         return browser;
     }
     
+    // 设置需要显示原图
     func setNeedsDisplayOriginalPic() {
         if let photoModel = photoAtIndex(index: currentIndex), let page = pageAtIndex(index: currentIndex) {
             photoModel.viewOriginalPic = true;
@@ -247,6 +151,7 @@ class RTPhotoBrowser: UIViewController {
         }
     }
     
+    // 提供获取原图的接口
     func originalImage(atIndex index: Int) -> UIImage? {
         if let photo = photoAtIndex(index: index) {
             let image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.originalPicUrl);
@@ -257,6 +162,7 @@ class RTPhotoBrowser: UIViewController {
         return nil;
     }
     
+    // 提供获取普通质量图片的接口
     func image(atIndex index:Int) -> UIImage? {
         if let photo = photoAtIndex(index: index) {
             let image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.picUrl);
@@ -297,6 +203,7 @@ class RTPhotoBrowser: UIViewController {
         }
     }
     
+    // 此处布局图片控件复用逻辑也在这里
     func layoutImagePages() {
         let bufferDistance:CGFloat = gap > 0 ? 2 : 0;
         let width = self.container.bounds.width;
@@ -513,41 +420,6 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
         presentaionController.viewNeedHidden = self.delegate?.rt_thumnailView(atIndex: currentIndex, browser: self);
 
         return presentaionController;
-    }
-}
-
-extension Int {
-    var rtFloatValue:CGFloat {
-        return CGFloat(self);
-    }
-}
-
-extension UInt32 {
-    var rtFloatValue:CGFloat {
-        return CGFloat(self);
-    }
-}
-
-extension CGFloat {
-    var rtIntValue:Int {
-        return Int(self);
-    }
-}
-
-extension UIColor {
-    class func rgba(red:CGFloat, green:CGFloat, blue:CGFloat, alpha:CGFloat) -> UIColor {
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha);
-    }
-    
-    class func rgb(red:CGFloat, green:CGFloat, blue:CGFloat) -> UIColor {
-        return UIColor.rgba(red: red, green: green, blue: blue, alpha: 1.0);
-    }
-    
-    class func randomColor() -> UIColor {
-        let red = arc4random_uniform(255).rtFloatValue / 255.0;
-        let green = arc4random_uniform(255).rtFloatValue / 255.0;
-        let blue = arc4random_uniform(255).rtFloatValue / 255.0;
-        return UIColor.rgb(red: red, green: green, blue: blue);
     }
 }
 

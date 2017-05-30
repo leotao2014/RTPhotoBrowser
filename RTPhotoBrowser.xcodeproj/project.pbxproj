@@ -12,6 +12,8 @@
 		265A114B1EDD7BCB00AAB822 /* RTFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A114A1EDD7BCB00AAB822 /* RTFooterView.swift */; };
 		265A114D1EDDB82F00AAB822 /* RTHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A114C1EDDB82F00AAB822 /* RTHeaderView.swift */; };
 		265A114F1EDDBAEE00AAB822 /* RTNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A114E1EDDBAEE00AAB822 /* RTNavigationController.swift */; };
+		265A11511EDDC40400AAB822 /* RTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11501EDDC40400AAB822 /* RTExtension.swift */; };
+		265A11531EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11521EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift */; };
 		2695D6491EC8A839001AF0BB /* RTPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2695D6481EC8A839001AF0BB /* RTPresentationController.swift */; };
 		26AFC2081EB78E7800EB29D6 /* ModalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */; };
 		26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE21E6312620029DEE5 /* AppDelegate.swift */; };
@@ -69,6 +71,8 @@
 		265A114A1EDD7BCB00AAB822 /* RTFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTFooterView.swift; sourceTree = "<group>"; };
 		265A114C1EDDB82F00AAB822 /* RTHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTHeaderView.swift; sourceTree = "<group>"; };
 		265A114E1EDDBAEE00AAB822 /* RTNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTNavigationController.swift; sourceTree = "<group>"; };
+		265A11501EDDC40400AAB822 /* RTExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTExtension.swift; sourceTree = "<group>"; };
+		265A11521EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTPhotoBrowserDelegate.swift; sourceTree = "<group>"; };
 		2695D6481EC8A839001AF0BB /* RTPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTPresentationController.swift; sourceTree = "<group>"; };
 		26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalAnimator.swift; sourceTree = "<group>"; };
 		26DABFDF1E6312620029DEE5 /* RTPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,7 +90,7 @@
 		26DAC0041E6312620029DEE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectVC.swift; sourceTree = "<group>"; };
 		26DAC0121E6316670029DEE5 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
-		26DAC0151E6318900029DEE5 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		26DAC0151E6318900029DEE5 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = ../Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		26DAC0191E631AB70029DEE5 /* RTPhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTPhotoModel.swift; sourceTree = "<group>"; };
 		26ECD2C81E9A36AE00A2AF20 /* RTImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTImageFetcher.swift; sourceTree = "<group>"; };
 		26ECD2CA1E9A929A00A2AF20 /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
@@ -120,10 +124,84 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		26DABFD61E6312610029DEE5 = {
+		265A11541EDDC52C00AAB822 /* RTPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				265A11571EDDC57C00AAB822 /* DefaultExtensionViews */,
+				265A11561EDDC56600AAB822 /* Animator */,
+				265A11551EDDC53B00AAB822 /* Core */,
+			);
+			name = RTPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		265A11551EDDC53B00AAB822 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				265A11481EDD753000AAB822 /* RTPhotoBrowserConfig.swift */,
+				26ED8FCE1E76F49300AB364E /* RTPhotoBrowser.swift */,
+				265A11501EDDC40400AAB822 /* RTExtension.swift */,
+				265A11521EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift */,
+				26ECD2C81E9A36AE00A2AF20 /* RTImageFetcher.swift */,
+				26ED8FD01E76F4CF00AB364E /* RTImagePage.swift */,
+				26DAC0191E631AB70029DEE5 /* RTPhotoModel.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		265A11561EDDC56600AAB822 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */,
+				2695D6481EC8A839001AF0BB /* RTPresentationController.swift */,
+			);
+			name = Animator;
+			sourceTree = "<group>";
+		};
+		265A11571EDDC57C00AAB822 /* DefaultExtensionViews */ = {
+			isa = PBXGroup;
+			children = (
+				265A114A1EDD7BCB00AAB822 /* RTFooterView.swift */,
+				265A114C1EDDB82F00AAB822 /* RTHeaderView.swift */,
+				2614910C1EBF209B000E1CE1 /* RTProgressView.swift */,
+			);
+			name = DefaultExtensionViews;
+			sourceTree = "<group>";
+		};
+		265A11581EDDC5CF00AAB822 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				26DAC0121E6316670029DEE5 /* ImageCell.swift */,
+				26DABFE41E6312620029DEE5 /* ViewController.swift */,
+				26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */,
+				26ECD2CA1E9A929A00A2AF20 /* PhotoModel.swift */,
+				265A114E1EDDBAEE00AAB822 /* RTNavigationController.swift */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		265A11591EDDC5E800AAB822 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				26DABFE21E6312620029DEE5 /* AppDelegate.swift */,
+				26DABFE61E6312620029DEE5 /* Main.storyboard */,
+				26DABFE91E6312620029DEE5 /* Assets.xcassets */,
+				26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */,
+				26DABFEE1E6312620029DEE5 /* Info.plist */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		265A115A1EDDC60200AAB822 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
 				26DAC0151E6318900029DEE5 /* Kingfisher.framework */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		26DABFD61E6312610029DEE5 = {
+			isa = PBXGroup;
+			children = (
 				26DABFE11E6312620029DEE5 /* RTPhotoBrowser */,
 				26DABFF61E6312620029DEE5 /* RTPhotoBrowserTests */,
 				26DAC0011E6312620029DEE5 /* RTPhotoBrowserUITests */,
@@ -144,26 +222,10 @@
 		26DABFE11E6312620029DEE5 /* RTPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */,
-				26DAC0121E6316670029DEE5 /* ImageCell.swift */,
-				26DABFE21E6312620029DEE5 /* AppDelegate.swift */,
-				26DABFE41E6312620029DEE5 /* ViewController.swift */,
-				26DABFE61E6312620029DEE5 /* Main.storyboard */,
-				26DABFE91E6312620029DEE5 /* Assets.xcassets */,
-				26DABFEB1E6312620029DEE5 /* LaunchScreen.storyboard */,
-				26DABFEE1E6312620029DEE5 /* Info.plist */,
-				26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */,
-				26DAC0191E631AB70029DEE5 /* RTPhotoModel.swift */,
-				26ED8FCE1E76F49300AB364E /* RTPhotoBrowser.swift */,
-				26ED8FD01E76F4CF00AB364E /* RTImagePage.swift */,
-				26ECD2C81E9A36AE00A2AF20 /* RTImageFetcher.swift */,
-				26ECD2CA1E9A929A00A2AF20 /* PhotoModel.swift */,
-				2614910C1EBF209B000E1CE1 /* RTProgressView.swift */,
-				2695D6481EC8A839001AF0BB /* RTPresentationController.swift */,
-				265A11481EDD753000AAB822 /* RTPhotoBrowserConfig.swift */,
-				265A114A1EDD7BCB00AAB822 /* RTFooterView.swift */,
-				265A114C1EDDB82F00AAB822 /* RTHeaderView.swift */,
-				265A114E1EDDBAEE00AAB822 /* RTNavigationController.swift */,
+				265A11541EDDC52C00AAB822 /* RTPhotoBrowser */,
+				265A11581EDDC5CF00AAB822 /* Class */,
+				265A11591EDDC5E800AAB822 /* Other */,
+				265A115A1EDDC60200AAB822 /* Vendor */,
 			);
 			path = RTPhotoBrowser;
 			sourceTree = "<group>";
@@ -352,12 +414,14 @@
 				265A114D1EDDB82F00AAB822 /* RTHeaderView.swift in Sources */,
 				26DAC0131E6316670029DEE5 /* ImageCell.swift in Sources */,
 				26ED8FD11E76F4CF00AB364E /* RTImagePage.swift in Sources */,
+				265A11531EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift in Sources */,
 				26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */,
 				26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */,
 				26AFC2081EB78E7800EB29D6 /* ModalAnimator.swift in Sources */,
 				265A114B1EDD7BCB00AAB822 /* RTFooterView.swift in Sources */,
 				26ED8FCF1E76F49300AB364E /* RTPhotoBrowser.swift in Sources */,
 				2695D6491EC8A839001AF0BB /* RTPresentationController.swift in Sources */,
+				265A11511EDDC40400AAB822 /* RTExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

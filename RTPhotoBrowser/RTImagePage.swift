@@ -141,7 +141,6 @@ class RTImagePage: UIScrollView {
             let zoomY = convertPoint.y - zoomHeigh * 0.5;
             let zoomRect = CGRect(x: zoomX, y: zoomY, width: zoomWidth, height: zoomHeigh);
             self.zoom(to: zoomRect, animated: true);
-            //            print("self.zoomScale = \(self.zoomScale) cacluateScale = \(zoomScale) self.max = \(self.maximumZoomScale) self.min = \(self.minimumZoomScale)");
         }
     }
 }
@@ -149,24 +148,19 @@ class RTImagePage: UIScrollView {
 // MARK:ImageFetchHandle
 extension RTImagePage {
     func imageLoadFail(error:Error?) {
-        print(#function);
         self.progressView.isHidden = true;
         if let failImage = RTPhotoBrowserConfig.defaulConfig.loadFailImage {
-            self.setImage(image: failImage, showProgress: false);
+            setImage(image: failImage, showProgress: false);
         }
     }
     
     func updateImageLoadProgress(progress:CGFloat) {
-        print("updateImageLoadProgress\(progress)");
-        var progress = max(0.02, progress);
-        progress = min(progress, 1.0);
-        
+        let progress = min(max(0.02, progress), 1.0);
         if progress == 1.0 {
             progressView.isHidden = true;
         } else {
             progressView.isHidden = false;
         }
-        
         
         progressView.progress = progress;
     }
@@ -183,37 +177,3 @@ extension RTImagePage: UIScrollViewDelegate {
     }
 }
 
-extension UIImage {
-    func rt_calculateImageViewframe(givenBounds:CGRect) -> CGRect {
-        var x:CGFloat = 0;
-        var size:CGSize = .zero;
-        if self.size.width < givenBounds.size.width && self.size.height < givenBounds.size.height {
-            size = self.size;
-            x = (givenBounds.size.width - size.width) * 0.5;
-        } else {
-            let heightScale = self.size.height / givenBounds.height;
-            let widthScale = self.size.width / givenBounds.width;
-            let scale = self.size.height / self.size.width;
-            print("heightScale = \(heightScale) widthScale = \(widthScale) scale = \(scale) image.size = \(self.size) self.frame = \(givenBounds.size)");
-            if heightScale > 1.0 && heightScale <= 1.51 && widthScale <= 1.1 {   // 虽然此时图片高度大于屏幕高度，但是高的不明显(倍数不超过1.51.根据qq中的相册反复试验得出)。所以不看成长图
-                size.height = givenBounds.size.height;
-                size.width = size.height / scale;
-                x = (givenBounds.size.width - size.width) * 0.5;
-            } else {
-                size.width = givenBounds.size.width;
-                size.height = givenBounds.size.width * scale;
-            }
-        }
-        
-        var y:CGFloat = 0;
-        if size.height < givenBounds.size.height {
-            y = (givenBounds.height - size.height) * 0.5;
-        }
-        
-        let rect = CGRect(x: x, y: y, width: size.width, height: size.height);
-        
-        return rect;
-    }
-
-    
-}

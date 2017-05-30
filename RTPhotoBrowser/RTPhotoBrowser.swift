@@ -11,19 +11,18 @@ import Kingfisher
 
 protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     func numberOfPhotosForBrowser() -> Int;
-    func photoForIndex(index: Int) -> RTPhotoModelDelegate;
+    func photoForIndex(index: Int) -> (picUrl:String, originalPicUrl:String?);
     // optional
     func thumnailView(atIndex index: Int) -> UIView?
-    func placeholderImage(atIndex index:Int) -> UIImage?
+    func previewImage(atIndex index:Int) -> UIImage?
 }
 
 extension RTPhotoBrowserDelegate {
-    
     func thumnailView(atIndex index: Int) -> UIView? {
         return nil;
     }
     
-    func placeholderImage(atIndex index:Int) -> UIImage? {
+    func previewImage(atIndex index:Int) -> UIImage? {
         return nil;
     }
 }
@@ -210,8 +209,12 @@ class RTPhotoBrowser: UIViewController {
         
         page.pageIndex = index;
         page.frame = pageFrameAtIndex(index: index, givenBounds: self.container.bounds);
-        let placeHolderImge = self.delegate?.placeholderImage(atIndex: index);
-        page.setPhoto(photo: photoAtIndex(index: index), placeHolderImage: placeHolderImge);
+        var placeHolderImage = self.delegate?.previewImage(atIndex: index);
+        if placeHolderImage == nil {
+            placeHolderImage = RTPhotoBrowserConfig.defaulConfig.placeHolderImage;
+        }
+        
+        page.setPhoto(photo: photoAtIndex(index: index), placeHolderImage: placeHolderImage);
     }
     
     func pageExistAtIndex(index:Int) -> Bool {
@@ -236,8 +239,8 @@ class RTPhotoBrowser: UIViewController {
         let photo = result.first;
         if photo == nil {
             if let delegate = self.delegate {
-                let model = delegate.photoForIndex(index: index);
-                let photoModel = RTPhotoModel(model: model);
+                let tupel = delegate.photoForIndex(index: index);
+                let photoModel = RTPhotoModel(picUrls: tupel);
                 photoModel.index = index;
                 self.photoArray.append(photoModel);
                 return photoModel;

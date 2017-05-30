@@ -65,12 +65,13 @@ class PhotoSelectVC: UIViewController {
             return model;
         }
         
-        photos = highQualityUrls.map { (url) -> PhotoModel in
-            let model = PhotoModel();
-            model.highQualityUrl = url;
+        photos = photos.enumerated().map({ (index, model) -> PhotoModel in
+            model.highQualityUrl = highQualityUrls[index];
+            
             return model;
-        }
-
+        })
+        
+        
     }
     
     deinit {
@@ -125,14 +126,15 @@ extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PhotoSelectVC: RTPhotoBrowserDelegate {    
+extension PhotoSelectVC: RTPhotoBrowserDelegate {
     func numberOfPhotosForBrowser() -> Int {
         return self.photos.count;
     }
     
     
-    func photoForIndex(index: Int) -> RTPhotoModelDelegate {
-        return self.photos[index];
+    func photoForIndex(index: Int) -> (picUrl:String, originalPicUrl:String?) {
+        let photo = self.photos[index];
+        return (photo.picUrl, photo.highQualityUrl);
     }
     
     func thumnailView(atIndex index: Int) -> UIView? {
@@ -140,7 +142,7 @@ extension PhotoSelectVC: RTPhotoBrowserDelegate {
         return cell?.imageView;
     }
     
-    func placeholderImage(atIndex index: Int) -> UIImage? {
+    func previewImage(atIndex index: Int) -> UIImage? {
         let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ImageCell;
         return cell?.imageView.image;
     }

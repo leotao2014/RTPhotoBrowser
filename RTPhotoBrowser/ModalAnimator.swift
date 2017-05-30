@@ -35,8 +35,6 @@ class ModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         guard let startView = self.startView, let scaleView = self.scaleView else { return  };
         
-        
-        
         let startFrame = startView.convert(startView.bounds, to: containerView);
         // 如果finalView为空则做fade动画
         var endFrame = startFrame;

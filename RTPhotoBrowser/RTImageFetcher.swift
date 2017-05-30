@@ -24,19 +24,19 @@ class RTImageFetcher: NSObject {
     weak var delegate:RTImageFetchDelegate?
     
     func fetchImage(photo:RTPhotoModel) {
+        var downloadUrlString:String;
         
-        
-        guard let url = URL(string:photo.picUrl) else {
-            return
-        };
+        if photo.viewOriginalPic {
+            downloadUrlString = photo.originalPicUrl!;
+        }
+        downloadUrlString = photo.picUrl;
+        guard let url = URL(string: downloadUrlString) else { return  };
         
         if url.scheme?.lowercased() == "assets-library" {   // 相册图片
             fetchImageFromSandBox(photo: photo, url: url);
         } else if url.isFileURL {   // 沙盒图片
             fetchImageFromSandBox(photo: photo, url: url);
         } else {    // 网络图片
-            
-            
             fetchImageFromNetwork(photo: photo, url: url);
         }
     }

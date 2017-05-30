@@ -13,21 +13,30 @@ enum RTImageDownloadPriority {
     case low
     case cancel
 }
-
-protocol RTPhotoModelDelegate: NSObjectProtocol {
-    var picUrl:String {get set};
-    var highQualityUrl:String? {get set};
-}
-
 class RTPhotoModel: NSObject {
-    var picUrl:String     // 图片地址
+    var picUrl:String = "";     // 图片地址
     var originalPicUrl:String?
     
     var downloadPriority = RTImageDownloadPriority.high
     var index:Int = 0;
+    var viewOriginalPic:Bool {
+        get {
+            guard let ogUrl = originalPicUrl else { return false }
+            let cacheKey = UserDefaults.standard.object(forKey: ogUrl);
+            return cacheKey != nil;
+        }
+        
+        set {
+            if let url = originalPicUrl {
+                UserDefaults.standard.set("true", forKey: url);
+            }
+        }
+    }
     
-    init(model:RTPhotoModelDelegate) {
-        self.picUrl = model.picUrl;
-        self.originalPicUrl = model.highQualityUrl;
+    init(picUrls: (picUrl:String, originalPicUrl:String?)) {
+        super.init();
+        
+        picUrl = picUrls.picUrl;
+        originalPicUrl = picUrls.originalPicUrl;
     }
 }

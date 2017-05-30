@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoModel: NSObject, RTPhotoModelDelegate {
+class PhotoModel: NSObject {
     var picUrl: String = "";
     var highQualityUrl: String?
 }

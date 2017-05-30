@@ -151,7 +151,9 @@ extension RTImagePage {
     func imageLoadFail(error:Error?) {
         print(#function);
         self.progressView.isHidden = true;
-        self.setImage(image: UIImage(named: "fail")!, showProgress: false);
+        if let failImage = RTPhotoBrowserConfig.defaulConfig.loadFailImage {
+            self.setImage(image: failImage, showProgress: false);
+        }
     }
     
     func updateImageLoadProgress(progress:CGFloat) {

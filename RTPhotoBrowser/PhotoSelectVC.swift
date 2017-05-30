@@ -126,27 +126,26 @@ extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension PhotoSelectVC: RTPhotoBrowserDelegate {
-    func numberOfPhotosForBrowser() -> Int {
+    func rt_numberOfPhotosForBrowser(browser: RTPhotoBrowser) -> Int {
         return self.photos.count;
     }
     
-    
-    func photoForIndex(index: Int) -> (picUrl:String, originalPicUrl:String?) {
+    func rt_picUrlsForIndex(index: Int, browser: RTPhotoBrowser) -> (picUrl: String, originalPicUrl: String?) {
         let photo = self.photos[index];
         return (photo.picUrl, photo.highQualityUrl);
     }
     
-    func thumnailView(atIndex index: Int) -> UIView? {
+    func rt_thumnailView(atIndex index: Int, browser: RTPhotoBrowser) -> UIView? {
         let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ImageCell;
         return cell?.imageView;
     }
     
-    func previewImage(atIndex index: Int) -> UIImage? {
+    func rt_previewImage(atIndex index: Int, browser: RTPhotoBrowser) -> UIImage? {
         let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ImageCell;
         return cell?.imageView.image;
     }
     
-    func heightForFooterView(atIndex index: Int, browser: RTPhotoBrowser) -> CGFloat {
+    func rt_heightForFooterView(atIndex index: Int, browser: RTPhotoBrowser) -> CGFloat {
         if index % 2 == 0 {
             return 88;
         } else {

@@ -7,32 +7,31 @@
 //
 
 import UIKit
-import Kingfisher
 
 protocol RTPhotoBrowserDelegate : NSObjectProtocol {
-    func numberOfPhotosForBrowser() -> Int;
-    func photoForIndex(index: Int) -> (picUrl:String, originalPicUrl:String?);
+    func rt_numberOfPhotosForBrowser(browser:RTPhotoBrowser) -> Int;
+    func rt_picUrlsForIndex(index: Int, browser:RTPhotoBrowser) -> (picUrl:String, originalPicUrl:String?);
     // optional
-    func thumnailView(atIndex index: Int) -> UIView?
-    func previewImage(atIndex index:Int) -> UIImage?
-    func footerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
-    func heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
-    func headerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
-    func heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
-    func pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser);
-    func imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser);
+    func rt_thumnailView(atIndex index: Int, browser:RTPhotoBrowser) -> UIView?
+    func rt_previewImage(atIndex index:Int, browser:RTPhotoBrowser) -> UIImage?
+    func rt_footerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
+    func rt_heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
+    func rt_headerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
+    func rt_heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
+    func rt_pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser);
+    func rt_imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser);
 }
 
 extension RTPhotoBrowserDelegate {
-    func thumnailView(atIndex index: Int) -> UIView? {
+    func rt_thumnailView(atIndex index: Int, browser:RTPhotoBrowser) -> UIView? {
         return nil;
     }
     
-    func previewImage(atIndex index:Int) -> UIImage? {
+    func rt_previewImage(atIndex index:Int, browser:RTPhotoBrowser) -> UIImage? {
         return nil;
     }
     
-    func footerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
+    func rt_footerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
         let footer = RTFooterView(frame: .zero);
         footer.displayOriginalPicClosure = { [weak browser] in
             browser?.setNeedsDisplayOriginalPic();
@@ -41,22 +40,22 @@ extension RTPhotoBrowserDelegate {
         return footer;
     }
     
-    func heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
+    func rt_heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
         return RTPhotoBrowserConfig.defaulConfig.footerHeight;
     }
     
     
-    func headerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
+    func rt_headerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
         let header = RTHeaderView();
         return header;
     }
     
-    func heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
+    func rt_heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
         return RTPhotoBrowserConfig.defaulConfig.headerHeight;
     }
 
     
-    func pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser) {
+    func rt_pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser) {
         let originalImage = browser.originalImage(atIndex: index);
         let existOriginalImage = originalImage != nil;
         
@@ -83,12 +82,12 @@ extension RTPhotoBrowserDelegate {
         }
         
         if let header = browser.browserHeader as? RTHeaderView {
-            header.contentLabel.text = "\(index + 1)/\(numberOfPhotosForBrowser())";
+            header.contentLabel.text = "\(index + 1)/\(rt_numberOfPhotosForBrowser(browser: browser))";
             header.setNeedsLayout();
         }
     }
     
-    func imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser) {
+    func rt_imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser) {
         let originalImage = browser.originalImage(atIndex: browser.currentVisiblePageIndex);
         let existOriginalImage = originalImage != nil;
         
@@ -151,7 +150,7 @@ class RTPhotoBrowser: UIViewController {
     
     fileprivate var photoCounts:Int  {
         if let delegate = self.delegate {
-            let photoCount = delegate.numberOfPhotosForBrowser();
+            let photoCount = delegate.rt_numberOfPhotosForBrowser(browser: self);
             return photoCount;
         }
         
@@ -216,12 +215,18 @@ class RTPhotoBrowser: UIViewController {
     
     deinit {
         print(#function);
-        ImageCache.default.clearMemoryCache();
+        RTImageFetcher.fetcher.clearMemoryCache();
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+        RTImageFetcher.fetcher.clearMemoryCache();
+        self.photoArray.forEach { (model) in
+            if model.viewOriginalPic {
+                model.viewOriginalPic = false;
+            }
+        }
     }
 // MARK:PublicMethods
     class func show(initialIndex: Int, delegate:RTPhotoBrowserDelegate, prsentedVC:UIViewController) -> RTPhotoBrowser {
@@ -277,15 +282,15 @@ class RTPhotoBrowser: UIViewController {
         
         self.view.addSubview(self.container);
         
-        if let footer = self.delegate?.footerViewForBrowser(browser: self) {
-            let footerHeight =  self.delegate!.heightForFooterView(atIndex: currentIndex, browser: self);
+        if let footer = self.delegate?.rt_footerViewForBrowser(browser: self) {
+            let footerHeight =  self.delegate!.rt_heightForFooterView(atIndex: currentIndex, browser: self);
             footer.frame = CGRect(x: 0, y: self.view.bounds.height - footerHeight, width: self.view.bounds.width, height: footerHeight);
             self.view.addSubview(footer);
             self.browserFooter = footer;
         }
         
-        if let header = self.delegate?.headerViewForBrowser(browser: self) {
-            let headerHeight =  self.delegate!.heightForHeaderView(atIndex: currentIndex, browser: self);
+        if let header = self.delegate?.rt_headerViewForBrowser(browser: self) {
+            let headerHeight =  self.delegate!.rt_heightForHeaderView(atIndex: currentIndex, browser: self);
             header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: headerHeight);
             self.view.addSubview(header);
             self.browserHeader = header;
@@ -300,7 +305,7 @@ class RTPhotoBrowser: UIViewController {
         let leftIndex = ((self.container.bounds.minX + interval) / width).rtIntValue;
         let rightIndex = ((self.container.bounds.maxX - interval) / width).rtIntValue;
         
-        let totalCount = self.delegate?.numberOfPhotosForBrowser() ?? 0;
+        let totalCount = self.delegate?.rt_numberOfPhotosForBrowser(browser: self) ?? 0;
         guard leftIndex >= 0 && rightIndex < totalCount else {
             return;
         }
@@ -342,7 +347,7 @@ class RTPhotoBrowser: UIViewController {
         
         page.pageIndex = index;
         page.frame = pageFrameAtIndex(index: index, givenBounds: self.container.bounds);
-        var placeHolderImage = self.delegate?.previewImage(atIndex: index);
+        var placeHolderImage = self.delegate?.rt_previewImage(atIndex: index, browser: self);
         if placeHolderImage == nil {
             placeHolderImage = RTPhotoBrowserConfig.defaulConfig.placeHolderImage;
         }
@@ -372,7 +377,7 @@ class RTPhotoBrowser: UIViewController {
         let photo = result.first;
         if photo == nil {
             if let delegate = self.delegate {
-                let tupel = delegate.photoForIndex(index: index);
+                let tupel = delegate.rt_picUrlsForIndex(index: index, browser: self);
                 let photoModel = RTPhotoModel(picUrls: tupel);
                 photoModel.index = index;
                 self.photoArray.append(photoModel);
@@ -405,12 +410,12 @@ class RTPhotoBrowser: UIViewController {
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
         if let delegate = delegate {
-            delegate.pageDidAppear(atIndex: currentIndex, browser: self);
+            delegate.rt_pageDidAppear(atIndex: currentIndex, browser: self);
         }
         
         if let footer = self.browserFooter {
             let previousFooterH = footer.frame.height;
-            let footerHeight =  self.delegate!.heightForFooterView(atIndex: currentIndex, browser: self);
+            let footerHeight =  self.delegate!.rt_heightForFooterView(atIndex: currentIndex, browser: self);
             if previousFooterH != footerHeight || footer.frame.origin.y == self.view.bounds.height {
                 footer.frame = CGRect(x: 0, y: self.view.bounds.height - footerHeight, width: self.view.bounds.width, height: footerHeight);
             }
@@ -418,7 +423,7 @@ class RTPhotoBrowser: UIViewController {
         
         if let header = self.browserHeader {
             let previousHeaderH = header.frame.height;
-            let headerHeight =  self.delegate!.heightForHeaderView(atIndex: currentIndex, browser: self);
+            let headerHeight =  self.delegate!.rt_heightForHeaderView(atIndex: currentIndex, browser: self);
             if previousHeaderH != headerHeight {
                 header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: headerHeight);
             }
@@ -458,7 +463,7 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
         
         
         if let delegate = self.delegate {
-            delegate.imageDidLoaded(atIndex: photoModel.index, browser: self);
+            delegate.rt_imageDidLoaded(atIndex: photoModel.index, browser: self);
         }
     }
     
@@ -480,7 +485,7 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
 extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.present = true;
-        animator.startView = self.delegate?.thumnailView(atIndex: currentIndex);
+        animator.startView = self.delegate?.rt_thumnailView(atIndex: currentIndex, browser: self);
         animator.scaleView = scaleView;
         animator.finalView = presentFinalView;
         
@@ -490,14 +495,14 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.present = true;
         animator.startView = self.visiblePages.first?.imageView;
-        animator.finalView = self.delegate?.thumnailView(atIndex: currentIndex);
+        animator.finalView = self.delegate?.rt_thumnailView(atIndex: currentIndex, browser: self);
         animator.scaleView = scaleView;
         
         if let presentController = self.presentationController as? RTPresentationController {
             // 将之前的需要隐藏的View更新成不隐藏状态
             presentController.viewNeedHidden?.isHidden = false;
             // 更新下需要隐藏的View
-            presentController.viewNeedHidden = self.delegate?.thumnailView(atIndex: currentIndex);
+            presentController.viewNeedHidden = self.delegate?.rt_thumnailView(atIndex: currentIndex, browser: self);
         }
         
         return animator;
@@ -505,7 +510,7 @@ extension RTPhotoBrowser: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         let presentaionController: RTPresentationController = RTPresentationController(presentedViewController: presented, presenting: presenting)
-        presentaionController.viewNeedHidden = self.delegate?.thumnailView(atIndex: currentIndex);
+        presentaionController.viewNeedHidden = self.delegate?.rt_thumnailView(atIndex: currentIndex, browser: self);
 
         return presentaionController;
     }

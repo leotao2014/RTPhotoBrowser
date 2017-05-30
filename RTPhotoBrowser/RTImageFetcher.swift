@@ -105,4 +105,8 @@ class RTImageFetcher: NSObject {
         return cacheImage;
     }
     
+    func clearMemoryCache() {
+        ImageCache.default.clearMemoryCache();
+    }
+    
 }

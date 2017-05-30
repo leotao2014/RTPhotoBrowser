@@ -41,4 +41,10 @@ class RTPresentationController: UIPresentationController {
             self.viewNeedHidden?.isHidden = false;
         })
     }
+    
+    override func dismissalTransitionDidEnd(_ completed: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.presentingViewController.setNeedsStatusBarAppearanceUpdate();
+        }
+    }
 }

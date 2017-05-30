@@ -14,4 +14,6 @@ class RTPhotoBrowserConfig {
     
     var placeHolderImage = UIImage(named: "rt-placeholder");
     var loadFailImage = UIImage(named: "rt-fail");
+    var footerHeight:CGFloat = 49.0;
+    var headerHeight:CGFloat = 64.0;
 }

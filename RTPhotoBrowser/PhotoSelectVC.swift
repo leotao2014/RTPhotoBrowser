@@ -74,6 +74,10 @@ class PhotoSelectVC: UIViewController {
         
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default;
+    }
+    
     deinit {
         ImageCache.default.clearMemoryCache();
         print("dealloc - PhotoSelectVC");
@@ -82,12 +86,7 @@ class PhotoSelectVC: UIViewController {
 
 extension PhotoSelectVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let browser = RTPhotoBrowser();
-        browser.delegate = self;
-        browser.currentIndex = indexPath.item;
-        browser.modalPresentationStyle = .custom;
-        browser.transitioningDelegate = browser;
-        self.present(browser, animated: true, completion: nil);
+        let _ = RTPhotoBrowser.show(initialIndex: indexPath.item, delegate: self, prsentedVC: self);
     }
 }
 
@@ -145,5 +144,13 @@ extension PhotoSelectVC: RTPhotoBrowserDelegate {
     func previewImage(atIndex index: Int) -> UIImage? {
         let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ImageCell;
         return cell?.imageView.image;
+    }
+    
+    func heightForFooterView(atIndex index: Int, browser: RTPhotoBrowser) -> CGFloat {
+        if index % 2 == 0 {
+            return 88;
+        } else {
+            return 150;
+        }
     }
 }

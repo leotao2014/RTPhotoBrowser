@@ -15,6 +15,12 @@ protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     // optional
     func thumnailView(atIndex index: Int) -> UIView?
     func previewImage(atIndex index:Int) -> UIImage?
+    func footerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
+    func heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
+    func headerViewForBrowser(browser:RTPhotoBrowser) -> UIView?;
+    func heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
+    func pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser);
+    func imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser);
 }
 
 extension RTPhotoBrowserDelegate {
@@ -24,6 +30,72 @@ extension RTPhotoBrowserDelegate {
     
     func previewImage(atIndex index:Int) -> UIImage? {
         return nil;
+    }
+    
+    func footerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
+        let footer = RTFooterView(frame: .zero);
+        footer.displayOriginalPicClosure = { [weak browser] in
+            browser?.setNeedsDisplayOriginalPic();
+        };
+        
+        return footer;
+    }
+    
+    func heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
+        return RTPhotoBrowserConfig.defaulConfig.footerHeight;
+    }
+    
+    
+    func headerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
+        let header = RTHeaderView();
+        return header;
+    }
+    
+    func heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
+        return RTPhotoBrowserConfig.defaulConfig.headerHeight;
+    }
+
+    
+    func pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser) {
+        let originalImage = browser.originalImage(atIndex: index);
+        let existOriginalImage = originalImage != nil;
+        
+        let contentArray = ["冰与火之歌-提里昂兰尼斯特",
+                            "冰与火之歌-囧斯诺",
+                            "冰与火之歌-二丫斯塔克",
+                            "婚姻起步价戳中多少男人的泪点",
+                            "卡哇伊少女",
+                            "知乎上的49条神回答，针针见血，看完整个人通透多了",
+                            "华大基因楼顶看梧桐山的云",
+                            "一位模特",
+                            "不知道是啥子东西，壁画?",
+                            "健客APP的个人健康报告UI图",
+                            "拍的MacBook Air",
+                            "qq截图1",
+                            "qq截图2"
+        ];
+        print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
+        if let footer = browser.browserFooter as? RTFooterView {
+            footer.contentLabel.text = contentArray[index];
+            footer.btn.isHidden = true;
+            footer.btn.isHidden = existOriginalImage;
+            footer.setNeedsLayout();
+        }
+        
+        if let header = browser.browserHeader as? RTHeaderView {
+            header.contentLabel.text = "\(index + 1)/\(numberOfPhotosForBrowser())";
+            header.setNeedsLayout();
+        }
+    }
+    
+    func imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser) {
+        let originalImage = browser.originalImage(atIndex: browser.currentVisiblePageIndex);
+        let existOriginalImage = originalImage != nil;
+        
+        print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
+        if let footer = browser.browserFooter as? RTFooterView {
+            footer.btn.isHidden = existOriginalImage;
+        }
     }
 }
 
@@ -37,11 +109,15 @@ enum RTPhotoBrowserShowStyle {
 let gap:CGFloat = 5.0;
 
 class RTPhotoBrowser: UIViewController {
-    
     var showStyle: RTPhotoBrowserShowStyle = .weibo;
-    var currentIndex = 0;
+    var currentVisiblePageIndex:Int {
+        return currentIndex;
+    }
+    fileprivate var currentIndex = 0;
     
     weak var delegate:RTPhotoBrowserDelegate?
+    weak var browserFooter:UIView?
+    weak var browserHeader:UIView?
     
     fileprivate let animator = ModalAnimator();
     fileprivate var photoArray:[RTPhotoModel] = [];
@@ -125,12 +201,17 @@ class RTPhotoBrowser: UIViewController {
         commonSetup();
         setupSubviews();
         layoutImagePages();
+        didStartViewPage(atIndex: currentIndex);
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         
         viewActive = true;
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent;
     }
     
     deinit {
@@ -142,9 +223,47 @@ class RTPhotoBrowser: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+// MARK:PublicMethods
+    class func show(initialIndex: Int, delegate:RTPhotoBrowserDelegate, prsentedVC:UIViewController) -> RTPhotoBrowser {
+        let browser = RTPhotoBrowser();
+        browser.delegate = delegate;
+        browser.currentIndex = initialIndex;
+        browser.modalPresentationStyle = .custom;
+        browser.transitioningDelegate = browser;
+        prsentedVC.present(browser, animated: true, completion: nil);
+        
+        return browser;
+    }
+    
+    func setNeedsDisplayOriginalPic() {
+        if let photoModel = photoAtIndex(index: currentIndex), let page = pageAtIndex(index: currentIndex) {
+            photoModel.viewOriginalPic = true;
+            configurePage(page: page, atIndex: currentIndex);
+        }
+    }
+    
+    func originalImage(atIndex index: Int) -> UIImage? {
+        if let photo = photoAtIndex(index: index) {
+            let image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.originalPicUrl);
+            
+            return image;
+        }
+        
+        return nil;
+    }
+    
+    func image(atIndex index:Int) -> UIImage? {
+        if let photo = photoAtIndex(index: index) {
+            let image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.picUrl);
+            return image;
+        }
+        
+        return nil;
+    }
     
 // MARK:PrivateMethods
     private func commonSetup() {
+        self.setNeedsStatusBarAppearanceUpdate();
         RTImageFetcher.fetcher.delegate = self;
         self.view.backgroundColor = UIColor.clear;
     }
@@ -157,6 +276,20 @@ class RTPhotoBrowser: UIViewController {
         }
         
         self.view.addSubview(self.container);
+        
+        if let footer = self.delegate?.footerViewForBrowser(browser: self) {
+            let footerHeight =  self.delegate!.heightForFooterView(atIndex: currentIndex, browser: self);
+            footer.frame = CGRect(x: 0, y: self.view.bounds.height - footerHeight, width: self.view.bounds.width, height: footerHeight);
+            self.view.addSubview(footer);
+            self.browserFooter = footer;
+        }
+        
+        if let header = self.delegate?.headerViewForBrowser(browser: self) {
+            let headerHeight =  self.delegate!.heightForHeaderView(atIndex: currentIndex, browser: self);
+            header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: headerHeight);
+            self.view.addSubview(header);
+            self.browserHeader = header;
+        }
     }
     
     func layoutImagePages() {
@@ -271,6 +404,25 @@ class RTPhotoBrowser: UIViewController {
     
     func didStartViewPage(atIndex index:Int) {
         print(#function, index);
+        if let delegate = delegate {
+            delegate.pageDidAppear(atIndex: currentIndex, browser: self);
+        }
+        
+        if let footer = self.browserFooter {
+            let previousFooterH = footer.frame.height;
+            let footerHeight =  self.delegate!.heightForFooterView(atIndex: currentIndex, browser: self);
+            if previousFooterH != footerHeight || footer.frame.origin.y == self.view.bounds.height {
+                footer.frame = CGRect(x: 0, y: self.view.bounds.height - footerHeight, width: self.view.bounds.width, height: footerHeight);
+            }
+        }
+        
+        if let header = self.browserHeader {
+            let previousHeaderH = header.frame.height;
+            let headerHeight =  self.delegate!.heightForHeaderView(atIndex: currentIndex, browser: self);
+            if previousHeaderH != headerHeight {
+                header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: headerHeight);
+            }
+        }
     }
 }
 
@@ -305,6 +457,9 @@ extension RTPhotoBrowser: RTImageFetchDelegate {
         }
         
         
+        if let delegate = self.delegate {
+            delegate.imageDidLoaded(atIndex: photoModel.index, browser: self);
+        }
     }
     
     func imageDidFailLoad(error: Error?, photoModel: RTPhotoModel) {

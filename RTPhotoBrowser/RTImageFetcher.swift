@@ -28,8 +28,10 @@ class RTImageFetcher: NSObject {
         
         if photo.viewOriginalPic {
             downloadUrlString = photo.originalPicUrl!;
+        } else {
+            downloadUrlString = photo.picUrl;
         }
-        downloadUrlString = photo.picUrl;
+        
         guard let url = URL(string: downloadUrlString) else { return  };
         
         if url.scheme?.lowercased() == "assets-library" {   // 相册图片

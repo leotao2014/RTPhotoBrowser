@@ -69,7 +69,7 @@ class RTProgressView: UIView {
 }
 
 extension RTProgressView: RTProgressViewDelegate {
-    func setProgress(progress: CGFloat) {
+    func rt_setProgress(progress: CGFloat) {
         self.progress = progress;
     }
 }

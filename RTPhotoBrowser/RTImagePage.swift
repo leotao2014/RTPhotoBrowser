@@ -18,17 +18,33 @@ class RTImagePage: UIScrollView {
         return iv;
     }();
     
-    var progressView = RTProgressView();
+    var progressView:RTProgressViewDelegate!
     
     var singleTapHandler:(()->Void)?;
     var pageIndex:Int = 0;
     
     var photo:RTPhotoModel?
+    init(progressView: RTProgressViewDelegate) {
+        super.init(frame: .zero);
+        
+        guard (progressView as AnyObject).isKind(of: UIView.self) else {
+            assertionFailure("ProgressView must be a UIView");
+            return;
+        }
+        
+        self.progressView = progressView;
+        commonSetup();
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         
+        commonSetup();
+    }
+    
+    func commonSetup() {
         addSubview(imageView);
-        addSubview(progressView);
+        addSubview(progressView as! UIView);
         self.delegate = self;
         self.backgroundColor = UIColor.black;
     }
@@ -39,15 +55,15 @@ class RTImagePage: UIScrollView {
     
     func prepareForReuse() {
         self.imageView.image = nil;
-        self.progressView.isHidden = true;
-        self.progressView.progress = 0.02;
+        (self.progressView as! UIView).isHidden = true;
+        self.progressView.rt_setProgress(progress: 0.02);
     }
     
     func setPhoto(photo:RTPhotoModel?, placeHolderImage:UIImage?) {
         if let photo = photo {
             RTImageFetcher.fetcher.fetchImage(photo: photo);
             if self.imageView.image == nil {
-                self.progressView.isHidden = false;
+                (self.progressView as! UIView).isHidden = false;
                 layoutComponents();
                 if let placeHolderImage = placeHolderImage {
                     setImage(image: placeHolderImage, showProgress: true);
@@ -61,7 +77,7 @@ class RTImagePage: UIScrollView {
         print(#function, image);
         
         self.imageView.image = image;
-        self.progressView.isHidden = !showProgress;
+        (self.progressView as! UIView).isHidden = !showProgress;
         setupZoomScale();
         layoutComponents();
     }
@@ -70,7 +86,7 @@ class RTImagePage: UIScrollView {
         // progress的frame和image存不存在不相关
         let pWidth:CGFloat = kProgressViewWidth;
         let pHeight = pWidth;
-        progressView.frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
+        (self.progressView as! UIView).frame = CGRect(x: (self.bounds.width - pWidth) * 0.5, y: (self.bounds.height - pHeight) * 0.5, width: pWidth, height: pHeight);
         
         guard let image = self.imageView.image else {
             return;
@@ -148,7 +164,7 @@ class RTImagePage: UIScrollView {
 // MARK:ImageFetchHandle
 extension RTImagePage {
     func imageLoadFail(error:Error?) {
-        self.progressView.isHidden = true;
+        (self.progressView as! UIView).isHidden = true;
         if let failImage = RTPhotoBrowserConfig.defaulConfig.loadFailImage {
             setImage(image: failImage, showProgress: false);
         }
@@ -157,19 +173,23 @@ extension RTImagePage {
     func updateImageLoadProgress(progress:CGFloat) {
         let progress = min(max(0.02, progress), 1.0);
         if progress == 1.0 {
-            progressView.isHidden = true;
+            (self.progressView as! UIView).isHidden = true;
         } else {
-            progressView.isHidden = false;
+            (self.progressView as! UIView).isHidden = false;
         }
         
-        progressView.progress = progress;
+        progressView.rt_setProgress(progress: progress);
     }
 }
 
 // MARK:UIScrollViewDelegate
 extension RTImagePage: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.imageView;
+        if (self.progressView as! UIView).isHidden {
+            return self.imageView;
+        }
+        
+        return nil;
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

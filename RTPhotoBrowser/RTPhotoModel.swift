@@ -28,7 +28,7 @@ class RTPhotoModel: NSObject {
         
         set {
             if let url = originalPicUrl {
-                if viewOriginalPic {
+                if newValue {
                     UserDefaults.standard.set("true", forKey: url);
                 } else {
                     UserDefaults.standard.removeObject(forKey: url);

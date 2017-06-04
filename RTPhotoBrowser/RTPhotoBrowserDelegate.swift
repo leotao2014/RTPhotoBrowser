@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol RTProgressViewDelegate {
-    func setProgress(progress:CGFloat);
+    func rt_setProgress(progress:CGFloat);
 }
 
 protocol RTPhotoBrowserDelegate : NSObjectProtocol {
@@ -25,7 +25,7 @@ protocol RTPhotoBrowserDelegate : NSObjectProtocol {
     func rt_heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat;
     func rt_pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser);
     func rt_imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser);
-    func rt_progressViewForBrowser<T:RTProgressViewDelegate>(browser:RTPhotoBrowser) -> T where T:UIView;
+    func rt_progressViewForBrowser(browser:RTPhotoBrowser) -> RTProgressViewDelegate;
 }
 
 extension RTPhotoBrowserDelegate {
@@ -103,9 +103,9 @@ extension RTPhotoBrowserDelegate {
         }
     }
     
-    func rt_progressViewForBrowser<T>(browser: RTPhotoBrowser) -> T where T : UIView, T : RTProgressViewDelegate {
+    func rt_progressViewForBrowser(browser:RTPhotoBrowser) -> RTProgressViewDelegate {
         let progressView = RTProgressView();
         
-        return progressView as! T;
+        return progressView;
     }
 }

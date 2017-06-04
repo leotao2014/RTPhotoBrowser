@@ -232,7 +232,12 @@ class RTPhotoBrowser: UIViewController {
             if !pageExistAtIndex(index: i) {    // 当前页上没有page则执行取page逻辑
                 var page = dequePageFromRecycleSet();   // 先从缓存池中取
                 if page == nil {    // 没有取出则新建一个
-                    page = RTImagePage();
+                    guard let progressView = self.delegate?.rt_progressViewForBrowser(browser: self) else {
+                        assertionFailure("progressView must not be nil");
+                        return;
+                    }
+                    
+                    page = RTImagePage(progressView: progressView);
                     self.container.addSubview(page!);
                 } else {
                     page!.prepareForReuse();

@@ -74,6 +74,11 @@ class PhotoSelectVC: UIViewController {
         
     }
     
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        self.collectionView.frame = self.view.bounds;
+        self.collectionView.reloadData();
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default;
     }

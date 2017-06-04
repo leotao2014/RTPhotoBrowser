@@ -64,13 +64,28 @@ extension UIImage {
             let widthScale = self.size.width / givenBounds.width;
             let scale = self.size.height / self.size.width;
             
-            if heightScale > 1.0 && heightScale <= 1.51 && widthScale <= 1.1 {   // 虽然此时图片高度大于屏幕高度，但是高的不明显(倍数不超过1.51.根据qq中的相册反复试验得出)。所以不看成长图
-                size.height = givenBounds.size.height;
-                size.width = size.height / scale;
-                x = (givenBounds.size.width - size.width) * 0.5;
-            } else {
-                size.width = givenBounds.size.width;
-                size.height = givenBounds.size.width * scale;
+            if deviceOrientation == .portrait {
+                if heightScale > 1.0 && heightScale <= 1.51 && widthScale <= 1.1 {   // 虽然此时图片高度大于屏幕高度，但是高的不明显(倍数不超过1.51.根据qq中的相册反复试验得出)。所以不看成长图
+                    size.height = givenBounds.size.height;
+                    size.width = size.height / scale;
+                    x = (givenBounds.size.width - size.width) * 0.5;
+                } else {
+                    size.width = givenBounds.size.width;
+                    size.height = givenBounds.size.width * scale;
+                }
+
+            } else if deviceOrientation == .landscapeLeft || deviceOrientation == .landscapeRight {
+                let screenScale:CGFloat = UIScreen.main.bounds.width / UIScreen.main.bounds.height;
+                let imageScale = self.size.width / self.size.height;
+                
+                if imageScale > screenScale {
+                    size.width = givenBounds.size.width;
+                    size.height = size.width * (self.size.height / self.size.width);
+                } else {
+                    size.height = givenBounds.size.height;
+                    size.width = size.height * (self.size.width / self.size.height);
+                    x = (givenBounds.size.width - size.width) * 0.5;
+                }
             }
         }
         

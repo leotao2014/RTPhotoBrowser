@@ -388,6 +388,11 @@ class RTPhotoBrowser: UIViewController {
         self.recyclePages.forEach { (page) in
             page.isHidden = false;
         }
+        
+        // 旋转后更新遮罩View的frame
+        if let presentationController = self.presentationController as? RTPresentationController, let containerView = presentationController.containerView {
+            presentationController.maskView.frame = containerView.bounds;
+        }
     }
     
     override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {

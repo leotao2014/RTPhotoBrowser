@@ -14,17 +14,23 @@ class ImageCell: UICollectionViewCell {
     var imageUrl:String = "" {
         didSet {
             imageView.kf.setImage(with: URL(string:imageUrl), placeholder: nil, options: [], progressBlock: nil, completionHandler: nil);
+            
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        imageView.frame = self.contentView.bounds;
         self.contentView.addSubview(imageView);
         self.contentView.backgroundColor = UIColor(red: 92 / 255.0, green: 105 / 255.0, blue: 111 / 255.0, alpha: 1.0);
         imageView.clipsToBounds = true;
         imageView.contentMode = .scaleAspectFill;
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews();
+        
+        imageView.frame = self.contentView.bounds;
     }
     
     required init?(coder aDecoder: NSCoder) {

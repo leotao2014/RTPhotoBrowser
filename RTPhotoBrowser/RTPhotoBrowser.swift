@@ -25,6 +25,7 @@ class RTPhotoBrowser: UIViewController {
     fileprivate var visiblePages:Set<RTImagePage> = Set();
     fileprivate var recyclePages:Set<RTImagePage> = Set();
     fileprivate var viewActive = false;
+    fileprivate var viewRotating = false;
     
     // MARK:Modal动画相关属性 scaleView和presentFinalView
     fileprivate var scaleView:UIImageView? {
@@ -180,26 +181,36 @@ class RTPhotoBrowser: UIViewController {
     }
     
     private func setupSubviews() {
-        self.container.frame = frameForContainer;
-        self.container.contentSize = contentSizeForContainer;
-        if currentIndex != 0 {
-            self.container.setContentOffset(contentOffset(atIndex: currentIndex), animated: false);
-        }
-        
         self.view.addSubview(self.container);
         
         if let footer = self.delegate?.rt_footerViewForBrowser(browser: self) {
-            let footerHeight =  self.delegate!.rt_heightForFooterView(atIndex: currentIndex, browser: self);
-            footer.frame = CGRect(x: 0, y: self.view.bounds.height - footerHeight, width: self.view.bounds.width, height: footerHeight);
             self.view.addSubview(footer);
             self.browserFooter = footer;
         }
         
         if let header = self.delegate?.rt_headerViewForBrowser(browser: self) {
-            let headerHeight =  self.delegate!.rt_heightForHeaderView(atIndex: currentIndex, browser: self);
-            header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: headerHeight);
             self.view.addSubview(header);
             self.browserHeader = header;
+        }
+        
+        layoutContainer();
+    }
+    
+    func layoutContainer() {
+        self.container.frame = frameForContainer;
+        self.container.contentSize = contentSizeForContainer;
+        if currentIndex != 0 {
+            self.container.setContentOffset(contentOffset(atIndex: currentIndex), animated: false);
+            
+            if let header = self.browserHeader {
+                let headerHeight =  self.delegate!.rt_heightForHeaderView(atIndex: currentIndex, browser: self);
+                header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: headerHeight);
+            }
+            if let footer = self.browserFooter {
+                let footerHeight =  self.delegate!.rt_heightForFooterView(atIndex: currentIndex, browser: self);
+                footer.frame = CGRect(x: 0, y: self.view.bounds.height - footerHeight, width: self.view.bounds.width, height: footerHeight);
+            }
+           
         }
     }
     
@@ -250,6 +261,13 @@ class RTPhotoBrowser: UIViewController {
                 configurePage(page: page!, atIndex: i);
             }
         }
+    }
+    
+    func layoutVisiblePagesForRotate() {
+        self.visiblePages.forEach { (page) in
+            page.frame = pageFrameAtIndex(index: page.pageIndex, givenBounds: self.container.bounds);
+            page.setNeedsUpdateFrameForComponents();
+        };
     }
     
     func configurePage(page:RTImagePage, atIndex index:Int) {
@@ -341,11 +359,37 @@ class RTPhotoBrowser: UIViewController {
             }
         }
     }
+    
+    // MARK:视图的旋转处理
+    override var shouldAutorotate: Bool {
+        return RTPhotoBrowserConfig.defaulConfig.shouldSupportRotate;
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.allButUpsideDown;
+    }
+    
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        guard toInterfaceOrientation != .portraitUpsideDown && toInterfaceOrientation != .unknown else {
+            return;
+        }
+        
+        viewRotating = true;
+    }
+    
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        viewRotating = false;
+    }
+    
+    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        layoutContainer();
+        layoutVisiblePagesForRotate();
+    }
 }
 
 extension RTPhotoBrowser: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if viewActive {
+        if viewActive && viewRotating == false {
             layoutImagePages();
             
             var index = (scrollView.contentOffset.x / scrollView.bounds.width).rtIntValue;

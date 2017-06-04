@@ -38,6 +38,8 @@ extension RTPhotoBrowserDelegate {
     }
     
     func rt_footerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
+        return nil;
+        
         let footer = RTFooterView(frame: .zero);
         footer.displayOriginalPicClosure = { [weak browser] in
             browser?.setNeedsDisplayOriginalPic();
@@ -52,6 +54,8 @@ extension RTPhotoBrowserDelegate {
     
     
     func rt_headerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
+        return nil;
+        
         let header = RTHeaderView();
         return header;
     }

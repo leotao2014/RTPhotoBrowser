@@ -16,4 +16,5 @@ class RTPhotoBrowserConfig {
     var loadFailImage = UIImage(named: "rt-fail");
     var footerHeight:CGFloat = 49.0;
     var headerHeight:CGFloat = 64.0;
+    var shouldSupportRotate = true;
 }

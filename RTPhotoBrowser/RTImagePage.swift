@@ -78,6 +78,11 @@ class RTImagePage: UIScrollView {
         
         self.imageView.image = image;
         (self.progressView as! UIView).isHidden = !showProgress;
+        
+        setNeedsUpdateFrameForComponents();
+    }
+    
+    func setNeedsUpdateFrameForComponents() {
         setupZoomScale();
         layoutComponents();
     }
@@ -157,6 +162,12 @@ class RTImagePage: UIScrollView {
             let zoomY = convertPoint.y - zoomHeigh * 0.5;
             let zoomRect = CGRect(x: zoomX, y: zoomY, width: zoomWidth, height: zoomHeigh);
             self.zoom(to: zoomRect, animated: true);
+        }
+    }
+    
+    override var frame: CGRect {
+        willSet {
+            print("现在的frame是\(frame)frame将要改变成\(newValue)")
         }
     }
 }

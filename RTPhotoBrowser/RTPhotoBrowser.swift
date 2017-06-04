@@ -44,7 +44,7 @@ class RTPhotoBrowser: UIViewController {
             let containerBounds = frameForContainer;
             var pageBounds = pageFrameAtIndex(index: currentIndex, givenBounds: containerBounds);
             pageBounds.origin = .zero;
-            imageView.frame = image.rt_calculateImageViewframe(givenBounds: pageBounds);
+            imageView.frame = image.rt_calculateImageViewframe(givenBounds: pageBounds, deviceOrientation: UIDevice.current.orientation);
         }
         
         return imageView;
@@ -268,6 +268,11 @@ class RTPhotoBrowser: UIViewController {
             page.frame = pageFrameAtIndex(index: page.pageIndex, givenBounds: self.container.bounds);
             page.setNeedsUpdateFrameForComponents();
         };
+        
+        // 布局旋转的时候隐藏不需要显示的View然后在旋转完后恢复不隐藏 不然会在旋转的时候看的到其他的View，影响体验
+        self.recyclePages.forEach { (page) in
+            page.isHidden = true;
+        }
     }
     
     func configurePage(page:RTImagePage, atIndex index:Int) {
@@ -379,6 +384,10 @@ class RTPhotoBrowser: UIViewController {
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         viewRotating = false;
+        
+        self.recyclePages.forEach { (page) in
+            page.isHidden = false;
+        }
     }
     
     override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {

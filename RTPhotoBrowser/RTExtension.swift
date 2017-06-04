@@ -53,7 +53,7 @@ extension UIColor {
 }
 
 extension UIImage {
-    func rt_calculateImageViewframe(givenBounds:CGRect) -> CGRect {
+    func rt_calculateImageViewframe(givenBounds:CGRect, deviceOrientation:UIDeviceOrientation) -> CGRect {
         var x:CGFloat = 0;
         var size:CGSize = .zero;
         if self.size.width < givenBounds.size.width && self.size.height < givenBounds.size.height {

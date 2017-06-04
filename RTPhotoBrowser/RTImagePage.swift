@@ -97,7 +97,7 @@ class RTImagePage: UIScrollView {
             return;
         }
         
-        self.imageView.frame = image.rt_calculateImageViewframe(givenBounds: self.bounds);
+        self.imageView.frame = image.rt_calculateImageViewframe(givenBounds: self.bounds, deviceOrientation: UIDevice.current.orientation);
         self.contentSize = self.imageView.frame.size;
     }
     

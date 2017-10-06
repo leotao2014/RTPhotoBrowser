@@ -119,8 +119,9 @@ class RTImagePage: UIScrollView {
         
         let width = min(self.frame.width, self.frame.height);
         
-        self.maximumZoomScale = (((image.size.width) / UIScreen.main.scale) * 3) / width;
-        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {  // 横屏状态
+        // 最大放大倍数最少要是1.2倍
+        self.maximumZoomScale = max(1.2, (((image.size.width) / UIScreen.main.scale) * 3) / width);
+        if UIApplication.shared.statusBarOrientation.isLandscape {  // 横屏状态
             if self.imageView.frame.size.height / self.imageView.frame.size.width > 2.0 {
                 self.maximumZoomScale = max(self.maximumZoomScale, self.frame.size.width / self.imageView.frame.size.width);
             }
@@ -161,8 +162,9 @@ class RTImagePage: UIScrollView {
         if self.zoomScale > self.minimumZoomScale {
             self.setZoomScale(self.minimumZoomScale, animated: true);
         } else {
-            let zoomCoefficient:CGFloat = UIDevice.current.orientation == .portrait ? 0.5 : 1.0;
-            let zoomScale = (self.maximumZoomScale + self.minimumZoomScale) * zoomCoefficient;
+            let zoomCoefficient:CGFloat = UIApplication.shared.statusBarOrientation.isLandscape ? 1.0 : 0.5;
+            // 放大倍数最小要为1.2倍
+            let zoomScale = max(1.2, (self.maximumZoomScale + self.minimumZoomScale) * zoomCoefficient);
             let zoomWidth = self.frame.size.width / zoomScale;
             let zoomHeigh = self.frame.size.height / zoomScale;
             let zoomX = convertPoint.x - zoomWidth * 0.5;

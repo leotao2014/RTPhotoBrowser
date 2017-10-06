@@ -27,7 +27,7 @@ class RTFooterView: UIView {
         return label;
     }();
     
-    var displayOriginalPicClosure: ((Void) -> Void)?;
+    var displayOriginalPicClosure: (() -> Void)?;
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -73,7 +73,7 @@ class RTFooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func showOriginalPic() {
+    @objc func showOriginalPic() {
         if let closure = displayOriginalPicClosure {
             closure();
         }

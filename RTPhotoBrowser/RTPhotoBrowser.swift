@@ -14,21 +14,21 @@ class RTPhotoBrowser: UIViewController {
         return currentIndex;
     }
     
-    fileprivate var currentIndex = 0;
+    private var currentIndex = 0;
     
     weak var delegate:RTPhotoBrowserDelegate?
     weak var browserFooter:UIView?
     weak var browserHeader:UIView?
     
-    fileprivate let animator = ModalAnimator();
-    fileprivate var photoArray:[RTPhotoModel] = [];
-    fileprivate var visiblePages:Set<RTImagePage> = Set();
-    fileprivate var recyclePages:Set<RTImagePage> = Set();
-    fileprivate var viewActive = false;
-    fileprivate var viewRotating = false;
+    private let animator = ModalAnimator();
+    private var photoArray:[RTPhotoModel] = [];
+    private var visiblePages:Set<RTImagePage> = Set();
+    private var recyclePages:Set<RTImagePage> = Set();
+    private var viewActive = false;
+    private var viewRotating = false;
     
     // MARK:Modal动画相关属性 scaleView和presentFinalView
-    fileprivate var scaleView:UIImageView? {
+    private var scaleView:UIImageView? {
         let imageView = UIImageView();
         let photoModel = photoAtIndex(index: currentIndex);
         imageView.image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl);
@@ -38,7 +38,7 @@ class RTPhotoBrowser: UIViewController {
         return imageView;
     }
     
-    fileprivate var presentFinalView:UIImageView? {
+    private var presentFinalView:UIImageView? {
         let imageView = UIImageView();
         if let image = self.scaleView?.image {
             let containerBounds = frameForContainer;
@@ -51,7 +51,7 @@ class RTPhotoBrowser: UIViewController {
     }
 
     
-    fileprivate var photoCounts:Int  {
+    private var photoCounts:Int  {
         if let delegate = self.delegate {
             let photoCount = delegate.rt_numberOfPhotosForBrowser(browser: self);
             return photoCount;
@@ -63,18 +63,18 @@ class RTPhotoBrowser: UIViewController {
     
     
     // MARK: 计算属性
-    fileprivate var frameForContainer:CGRect {
+    private var frameForContainer:CGRect {
         let rect = CGRect(x: -gap, y: 0, width: self.view.bounds.width + 2.0 * gap, height: self.view.bounds.height);
         return rect;
     }
     
-    fileprivate var contentSizeForContainer:CGSize {
+    private var contentSizeForContainer:CGSize {
         let photoCount = photoCounts;
         let contentSize = CGSize(width:  photoCount.rtFloatValue * frameForContainer.width, height: 0);
         return contentSize;
     }
     
-    fileprivate lazy var container: UIScrollView = { [unowned self] in
+    private lazy var container: UIScrollView = { [unowned self] in
         let scrollView = UIScrollView();
         scrollView.isPagingEnabled = true;
         scrollView.showsHorizontalScrollIndicator = false;

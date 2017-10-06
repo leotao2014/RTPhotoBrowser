@@ -143,7 +143,7 @@ class RTImagePage: UIScrollView {
         }
     }
     
-    func handleSingleTap(touch:UITouch) {
+    @objc func handleSingleTap(touch:UITouch) {
         print(touch.tapCount);
         if let closure = self.singleTapHandler {
             closure();

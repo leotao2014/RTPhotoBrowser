@@ -90,9 +90,10 @@ class RTImageFetcher: NSObject {
         }
         
         var cacheImage: UIImage?
-        let result = KingfisherManager.shared.cache.isImageCached(forKey: url.cacheKey)
-        if result.cached, let cacheType = result.cacheType {
-            switch cacheType {
+        let result = KingfisherManager.shared.cache.imageCachedType(forKey: url.cacheKey);
+        
+        if result.cached {
+            switch result {
             case .memory:
                 cacheImage = KingfisherManager.shared.cache.retrieveImageInMemoryCache(forKey: url.cacheKey)
             case .disk:

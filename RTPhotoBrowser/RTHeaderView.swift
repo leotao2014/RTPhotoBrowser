@@ -25,7 +25,7 @@ class RTHeaderView: UIView {
         return label;
     }();
     
-    var displayOriginalPicClosure: ((Void) -> Void)?;
+    var displayOriginalPicClosure: (() -> Void)?;
     
     override init(frame: CGRect) {
         super.init(frame: frame);

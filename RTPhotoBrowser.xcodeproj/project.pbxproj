@@ -15,6 +15,8 @@
 		265A11511EDDC40400AAB822 /* RTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11501EDDC40400AAB822 /* RTExtension.swift */; };
 		265A11531EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11521EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift */; };
 		2695D6491EC8A839001AF0BB /* RTPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2695D6481EC8A839001AF0BB /* RTPresentationController.swift */; };
+		26A680001F87972E0003F8B4 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; };
+		26A680011F87972E0003F8B4 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		26AFC2081EB78E7800EB29D6 /* ModalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */; };
 		26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE21E6312620029DEE5 /* AppDelegate.swift */; };
 		26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE41E6312620029DEE5 /* ViewController.swift */; };
@@ -25,8 +27,6 @@
 		26DAC0031E6312620029DEE5 /* RTPhotoBrowserUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0021E6312620029DEE5 /* RTPhotoBrowserUITests.swift */; };
 		26DAC0111E6316130029DEE5 /* PhotoSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0101E6316130029DEE5 /* PhotoSelectVC.swift */; };
 		26DAC0131E6316670029DEE5 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0121E6316670029DEE5 /* ImageCell.swift */; };
-		26DAC0161E6318900029DEE5 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; };
-		26DAC0171E6318900029DEE5 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		26DAC01A1E631AB70029DEE5 /* RTPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC0191E631AB70029DEE5 /* RTPhotoModel.swift */; };
 		26ECD2C91E9A36AE00A2AF20 /* RTImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECD2C81E9A36AE00A2AF20 /* RTImageFetcher.swift */; };
 		26ECD2CB1E9A929A00A2AF20 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECD2CA1E9A929A00A2AF20 /* PhotoModel.swift */; };
@@ -52,13 +52,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		26DAC0181E6318900029DEE5 /* Embed Frameworks */ = {
+		26A680021F87972E0003F8B4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				26DAC0171E6318900029DEE5 /* Kingfisher.framework in Embed Frameworks */,
+				26A680011F87972E0003F8B4 /* Kingfisher.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,7 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26DAC0161E6318900029DEE5 /* Kingfisher.framework in Frameworks */,
+				26A680001F87972E0003F8B4 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +259,7 @@
 				26DABFDC1E6312620029DEE5 /* Frameworks */,
 				26DABFDD1E6312620029DEE5 /* Resources */,
 				26DAC0141E6318260029DEE5 /* ShellScript */,
-				26DAC0181E6318900029DEE5 /* Embed Frameworks */,
+				26A680021F87972E0003F8B4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -313,23 +313,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = leotao;
 				TargetAttributes = {
 					26DABFDE1E6312620029DEE5 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 2ASFUBQX4V;
+						DevelopmentTeam = CC6Q466FS8;
 						ProvisioningStyle = Automatic;
 					};
 					26DABFF21E6312620029DEE5 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 2ASFUBQX4V;
+						DevelopmentTeam = CC6Q466FS8;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 26DABFDE1E6312620029DEE5;
 					};
 					26DABFFD1E6312620029DEE5 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 2ASFUBQX4V;
+						DevelopmentTeam = CC6Q466FS8;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 26DABFDE1E6312620029DEE5;
 					};
@@ -485,7 +485,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -493,7 +495,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -534,7 +540,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -542,7 +550,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -571,7 +583,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				DEVELOPMENT_TEAM = CC6Q466FS8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -581,7 +593,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -589,7 +601,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				DEVELOPMENT_TEAM = CC6Q466FS8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -599,7 +611,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -608,7 +620,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				DEVELOPMENT_TEAM = CC6Q466FS8;
 				INFOPLIST_FILE = RTPhotoBrowserTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserTests;
@@ -623,7 +635,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				DEVELOPMENT_TEAM = CC6Q466FS8;
 				INFOPLIST_FILE = RTPhotoBrowserTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserTests;
@@ -637,7 +649,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				DEVELOPMENT_TEAM = CC6Q466FS8;
 				INFOPLIST_FILE = RTPhotoBrowserUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserUITests;
@@ -651,7 +663,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = 2ASFUBQX4V;
+				DEVELOPMENT_TEAM = CC6Q466FS8;
 				INFOPLIST_FILE = RTPhotoBrowserUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserUITests;

@@ -116,7 +116,8 @@ extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let col = 3;
         let width = (UIScreen.main.bounds.width - margin * (CGFloat(col) + 1.0)) / CGFloat(col);
-        let size = CGSize(width: width, height: width);
+    
+        let size = CGSize(width: floor(width) , height: floor(width));
         
         return size;
     }

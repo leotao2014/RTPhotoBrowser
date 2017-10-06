@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import RTPhotoBrowser
+
 
 class RTPhotoBrowserTests: XCTestCase {
     

@@ -44,7 +44,7 @@ class RTPhotoBrowser: UIViewController {
             let containerBounds = frameForContainer;
             var pageBounds = pageFrameAtIndex(index: currentIndex, givenBounds: containerBounds);
             pageBounds.origin = .zero;
-            imageView.frame = image.rt_calculateImageViewframe(givenBounds: pageBounds, deviceOrientation: UIDevice.current.orientation);
+            imageView.frame = image.rt_calculateImageViewframe(givenBounds: pageBounds, deviceOrientation: UIApplication.shared.statusBarOrientation);
         }
         
         return imageView;

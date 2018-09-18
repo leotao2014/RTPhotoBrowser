@@ -40,12 +40,12 @@ extension RTPhotoBrowserDelegate {
     func rt_footerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
         return nil;
         
-        let footer = RTFooterView(frame: .zero);
-        footer.displayOriginalPicClosure = { [weak browser] in
-            browser?.setNeedsDisplayOriginalPic();
-        };
-        
-        return footer;
+//        let footer = RTFooterView(frame: .zero);
+//        footer.displayOriginalPicClosure = { [weak browser] in
+//            browser?.setNeedsDisplayOriginalPic();
+//        };
+//
+//        return footer;
     }
     
     func rt_heightForFooterView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {
@@ -56,8 +56,8 @@ extension RTPhotoBrowserDelegate {
     func rt_headerViewForBrowser(browser:RTPhotoBrowser) -> UIView? {
         return nil;
         
-        let header = RTHeaderView();
-        return header;
+//        let header = RTHeaderView();
+//        return header;
     }
     
     func rt_heightForHeaderView(atIndex index:Int, browser:RTPhotoBrowser) -> CGFloat {

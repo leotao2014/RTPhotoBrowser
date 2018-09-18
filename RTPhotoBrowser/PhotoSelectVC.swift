@@ -127,7 +127,7 @@ extension PhotoSelectVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(10, 10, 0, 10);
+        return UIEdgeInsets.init(top: 10, left: 10, bottom: 0, right: 10);
     }
 }
 

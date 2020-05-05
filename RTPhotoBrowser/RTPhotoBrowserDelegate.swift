@@ -66,44 +66,50 @@ extension RTPhotoBrowserDelegate {
     
     
     func rt_pageDidAppear(atIndex index:Int, browser:RTPhotoBrowser) {
-        let originalImage = browser.originalImage(atIndex: index);
-        let existOriginalImage = originalImage != nil;
-        
-        let contentArray = ["冰与火之歌-提里昂兰尼斯特",
-                            "冰与火之歌-囧斯诺",
-                            "冰与火之歌-二丫斯塔克",
-                            "婚姻起步价戳中多少男人的泪点",
-                            "卡哇伊少女",
-                            "知乎上的49条神回答，针针见血，看完整个人通透多了",
-                            "华大基因楼顶看梧桐山的云",
-                            "一位模特",
-                            "不知道是啥子东西，壁画?",
-                            "健客APP的个人健康报告UI图",
-                            "拍的MacBook Air",
-                            "qq截图1",
-                            "qq截图2"
-        ];
-        print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
-        if let footer = browser.browserFooter as? RTFooterView {
-            footer.contentLabel.text = contentArray[index];
-            footer.btn.isHidden = true;
-            footer.btn.isHidden = existOriginalImage;
-            footer.setNeedsLayout();
-        }
-        
-        if let header = browser.browserHeader as? RTHeaderView {
-            header.contentLabel.text = "\(index + 1)/\(rt_numberOfPhotosForBrowser(browser: browser))";
-            header.setNeedsLayout();
+        browser.originalImage(atIndex: index) { (image) -> (Void) in
+            DispatchQueue.main.async {
+                let existOriginalImage = image != nil;
+                
+                let contentArray = ["冰与火之歌-提里昂兰尼斯特",
+                                    "冰与火之歌-囧斯诺",
+                                    "冰与火之歌-二丫斯塔克",
+                                    "婚姻起步价戳中多少男人的泪点",
+                                    "卡哇伊少女",
+                                    "知乎上的49条神回答，针针见血，看完整个人通透多了",
+                                    "华大基因楼顶看梧桐山的云",
+                                    "一位模特",
+                                    "不知道是啥子东西，壁画?",
+                                    "健客APP的个人健康报告UI图",
+                                    "拍的MacBook Air",
+                                    "qq截图1",
+                                    "qq截图2"
+                ];
+                print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
+                if let footer = browser.browserFooter as? RTFooterView {
+                    footer.contentLabel.text = contentArray[index];
+                    footer.btn.isHidden = true;
+                    footer.btn.isHidden = existOriginalImage;
+                    footer.setNeedsLayout();
+                }
+                
+                if let header = browser.browserHeader as? RTHeaderView {
+                    header.contentLabel.text = "\(index + 1)/\(self.rt_numberOfPhotosForBrowser(browser: browser))";
+                    header.setNeedsLayout();
+                }
+            }
         }
     }
     
     func rt_imageDidLoaded(atIndex index:Int, browser:RTPhotoBrowser) {
-        let originalImage = browser.originalImage(atIndex: browser.currentVisiblePageIndex);
-        let existOriginalImage = originalImage != nil;
-        
-        print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
-        if let footer = browser.browserFooter as? RTFooterView {
-            footer.btn.isHidden = existOriginalImage;
+        browser.originalImage(atIndex: index) { (image) -> (Void) in
+            DispatchQueue.main.async {
+                let existOriginalImage = image != nil;
+                
+                print("第\(index)位上原图是\(existOriginalImage ? "存在" : "不存在")");
+                if let footer = browser.browserFooter as? RTFooterView {
+                    footer.btn.isHidden = existOriginalImage;
+                }
+            }
         }
     }
     

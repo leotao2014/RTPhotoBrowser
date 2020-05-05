@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A4C90B1AE140C5708A59DCC /* Pods_RTPhotoBrowserTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68BD44877FA7ED851FC59094 /* Pods_RTPhotoBrowserTests.framework */; };
 		2614910D1EBF209B000E1CE1 /* RTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2614910C1EBF209B000E1CE1 /* RTProgressView.swift */; };
 		265A11491EDD753000AAB822 /* RTPhotoBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11481EDD753000AAB822 /* RTPhotoBrowserConfig.swift */; };
 		265A114B1EDD7BCB00AAB822 /* RTFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A114A1EDD7BCB00AAB822 /* RTFooterView.swift */; };
@@ -15,8 +16,6 @@
 		265A11511EDDC40400AAB822 /* RTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11501EDDC40400AAB822 /* RTExtension.swift */; };
 		265A11531EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265A11521EDDC4AA00AAB822 /* RTPhotoBrowserDelegate.swift */; };
 		2695D6491EC8A839001AF0BB /* RTPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2695D6481EC8A839001AF0BB /* RTPresentationController.swift */; };
-		26A680001F87972E0003F8B4 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; };
-		26A680011F87972E0003F8B4 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 26DAC0151E6318900029DEE5 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		26AFC2081EB78E7800EB29D6 /* ModalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AFC2071EB78E7800EB29D6 /* ModalAnimator.swift */; };
 		26DABFE31E6312620029DEE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE21E6312620029DEE5 /* AppDelegate.swift */; };
 		26DABFE51E6312620029DEE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DABFE41E6312620029DEE5 /* ViewController.swift */; };
@@ -32,6 +31,8 @@
 		26ECD2CB1E9A929A00A2AF20 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECD2CA1E9A929A00A2AF20 /* PhotoModel.swift */; };
 		26ED8FCF1E76F49300AB364E /* RTPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED8FCE1E76F49300AB364E /* RTPhotoBrowser.swift */; };
 		26ED8FD11E76F4CF00AB364E /* RTImagePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED8FD01E76F4CF00AB364E /* RTImagePage.swift */; };
+		E67EE031A83DF8F4D29779B3 /* Pods_RTPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1962516A4CBC0858BA794D4F /* Pods_RTPhotoBrowser.framework */; };
+		F09A9131AFA43DCEB02AD9B2 /* Pods_RTPhotoBrowser_RTPhotoBrowserUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2325763434FA10E482FE21D /* Pods_RTPhotoBrowser_RTPhotoBrowserUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,21 +52,9 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		26A680021F87972E0003F8B4 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				26A680011F87972E0003F8B4 /* Kingfisher.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		0194FDC0C7F033E2862DDFCC /* Pods-RTPhotoBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTPhotoBrowser.debug.xcconfig"; path = "Target Support Files/Pods-RTPhotoBrowser/Pods-RTPhotoBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		1962516A4CBC0858BA794D4F /* Pods_RTPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RTPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2614910C1EBF209B000E1CE1 /* RTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTProgressView.swift; sourceTree = "<group>"; };
 		265A11481EDD753000AAB822 /* RTPhotoBrowserConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTPhotoBrowserConfig.swift; sourceTree = "<group>"; };
 		265A114A1EDD7BCB00AAB822 /* RTFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTFooterView.swift; sourceTree = "<group>"; };
@@ -96,6 +85,13 @@
 		26ECD2CA1E9A929A00A2AF20 /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		26ED8FCE1E76F49300AB364E /* RTPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTPhotoBrowser.swift; sourceTree = "<group>"; };
 		26ED8FD01E76F4CF00AB364E /* RTImagePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTImagePage.swift; sourceTree = "<group>"; };
+		4D1225BAF996465D97072C84 /* Pods-RTPhotoBrowserTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTPhotoBrowserTests.debug.xcconfig"; path = "Target Support Files/Pods-RTPhotoBrowserTests/Pods-RTPhotoBrowserTests.debug.xcconfig"; sourceTree = "<group>"; };
+		68BD44877FA7ED851FC59094 /* Pods_RTPhotoBrowserTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RTPhotoBrowserTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2325763434FA10E482FE21D /* Pods_RTPhotoBrowser_RTPhotoBrowserUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RTPhotoBrowser_RTPhotoBrowserUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D446A226C7B69453EFE99B87 /* Pods-RTPhotoBrowser-RTPhotoBrowserUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTPhotoBrowser-RTPhotoBrowserUITests.debug.xcconfig"; path = "Target Support Files/Pods-RTPhotoBrowser-RTPhotoBrowserUITests/Pods-RTPhotoBrowser-RTPhotoBrowserUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		DC12E8A05E0E83E3928EA42D /* Pods-RTPhotoBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTPhotoBrowser.release.xcconfig"; path = "Target Support Files/Pods-RTPhotoBrowser/Pods-RTPhotoBrowser.release.xcconfig"; sourceTree = "<group>"; };
+		E5E786B42006C6842525A7F9 /* Pods-RTPhotoBrowserTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTPhotoBrowserTests.release.xcconfig"; path = "Target Support Files/Pods-RTPhotoBrowserTests/Pods-RTPhotoBrowserTests.release.xcconfig"; sourceTree = "<group>"; };
+		F0F9AC907327803C2522E77D /* Pods-RTPhotoBrowser-RTPhotoBrowserUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTPhotoBrowser-RTPhotoBrowserUITests.release.xcconfig"; path = "Target Support Files/Pods-RTPhotoBrowser-RTPhotoBrowserUITests/Pods-RTPhotoBrowser-RTPhotoBrowserUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26A680001F87972E0003F8B4 /* Kingfisher.framework in Frameworks */,
+				E67EE031A83DF8F4D29779B3 /* Pods_RTPhotoBrowser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A4C90B1AE140C5708A59DCC /* Pods_RTPhotoBrowserTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F09A9131AFA43DCEB02AD9B2 /* Pods_RTPhotoBrowser_RTPhotoBrowserUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +204,8 @@
 				26DABFF61E6312620029DEE5 /* RTPhotoBrowserTests */,
 				26DAC0011E6312620029DEE5 /* RTPhotoBrowserUITests */,
 				26DABFE01E6312620029DEE5 /* Products */,
+				8E9EE720967B69A27079C1C4 /* Pods */,
+				54CEAB55B49D3094D08D3E8B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -248,6 +248,29 @@
 			path = RTPhotoBrowserUITests;
 			sourceTree = "<group>";
 		};
+		54CEAB55B49D3094D08D3E8B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1962516A4CBC0858BA794D4F /* Pods_RTPhotoBrowser.framework */,
+				B2325763434FA10E482FE21D /* Pods_RTPhotoBrowser_RTPhotoBrowserUITests.framework */,
+				68BD44877FA7ED851FC59094 /* Pods_RTPhotoBrowserTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E9EE720967B69A27079C1C4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0194FDC0C7F033E2862DDFCC /* Pods-RTPhotoBrowser.debug.xcconfig */,
+				DC12E8A05E0E83E3928EA42D /* Pods-RTPhotoBrowser.release.xcconfig */,
+				D446A226C7B69453EFE99B87 /* Pods-RTPhotoBrowser-RTPhotoBrowserUITests.debug.xcconfig */,
+				F0F9AC907327803C2522E77D /* Pods-RTPhotoBrowser-RTPhotoBrowserUITests.release.xcconfig */,
+				4D1225BAF996465D97072C84 /* Pods-RTPhotoBrowserTests.debug.xcconfig */,
+				E5E786B42006C6842525A7F9 /* Pods-RTPhotoBrowserTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -255,11 +278,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26DAC0071E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowser" */;
 			buildPhases = (
+				5F4578565D1F74111837A7FA /* [CP] Check Pods Manifest.lock */,
 				26DABFDB1E6312620029DEE5 /* Sources */,
 				26DABFDC1E6312620029DEE5 /* Frameworks */,
 				26DABFDD1E6312620029DEE5 /* Resources */,
-				26DAC0141E6318260029DEE5 /* ShellScript */,
-				26A680021F87972E0003F8B4 /* Embed Frameworks */,
+				BDB8053F33F793CDE4D211D1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -274,6 +297,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26DAC00A1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserTests" */;
 			buildPhases = (
+				64DD799E7088EF899AB4B7A9 /* [CP] Check Pods Manifest.lock */,
 				26DABFEF1E6312620029DEE5 /* Sources */,
 				26DABFF01E6312620029DEE5 /* Frameworks */,
 				26DABFF11E6312620029DEE5 /* Resources */,
@@ -292,9 +316,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26DAC00D1E6312620029DEE5 /* Build configuration list for PBXNativeTarget "RTPhotoBrowserUITests" */;
 			buildPhases = (
+				191050837784887AB1D282DC /* [CP] Check Pods Manifest.lock */,
 				26DABFFA1E6312620029DEE5 /* Sources */,
 				26DABFFB1E6312620029DEE5 /* Frameworks */,
 				26DABFFC1E6312620029DEE5 /* Resources */,
+				0549C3605FEBF465F1F0A5E3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -313,7 +339,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = leotao;
 				TargetAttributes = {
 					26DABFDE1E6312620029DEE5 = {
@@ -325,14 +351,14 @@
 					26DABFF21E6312620029DEE5 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = CC6Q466FS8;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1140;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 26DABFDE1E6312620029DEE5;
 					};
 					26DABFFD1E6312620029DEE5 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = CC6Q466FS8;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1140;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 26DABFDE1E6312620029DEE5;
 					};
@@ -340,7 +366,7 @@
 			};
 			buildConfigurationList = 26DABFDA1E6312610029DEE5 /* Build configuration list for PBXProject "RTPhotoBrowser" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -386,19 +412,107 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		26DAC0141E6318260029DEE5 /* ShellScript */ = {
+		0549C3605FEBF465F1F0A5E3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-RTPhotoBrowser-RTPhotoBrowserUITests/Pods-RTPhotoBrowser-RTPhotoBrowserUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RTPhotoBrowser-RTPhotoBrowserUITests/Pods-RTPhotoBrowser-RTPhotoBrowserUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		191050837784887AB1D282DC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RTPhotoBrowser-RTPhotoBrowserUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5F4578565D1F74111837A7FA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RTPhotoBrowser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		64DD799E7088EF899AB4B7A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RTPhotoBrowserTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BDB8053F33F793CDE4D211D1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RTPhotoBrowser/Pods-RTPhotoBrowser-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RTPhotoBrowser/Pods-RTPhotoBrowser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -483,6 +597,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -540,6 +655,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -588,44 +704,41 @@
 		};
 		26DAC0081E6312620029DEE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0194FDC0C7F033E2862DDFCC /* Pods-RTPhotoBrowser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = CC6Q466FS8;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = RTPhotoBrowser/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		26DAC0091E6312620029DEE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC12E8A05E0E83E3928EA42D /* Pods-RTPhotoBrowser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = CC6Q466FS8;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = RTPhotoBrowser/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 		26DAC00B1E6312620029DEE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D1225BAF996465D97072C84 /* Pods-RTPhotoBrowserTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -634,14 +747,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RTPhotoBrowser.app/RTPhotoBrowser";
 			};
 			name = Debug;
 		};
 		26DAC00C1E6312620029DEE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5E786B42006C6842525A7F9 /* Pods-RTPhotoBrowserTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -650,14 +764,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RTPhotoBrowser.app/RTPhotoBrowser";
 			};
 			name = Release;
 		};
 		26DAC00E1E6312620029DEE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D446A226C7B69453EFE99B87 /* Pods-RTPhotoBrowser-RTPhotoBrowserUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = CC6Q466FS8;
@@ -665,14 +780,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = RTPhotoBrowser;
 			};
 			name = Debug;
 		};
 		26DAC00F1E6312620029DEE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0F9AC907327803C2522E77D /* Pods-RTPhotoBrowser-RTPhotoBrowserUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = CC6Q466FS8;
@@ -680,8 +796,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leotao.RTPhotoBrowserUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = RTPhotoBrowser;
 			};
 			name = Release;

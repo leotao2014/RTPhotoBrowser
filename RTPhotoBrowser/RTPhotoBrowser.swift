@@ -31,7 +31,12 @@ class RTPhotoBrowser: UIViewController {
     private var scaleView:UIImageView? {
         let imageView = UIImageView();
         let photoModel = photoAtIndex(index: currentIndex);
-        imageView.image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl);
+        RTImageFetcher.fetcher.fetchCacheImage(withUrl: photoModel?.picUrl) { (image) -> (Void) in
+            DispatchQueue.main.async {
+                imageView.image = image
+            }
+        }
+        
         imageView.contentMode = .scaleAspectFill;
         imageView.clipsToBounds = true;
         
@@ -153,24 +158,21 @@ class RTPhotoBrowser: UIViewController {
     }
     
     // 提供获取原图的接口
-    func originalImage(atIndex index: Int) -> UIImage? {
+    func originalImage(atIndex index: Int, completion: @escaping (UIImage?) -> (Void)) {
         if let photo = photoAtIndex(index: index) {
-            let image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.originalPicUrl);
-            
-            return image;
+            RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.originalPicUrl, completion: completion)
         }
         
-        return nil;
+        completion(nil)
     }
     
     // 提供获取普通质量图片的接口
-    func image(atIndex index:Int) -> UIImage? {
+    func image(atIndex index:Int, completion: @escaping (UIImage?) -> (Void)) {
         if let photo = photoAtIndex(index: index) {
-            let image = RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.picUrl);
-            return image;
+            RTImageFetcher.fetcher.fetchCacheImage(withUrl: photo.picUrl, completion: completion)
         }
         
-        return nil;
+        completion(nil)
     }
     
 // MARK:PrivateMethods

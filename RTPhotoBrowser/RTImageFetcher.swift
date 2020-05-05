@@ -20,7 +20,7 @@ let GSPHOTO_IMAGE_LOADED_NOTIFICATION = "GSPHOTO_IMAGE_LOADED_NOTIFICATION";
 
 class RTImageFetcher: NSObject {
     static let fetcher = RTImageFetcher();
-    var taskDict:[RTPhotoModel : RetrieveImageTask] = [:];
+    var taskDict:[RTPhotoModel : DownloadTask] = [:];
     weak var delegate:RTImageFetchDelegate?
     
     func fetchImage(photo:RTPhotoModel) {
@@ -52,7 +52,6 @@ class RTImageFetcher: NSObject {
     }
     
     func fetchImageFromNetwork(photo:RTPhotoModel, url:URL) {
-        
         KingfisherManager.shared.retrieveImage(with: url, options: [.backgroundDecode], progressBlock: { (received, total) in
             let progress = CGFloat(received) / CGFloat(total);
             if let delegate = self.delegate {
@@ -60,50 +59,44 @@ class RTImageFetcher: NSObject {
                     delegate.imageLoadingUpdateProgress(progress: progress, photoModel: photo);
                 }
             }
-        }, completionHandler: { (image, error, type, url) in
+        }) { (result) in
             self.taskDict.removeValue(forKey: photo);
-            
-            guard let image = image else {
+            switch result {
+            case .success(let r):
                 if let delegate = self.delegate {
-                    if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidFailLoad(error:photoModel:))) {
-                        delegate.imageDidFailLoad(error: error, photoModel: photo);
+                    if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidLoaded(image:photoModel:))) {
+                        delegate.imageDidLoaded(image: r.image, photoModel: photo);
                     }
                 }
-                return;
-            }
-            
-            if let delegate = self.delegate {
-                if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidLoaded(image:photoModel:))) {
-                    delegate.imageDidLoaded(image: image, photoModel: photo);
+            case .failure(let err):
+                if let delegate = self.delegate {
+                    if delegate.responds(to: #selector(RTImageFetchDelegate.imageDidFailLoad(error:photoModel:))) {
+                        delegate.imageDidFailLoad(error: err, photoModel: photo);
+                    }
                 }
             }
-        });
+        }
     }
     
-    func fetchCacheImage(withUrl urlString: String?) -> UIImage? {
+    func fetchCacheImage(withUrl urlString: String?, completion: @escaping (UIImage?) -> (Void)) {
         guard let urlString = urlString else {
-            return nil
+            completion(nil)
+            return
         }
         
         guard let url = URL(string: urlString) else {
-            return nil;
+            completion(nil)
+            return
         }
         
-        var cacheImage: UIImage?
-        let result = KingfisherManager.shared.cache.imageCachedType(forKey: url.cacheKey);
-        
-        if result.cached {
+        KingfisherManager.shared.cache.retrieveImage(forKey: url.cacheKey) { (result) in
             switch result {
-            case .memory:
-                cacheImage = KingfisherManager.shared.cache.retrieveImageInMemoryCache(forKey: url.cacheKey)
-            case .disk:
-                cacheImage = KingfisherManager.shared.cache.retrieveImageInDiskCache(forKey: url.cacheKey)
+            case .success(let r):
+                completion(r.image)
             default:
-                cacheImage = nil
+                completion(nil)
             }
         }
-        
-        return cacheImage;
     }
     
     func clearMemoryCache() {

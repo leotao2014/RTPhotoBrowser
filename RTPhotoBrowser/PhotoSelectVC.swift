@@ -30,48 +30,43 @@ class PhotoSelectVC: UIViewController {
         
 
         
-        let urls = ["http://7xr16i.com1.z0.glb.clouddn.com/607210ee51151af6f9a25a1c75f55aab_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/6ee28dfeeff39ed9807b868c9969d8fb_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/8c2cfc7c0e713b9c3bf02daec77e2cbe_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/83f79630ae87d6ddfa1d6adb4413ff70_copy.jpg",
-                    "http://images-10038599.cos.myqcloud.com/5.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/a622abd5a0fbc15337d2848fc58eae1a_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/landscapecopy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/924a4008418cfe474363545cfc444051_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/9_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/351b86227b5714f60278a4c501346cd4_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/11_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/98c7d2dfe77926ecbb590ebb99ff33c3_copy.jpg",
-                    "http://7xr16i.com1.z0.glb.clouddn.com/ab062e4df53eede0176035bc8221acec_copy.jpg",
-                    ];
-        
-        let highQualityUrls = ["http://images-10038599.cos.myqcloud.com/1.jpg",
-                    "http://images-10038599.cos.myqcloud.com/2.jpg",
-                    "http://images-10038599.cos.myqcloud.com/3.jpg",
-                    "http://images-10038599.cos.myqcloud.com/4.jpg",
-                    "http://images-10038599.cos.myqcloud.com/5.jpg",
-                    "http://images-10038599.cos.myqcloud.com/6.jpg",
-                    "http://images-10038599.cos.myqcloud.com/7.jpg",
-                    "http://images-10038599.cos.myqcloud.com/8.jpg",
-                    "http://images-10038599.cos.myqcloud.com/9.jpg",
-                    "http://images-10038599.cos.myqcloud.com/10.jpg",
-                    "http://images-10038599.cos.myqcloud.com/11.jpg",
-                    "http://images-10038599.cos.myqcloud.com/QQ20161015-0.png",
-                    "http://images-10038599.cos.myqcloud.com/QQ20161015-1.png"];
+        let urls: [Dictionary<String, String>] = [
+            [
+                "thumbnail": "https://wx3.sinaimg.cn/orj360/a17004b2gy1gehlhsjj61j20u01hc120.jp",
+                "large": "https://photo.weibo.com/2708473010/wbphotos/large/mid/4501241004504614/pid/a17004b2gy1gehlhsjj61j20u01hc120"],
+            [
+            "thumbnail": "https://wx3.sinaimg.cn/mw690/bc52b9dfly1gehbgbfdhwj20j60qvq8j.jpg",
+            "large": "https://wx3.sinaimg.cn/large/bc52b9dfly1gehbgbfdhwj20j60qvq8j.jpg"],
+            [
+            "thumbnail": "https://wx2.sinaimg.cn/mw690/bc52b9dfly1gehbgbz3ptj20j60sswl2.jpg",
+            "large": "https://wx2.sinaimg.cn/large/bc52b9dfly1gehbgbz3ptj20j60sswl2.jpg"],
+            [
+            "thumbnail": "https://wx4.sinaimg.cn/mw690/bc52b9dfly1gehbgd5xsoj20j60rmq9v.jpg",
+            "large": "https://wx4.sinaimg.cn/large/bc52b9dfly1gehbgd5xsoj20j60rmq9v.jpg"],
+            [
+            "thumbnail": "https://wx3.sinaimg.cn/mw690/bc52b9dfly1gehbgdubwsj20j60tdn3r.jpg",
+            "large": "https://wx3.sinaimg.cn/large/bc52b9dfly1gehbgdubwsj20j60tdn3r.jpg"],
+            [
+            "thumbnail": "https://wx4.sinaimg.cn/mw690/bc52b9dfly1gehbgetb6nj20j60s6gsg.jpg",
+            "large": "https://wx4.sinaimg.cn/large/bc52b9dfly1gehbgetb6nj20j60s6gsg.jpg"],
+            [
+            "thumbnail": "https://wx3.sinaimg.cn/mw690/bc52b9dfly1gehbgftkfhj20j60srq5x.jpg",
+            "large": "https://wx3.sinaimg.cn/large/bc52b9dfly1gehbgftkfhj20j60srq5x.jpg"],
+            [
+            "thumbnail": "https://wx4.sinaimg.cn/mw690/bc52b9dfly1gegps3uujgj20rs0rs0u7.jpg",
+            "large": "https://wx4.sinaimg.cn/large/bc52b9dfly1gegps3uujgj20rs0rs0u7.jpg"],
+            [
+            "thumbnail": "https://wx1.sinaimg.cn/mw690/94d9c01fly1gehgoot8uaj20h808maan.jpg",
+            "large": "https://wx1.sinaimg.cn/mw1024/94d9c01fly1gehgoot8uaj20h808maan.jpg"]
+        ];
 
-        photos = urls.map { (url) -> PhotoModel in
-            let model = PhotoModel();
-            model.picUrl = url;
-            return model;
-        }
-        
-        photos = photos.enumerated().map({ (index, model) -> PhotoModel in
-            model.highQualityUrl = highQualityUrls[index];
+        photos = urls.map({ (dict) -> PhotoModel in
+            let model = PhotoModel()
+            model.picUrl = dict["thumbnail", default: ""]
+            model.highQualityUrl = dict["large", default: ""]
             
-            return model;
+            return model
         })
-        
-        
     }
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
